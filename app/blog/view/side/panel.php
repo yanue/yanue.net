@@ -1,6 +1,12 @@
 <div class="widget suggest">
     <strong>站长推荐</strong>
 
+    <h2><a href="https://github.com/yanue/">开源项目</a></h2>
+
+    <p>
+        <a href="https://github.com/yanue/nginx-lua-GraphicsMagick">nginx-lua-GraphicsMagick</a>
+    </p>
+
     <h2>地图作品</h2>
 
     <p>
