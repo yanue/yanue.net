@@ -20,11 +20,10 @@ $cats = \App\Blog\Helper\SideData::getAllCats();
             <ul class="top-nav">
                 <li><a href="<?php echo $this->baseUrl(''); ?>">博客首页</a></li>
                 <li><a href="<?php echo $this->baseUrl('tool'); ?>">前端工具箱</a></li>
-                <!--                <li><a href="">在线手册</a></li>-->
-                <!--                <li><a href="">各种查询</a></li>-->
+                <li><a href="https://github.com/yanue" style="color: red;">github</a></li>
                 <li>
                     <h4><a href="<?php echo $this->suburl('map', '', false); ?>" class="top-alt" data-sub="map">地图作品 <i
-                                class="icon arrow  icon-angle-down"></i></a></h4>
+                                    class="icon arrow  icon-angle-down"></i></a></h4>
 
                     <p class="sub-nav" data-sub="map">
                         <a href="<?php echo $this->suburl('map', 'gps'); ?>">GPS经纬度转换</a>
@@ -38,8 +37,8 @@ $cats = \App\Blog\Helper\SideData::getAllCats();
     <section class="wrap nav">
         <div class="site">
             <a href="<?php echo $this->baseUrl(''); ?>" class="logo"><img
-                    src="http://<?php echo Config::getItem('domain.src'); ?>/images/logo.png"
-                    alt=""/></a>
+                        src="http://<?php echo Config::getItem('domain.src'); ?>/images/logo.png"
+                        alt=""/></a>
 
             <div class="sub-site">
                 <a href="" class="site-name">技术博客</a>
@@ -80,7 +79,7 @@ $cats = \App\Blog\Helper\SideData::getAllCats();
                                data-rel="<?php echo $cat['id']; ?>"><?php echo $cat['name']; ?>
                                 <em class="arrow" style="<?php echo $block ?>"></em>
                             </a>
-                        <?php
+                            <?php
                         }
                     }
                 }
@@ -116,7 +115,7 @@ $cats = \App\Blog\Helper\SideData::getAllCats();
                                     $m++;
                                     ?>
                                     <a href="<?php echo $this->baseUrl('topic/' . ($v1['alias'] ? $v1['alias'] : $v1['id'])); ?>"><?php echo $v1['name']; ?></a>
-                                <?php
+                                    <?php
                                 }
                             }
                             if ($m == 0) {
@@ -124,7 +123,7 @@ $cats = \App\Blog\Helper\SideData::getAllCats();
                             }
                             ?>
                             </span>
-                        <?php
+                            <?php
                         }
                     }
                 }

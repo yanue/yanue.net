@@ -20,13 +20,6 @@
                 <div class="clear"></div>
             </div>
         </section>
-        <section class="left-top-ad">
-            <script type="text/javascript">
-                var cpro_id="u2128929";
-                (window["cproStyleApi"] = window["cproStyleApi"] || {})[cpro_id]={at:"3",rsi0:"828",rsi1:"100",pat:"6",tn:"baiduCustNativeAD",rss1:"#FFFFFF",conBW:"1",adp:"1",ptt:"0",titFF:"%E5%BE%AE%E8%BD%AF%E9%9B%85%E9%BB%91",titFS:"",rss2:"#000000",titSU:"0",ptbg:"90",piw:"0",pih:"0",ptp:"0"}
-            </script>
-            <script src="http://cpro.baidustatic.com/cpro/ui/c.js" type="text/javascript"></script>
-        </section>
         <section class="section latest">
             <h2 class="title">
                 <span class="more">

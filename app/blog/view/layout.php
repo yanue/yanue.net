@@ -94,11 +94,6 @@ use Library\Core\Config;
     <?php $this->content(); ?>
 </main>
 <?php $this->render('footer', false); ?>
-<script type="text/javascript">
-    /*120*300 创建于 2015-03-13*/
-    var cpro_id = "u1994919";
-</script>
-<script src="http://cpro.baidustatic.com/cpro/ui/f.js" type="text/javascript"></script>
 <!-- map.yanue.net Baidu tongji analytics -->
 <script type="text/javascript">
     var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
