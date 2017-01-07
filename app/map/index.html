@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>经纬度在线查询,地名(批量)查询经纬度,经纬度(批量)查询地名,google map运用geocoder.geocode实例</title>
+    <meta name="author" content="yanue"/>
+    <meta name="copyright" content="powered by yanue"/>
+    <meta name="keywords"
+          content="经纬度,查询,经纬度查询,经纬度在线查询,经纬度查找地名,经纬度(批量)查询,经纬度转换地名,地名批量查询经纬度,查询地名返回经纬度,根据经纬度批量查询地名,google map经纬度 ,yanue.net">
+    <meta name="description"
+          content="运用google map api开发的地图系统，实现经纬度(批量)在线查询,地名批量查询经纬度,google 经纬度查询地名,经纬度查找地名,查询地名返回经纬度,根据经纬度批量查询地名,google map运用geocoder.geocode实例">
+    <link rel="stylesheet" type="text/css" href="css/basic.css" media="all"/>
+    <script src="http://src0.yanue.net/js/jquery/jquery.last.js" type="text/javascript"></script>
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=CG8eakl6UTlEb1OakeWYvofh"></script>
+    <script type="text/javascript"
+            src="http://api.map.baidu.com/library/TextIconOverlay/1.2/src/TextIconOverlay_min.js"></script>
+    <script type="text/javascript"
+            src="http://api.map.baidu.com/library/MarkerClusterer/1.2/src/MarkerClusterer_min.js"></script>
+    <script type="text/javascript">
+        window.onload = function () {
+
+            // 百度地图API功能
+            var map = new BMap.Map("map_canvas");
+            map.enableDragging();
+            map.enableScrollWheelZoom();
+            var point = new BMap.Point(114.05786799999998, 22.543099);
+            map.centerAndZoom(point, 12);
+
+            var myGeo = new BMap.Geocoder();
+
+            var markerClusterer = new BMapLib.MarkerClusterer(map, {markers: []});
+
+            $(function () {
+                $('#toLatLngBtn').live('click', function (e) {
+                    $('#showResults').html("").fadeIn();
+                    map.clearOverlays();
+                    markerClusterer.clearMarkers();
+                    var addrStr = $('#addrs').val();
+                    var addrs = addrStr.split('\n');
+                    for (var i in addrs) {
+                        var addr = addrs[i];
+                        geoSearch(addr);
+                    }
+                    e.stopImmediatePropagation();
+                });
+
+                $('#toAddressBtn').live('click', function (e) {
+                    $('#showResults').html("").fadeIn();
+                    map.clearOverlays();
+                    markerClusterer.clearMarkers();
+                    makers = [];
+                    var addrStr = $('#latLng').val();
+                    var addrs = addrStr.split('\n');
+                    var inProgressing = false;
+                    for (var i in addrs) {
+                        var addr = addrs[i];
+                        geoParse(addr);
+                    }
+
+                    //最简单的用法，生成一个marker数组，然后调用markerClusterer类即可。
+                    e.stopImmediatePropagation();
+                });
+
+                function geoSearch(addr) {
+                    myGeo.getPoint(addr, function (point) {
+                        if (point) {
+                            var str = addr + ":" + point.lng + "," + point.lat + "<br>";
+                            var po = new BMap.Point(point.lng, point.lat);
+                            map.centerAndZoom(po, 12);
+
+                            var _marker = new BMap.Marker(po);
+
+                            _marker.addEventListener("click", function (e) {
+                                this.openInfoWindow(new BMap.InfoWindow(str));
+                            });
+
+                            _marker.addEventListener("mouseover", function (e) {
+                                this.setTitle("位于: " + point.lng + "," + point.lat);
+                            });
+
+                            markerClusterer.addMarker(_marker);
+                            map.addOverlay(_marker);              // 将标注添加到地图中
+                            $("#showResults").append(str);
+                        }
+                    });
+                }
+
+
+                function geoParse(str) {
+                    str = str.toString();
+                    //去除中间所有空格，将中文'，'号替换成英文','并按','分割
+                    str = str.replace(/[(^\s+)(\s+$)]/g, "").replace('，', ',').split(',');
+                    //第一个值为纬度并转化为float类型
+                    var lat = parseFloat(str[1]);
+                    //第二个值为经度并转化为float类型
+                    var lng = parseFloat(str[0]);
+                    if (lat == 0 || lng == 0 || isNaN(lat) || isNaN(lng)) return false;
+                    var po = new BMap.Point(lng, lat);
+                    console.log(po);
+                    myGeo.getLocation(po, function (rs) {
+                        if (rs) {
+                            var str = lng + "," + lat + "：" + rs.address + '<br>';
+                            var po = new BMap.Point(lng, lat);
+                            var _marker = new BMap.Marker(po);
+
+                            _marker.addEventListener("click", function (e) {
+                                this.openInfoWindow(new BMap.InfoWindow(str));
+                            });
+
+                            _marker.addEventListener("mouseover", function (e) {
+                                this.setTitle("位于: " + point.lng + "," + point.lat);
+                            });
+
+                            markerClusterer.addMarker(_marker);
+                            map.centerAndZoom(po, 12);
+                            map.addOverlay(_marker);              // 将标注添加到地图中
+
+                            $('#showResults').append(str);
+                        }
+                    });
+                }
+
+
+                $('.clear').live('click', function () {
+                    $('#showResults').html("");
+                });
+                $('.hide').live('click', function () {
+                    $('#showResults').fadeOut();
+                });
+                $('.expand').live('click', function () {
+                    $('#showResults').fadeIn();
+                });
+            });
+        }
+    </script>
+    <style type="text/css">
+        #main {
+            border: 1px solid #f0f0f0;
+            padding: 10px;
+        }
+        #main #left {
+            float: left;
+            width: 400px;
+            margin: 0 10px 0;
+        }
+        #main #right {
+            float: right;
+            margin: 0 10px 0 0;
+            width: 520px;
+        }
+        h2 {
+            font-size: 16px;
+            line-height: 42px;
+            height: 42px;
+            color: #333;
+            font-family: '微软雅黑';
+            border-bottom: 1px solid #f0f0f0;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, .3);
+            margin: 8px 0;
+        }
+        h2 button {
+            float: right;
+        }
+        h2 span {
+            font-weight: normal;
+            font-size: 12px;
+            color: #666;
+        }
+        h3 a, h2 a {
+            color: #06f;
+        }
+        h3 a:hover, h2 a:hover {
+            color: #03f;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, .3);
+        }
+        h3 {
+            font-size: 16px;
+            line-height: 30px;
+            height: 30px;
+            color: #333;
+            font-family: '微软雅黑';
+            border-bottom: 1px solid #f0f0f0;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, .3);
+            margin: 8px 0;
+        }
+        h3 em {
+            font-weight: normal;
+            font-size: 12px;
+            color: #666;
+            font-style: normal;
+        }
+        h3 span {
+            font-weight: normal;
+            font-size: 12px;
+            color: #666;
+            float: right;
+        }
+        #addrs {
+            width: 388px;
+            height: 160px;
+            border: 1px solid #e0e0e0;
+            border-radius: 5px;
+            padding: 8px 5px;
+            font-size: 12px;
+            color: #666;
+        }
+        #latLng {
+            width: 298px;
+            height: 100px;
+            border: 1px solid #e0e0e0;
+            border-radius: 5px;
+            padding: 8px 5px;
+            font-size: 12px;
+            color: #666;
+        }
+        #toAddressDiv {
+            float: left;
+            width: 310px;
+        }
+        #info {
+            margin: 12px 6px 0 0;
+            float: right;
+            width: 180px;
+        }
+        #info p {
+            border: 1px solid #f0f0f0;
+            color: #666;
+            border-radius: 5px;
+            padding: 10px 20px;
+            line-height: 24px;
+        }
+        #showResults {
+            border: 1px solid #e0e0e0;
+            height: 318px;
+            padding: 8px;
+            overflow-y: auto;
+            margin: 0 0 8px 0;
+        }
+        #map_canvas {
+            background: url(images/load_s.gif) no-repeat center center;
+        }
+        #hm_t_30690 {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+<div id="header">
+    <p id="top">
+        <span class='back'><a href="http://yanue.net/" class="button">返回</a></span><b>半叶寒羽</b>
+        - 原创作品
+    </p>
+</div>
+<div class="wrap">
+    <div style="border: 1px solid #eee;padding: 10px 0 0 10px;background: #fff;margin-bottom: 20px;">
+        <script type="text/javascript">
+            /*960*54 创建于 2015-03-29*/
+            var cpro_id = "u2016487";
+        </script>
+        <script src="http://cpro.baidustatic.com/cpro/ui/c.js" type="text/javascript"></script>
+    </div>
+    <div id="toplink">
+        <span><a href='http://yanue.net/about'>联系我</a></span>其他版本：<a
+            href="http://map.yanue.net/toLatLng/">地名查询经纬度详细版</a> | <a
+            href="http://map.yanue.net/gps.html">GPS转换谷歌百度经纬度</a> | <a
+            href="http://sqph.org/map" target='_blank'>希望工程电子地图</a> | <a href="http://map.yanue.net/geometry.html">公交路线查询实例版</a>
+    </div>
+    <div id="main">
+        <h1 class='title'>经纬度在线查询,地名(批量)查询经纬度,经纬度(批量)查询地名</h1>
+
+        <div id="content">
+            <div id="left">
+                <h2>
+                    <button id='toLatLngBtn' class="button">解析地名</button>
+                    输入地名<span>(每个地名一行) <a href="javascript:;" id='clearAddress'>清空输入</a></span>
+                </h2>
+                <textarea name="" id="addrs" class='input'>
+贵州省贵阳市云岩区书香门第B栋3单元
+北京
+遵义</textarea>
+
+                <h3><span><a href=''>重新载入</a></span>地图展示<em>(基于百度地图)</em></h3>
+
+                <div id="map_canvas" style='width: 398px; height: 298px; border: 1px solid #e0e0e0;'></div>
+            </div>
+            <div id="right">
+                <div id="toAddressDiv">
+                    <h2>
+                        <button id='toAddressBtn' class="button">解析经纬度</button>
+                        输入经纬度<span> <a href="javascript:;" id='clearLatLng'>清空输入</a></span>
+                    </h2>
+                    <p style='line-height:24px;color:#999;'>每个经纬度换一行，格式：经度,纬度</p>
+                    <textarea name="" id="latLng" class='input'>
+106.72,26.57
+116.40741300000002,39.904214</textarea>
+                </div>
+
+                <div id="info">
+                    <h3><span>关于</span></h3>
+
+                    <p>
+						  <span>作者：<a href='http://yanue.net/'>Yanue</a><br/>
+							QQ:642399406</span><br/>
+                        <a href='http://yanue.net/archives/207.html'>详细介绍</a><br/>
+                        <a href='http://map.yanue.net/geoBatch.rar'>源码下载</a> <br/>
+                        <a href='http://yanue.net/archives/217.html'>geocoder.geocode详解</a>
+                    </p>
+                </div>
+                <div class="clear"></div>
+                <h3>
+                    <span><a href="javascript:;" id='clearResult'>清空结果</a></span>解析结果
+                </h3>
+
+                <div id="showResults">
+                    <p style='color: #999;'>等待解析</p>
+                </div>
+
+            </div>
+            <div class="clear"></div>
+            <div style="color: #999;">说明：由于GFW封闭了所有谷歌服务，导致谷歌地图无法使用，现在换为百度地图</div>
+
+        </div>
+    </div>
+</div>
+<div id="footer">
+    <p>
+        <span>Author：<a href="http://yanue.net/">yanue</a></span>版权所有 &copy; <a href="http://yanue.net/">半叶寒羽</a>
+    </p>
+</div>
+<script type="text/javascript">
+    /*120*300 创建于 2015-03-13*/
+    var cpro_id = "u1994919";
+</script>
+<script src="http://cpro.baidustatic.com/cpro/ui/f.js" type="text/javascript"></script>
+<!-- map.yanue.net Baidu tongji analytics -->
+<script type="text/javascript">
+    var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F2a1063cadb2ff3dbe7a08094b86840e7' type='text/javascript'%3E%3C/script%3E"));
+</script>
+</body>
+</html>

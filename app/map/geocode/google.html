@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf8"/>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no"/>
+    <title>Google Map经纬度地名批量转换工具-快速版 - 半叶寒羽-原创作品</title>
+    <script src="http://src0.yanue.net/js/jquery/jquery.last.js" type="text/javascript"></script>
+    <!--[if lt IE 9]>
+    <script src="http://src.yanue.net/js/html5shiv.js" type="text/javascript"></script>
+    <![endif]-->
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        a {
+            text-decoration: none;
+            color: #ffa225;
+        }
+
+        a:hover {
+            color: #f60;
+        }
+
+        .right {
+            float: right;
+        }
+
+        body {
+
+        }
+
+        .panel {
+            width: 320px;
+            min-height: 800px;
+            position: absolute;
+            left: 0;
+            height: 100%;
+            z-index: 1
+        }
+
+        .content {
+
+        }
+
+        .map {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            left: 320px;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .resArea {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            left: 320px;
+            top: 0;
+            opacity: 0.8;
+            z-index: 100;
+            border-left: 1px solid #f0f0f6;
+            background: #FCFcF9;
+        }
+
+        #result {
+            padding: 8px;
+	    list-style-type:decimal;
+	    list-style-position: inside;
+            overflow-y: scroll;
+        }
+
+        .txt {
+            border: 1px solid #e0e0e0;
+            line-height: 18px;
+            color: #666;
+            padding: 3px 5px;
+            background: #fefefe;
+            width: 290px;
+            height: 200px;
+            margin: 8px;
+            outline: none;
+        }
+
+        .button {
+            color: #444;
+            padding: 5px 8px;
+            outline: none;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            border-radius: 5px;
+            background-color: #F5F5F5;
+            background-image: -moz-linear-gradient(center top, #F5F5F5, #F1F1F1);
+            box-shadow: 0 0 5px rgba(120, 120, 120, .1), inset 0 0 2px #fff;
+            text-shadow: 1px 1px 1px rgba(0, 0, 0, .1);
+            /*鼠标经过背景渐变过程*/
+            -moz-transition: all .2s ease-in-out;
+            -webkit-transition: all .2s ease-in-out;
+            -o-transition: all .2s ease-in-out;
+            -ms-transition: all .2s ease-in-out;
+            transition: all .2s ease-in-out;
+        }
+
+        .button:focus, .button:hover {
+            background-color: #fff;
+            background-image: -moz-linear-gradient(center top, #fcfcfc, #F1F1F1);
+            border: 1px solid #C6C6C6;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            color: #333333;
+        }
+
+        .btn-gray:hover {
+            border: 1px solid #999;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+            color: #000;
+        }
+
+        .txt:hover, .txt:focus {
+            box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
+            border: 1px solid #ccc;
+            background: #f9f9f9;
+            color: #333;
+        }
+
+        .res-title {
+            border-bottom: 1px solid #f0f0f6;
+            line-height: 36px;
+            padding: 0 0 0 12px;
+            font-size: 16px;
+            font-weight: normal;
+            font-family: 'microsoft yahei';
+            background: #FCF9F6;
+        }
+
+        .tip-title {
+            border: 1px solid #f0f0f6;
+            border-right: none;
+            line-height: 36px;
+            color: #666;
+            padding: 0 0 0 10px;
+            font-size: 13px;
+            margin: 30px 0 0 0;
+            font-weight: normal;
+            font-family: 'microsoft yahei';
+            background: #fcfcf9;
+        }
+
+        .action {
+            padding: 0 8px;
+        }
+
+        .copy {
+            border: 1px solid #f0f0f6;
+            border-right: none;
+            background: #fcfcf9;
+            width: 303px;
+            padding: 8px;
+            color: #666;
+            margin: 20px 0 0;
+            font-family: 'microsoft yahei';
+            line-height: 160%;
+        }
+    </style>
+</head>
+<body>
+<main class="wrapper">
+    <aside class="panel">
+        <h2 class="res-title">Google Map经纬度地名批量转换工具</h2>
+
+        <p style="font-family: 'microsoft yahei';padding: 8px;color: #999;"><span style="color: #f60;">极速版</span> -
+            使用Google Geocoding API接口实现<br>每天查询请求不得超过2,500 个。</p>
+
+        <p class="tip-title">请输入地址：每行一个地址</p>
+
+        <p>
+            <textarea name="" id="addrs" class="txt">深圳市腾讯大厦停车场
+深圳市竹子林公交总站
+深圳市车公庙
+            </textarea>
+        </p>
+
+        <p class="action">
+            <input type="button" value="解析经纬度" id="toLatLntBtn" class="button"/>
+            <a href="javascript:;" class="clear">清空结果</a>
+        </p>
+
+        <p class="tip-title">请输入经纬度：每行以纬度,经度形式</p>
+
+        <p>
+            <textarea name="" id="latlng" class="txt">22.246417,113.941181
+22.240865,114.017209
+            </textarea>
+        </p>
+
+        <p class="action">
+            <input type="button" value="解析地址" id="toAddrBtn" class="button"/>
+            <a href="javascript:;" class="clear">清空结果</a>
+        </p>
+
+        <section class="copy">
+            <p>其他版本： <a href="http://map.yanue.net">http://map.yanue.net</a></p>
+        </section>
+
+        <section class="copy">
+            <p>半叶寒羽-地图作品 <span class="right">作者：<a href="http://yanue.net/about.html">Yanue</a></span></p>
+        </section>
+    </aside>
+    <div class="content">
+        <div class="resArea">
+            <h4 class="res-title">解析结果</h4>
+
+            <ol id="result">
+
+            </ol>
+        </div>
+    </div>
+</main>
+
+</body>
+</html>
+<script type="text/javascript">
+
+    $(function () {
+        $('#toLatLntBtn').live('click', function (e) {
+            $('#result').html("").fadeIn();
+            var addrStr = $('#addrs').val();
+            var addrs = addrStr.split('\n');
+            for (var i in addrs) {
+                var addr = addrs[i].trim();
+                if (addr) {
+                    geoToLatlng(addr);
+                }
+            }
+            e.stopImmediatePropagation();
+        });
+
+        $('#toAddrBtn').live('click', function (e) {
+            $('#result').html("").fadeIn();
+            makers = [];
+            var addrStr = $('#latlng').val();
+            var addrs = addrStr.split('\n');
+            for (var i in addrs) {
+                var addr = addrs[i].trim();
+                if (addr) {
+                    geoToAddr(addr);
+                }
+            }
+
+            //最简单的用法，生成一个marker数组，然后调用markerClusterer类即可。
+            e.stopImmediatePropagation();
+        });
+
+        function geoToLatlng(addr) {
+            $.ajax({
+                method: 'post',
+                url: 'http://maps.googleapis.com/maps/api/geocode/json?',
+                data: {address: addr, sensor: false, language: 'zh_cn'},
+                success: function (res) {
+                    console.log(res)
+                    var output = '';
+                    if (res.status == "OK") {
+                        output = '<li>' + addr + ':' + res.results[0].geometry.location.lat + ',' + res.results[0].geometry.location.lng + '</li>';
+                    } else {
+                        output = '<li>' + addr + ':' + res.status + '</li>';
+                    }
+                    console.log(output)
+                    $('#result').append(output);
+                }
+            });
+        }
+
+
+        function geoToAddr(str) {
+            $.ajax({
+                method: 'post',
+                url: 'http://maps.googleapis.com/maps/api/geocode/json?',
+                data: {latlng: str, sensor: false, language: 'zh_cn'},
+                success: function (res) {
+                    var output = '';
+                    if (res.status == "OK") {
+                        output = '<li>' + str + ':' + res.results[0].formatted_address + '</li>';
+                    } else {
+                        output = '<li>' + str + ':' + res.status + '</li>';
+                    }
+                    $('#result').append(output);
+                }
+            });
+        }
+
+        $('.clear').live('click', function () {
+            $('#result').html("");
+        });
+
+        $('.expand').live('click', function () {
+            $('#result').fadeIn();
+        });
+    });
+
+
+</script>
+<!-- map.yanue.net Baidu tongji analytics -->
+<script type="text/javascript">
+    var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F2a1063cadb2ff3dbe7a08094b86840e7' type='text/javascript'%3E%3C/script%3E"));
+</script>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<script src="http://ditu.google.cn/maps/api/js?sensor=false&libraries=places" type="text/javascript"></script>
+<title>google map 经纬度批量在线查询工具 google map查询地名返回经纬度</title>
+<meta name="author" content="yanue" />
+<meta name="copyright" content="powered by yanue" />
+<script type="text/javascript">
+	window.onload = function() {
+		var to = new toText();
+		var but = document.getElementById('submit');
+		but.onclick = function(){
+			var area = document.getElementById('addrs').value;
+		   area=area.split('\n');
+				var sh;
+				var i = 0;
+				sh = window.setInterval(function() {
+					if (i < area.length) {
+						to.geo(area[i]);
+					} else {
+						window.clearInterval(sh);
+					}
+					i++;
+				}, 500);
+		} 
+	}
+	function toText() {
+		toText.map = new google.maps.Map(document.getElementById("map_canvas"),
+				{
+					center : new google.maps.LatLng(26.57, 106.72),
+					zoom : 8,
+					mapTypeId : google.maps.MapTypeId.ROADMAP
+				});
+		toText.marker = new google.maps.Marker({map: toText.map,position: new google.maps.LatLng(26.57, 106.72)});
+	}
+	toText.address = null;
+	toText.prototype = {
+		geo : function(address) {
+			toText.address = address;
+			var _this = this;
+			geocoder = new google.maps.Geocoder();
+			var latLng = geocoder.geocode({
+				'address' : address
+			}, function(results, status) {
+				//create div
+				var newElement = window.document.createElement('p');
+				if (status == google.maps.GeocoderStatus.OK) {
+					var location = results[0].geometry.location;
+					toText.map.setCenter(location);
+					toText.marker.setPosition(location);
+					// location is like (26.647449, 106.63014299999998) so we should clear '(' in zhe start of this string and ')' in end;
+					var latLng = location.toString().substr(1,
+							location.toString().indexOf(')') - 1);
+					// insert innerHTML
+					newElement.innerHTML = toText.address + "：" + latLng;
+
+				} else {
+					// insert error innerHTML
+					newElement.innerHTML = toText.address + "：error " + status;
+				}
+				//append child
+				document.getElementById('test').appendChild(newElement);
+			});
+			return latLng;
+		}
+	}
+</script>
+<style type="text/css">
+ *{
+  margin:0;
+  padding:0;
+ }
+ body{
+   font-size:12px;
+   line-height:160%;
+ }
+ #test{
+   float:left;
+ }
+</style>
+</head>
+<body>
+	请从下面输入你要解析的地名（每个地名隔一行）<br />
+	输入完成后按‘批量解析’按钮<br />
+	<textarea name="" id="addrs" cols="50" rows="10"></textarea>
+	<button id='submit'>批量解析</button>
+	<div id="map_canvas" style='width: 300px; height: 200px;'></div>
+	<div id="test"></div>
+
+<!-- map.yanue.net Baidu tongji analytics -->
+<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F2a1063cadb2ff3dbe7a08094b86840e7' type='text/javascript'%3E%3C/script%3E"));
+</script>
+</body>
+</html>

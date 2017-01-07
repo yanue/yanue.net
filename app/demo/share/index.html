@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>自定义分享功能 - 半叶寒羽 - 原创作品</title>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.8.0.min.js"></script>
+    <script type="text/javascript" src="./yanue-share.js"></script>
+<script type="text/javascript">
+    $(function(){
+        //使用方法：
+        shareParas = {
+            'elem' : "#aa",//分享dom
+            'iconbg' : './share.png',// 分享按钮对于页面的路径
+            'pics' : '',// 图片地址数组[]
+            'url' : 'http://yanue.net/',// 自定义分享的地址为空则当前页面
+            'desc' : '半叶寒羽-yanue.net - 关注WEB前端 探索HTML5 深入php' //分享描述
+        };
+        new share(shareParas);
+    });
+</script>
+</head>
+<body>
+<div id="aa">
+    加载中...
+</div>
+<p>代码实例:</p>
+<textarea name="" id="" style="width:688px;height: 216px;border: 1px solid #e0e0e0;outline: none;color: #333;">
+<script type="text/javascript">
+    $(function(){
+        //使用方法：
+        shareParas = {
+            'elem'   : "#aa",//分享dom
+            'iconbg' : './share.png',// 分享按钮对于页面的路径
+            'pics'   : '',// 图片地址数组[]
+            'url'    : 'http://yanue.net/',// 自定义分享的地址为空则当前页面
+            'title'  : '半叶寒羽 - yanue.net - 我的技术分享博客',
+            'desc'   : '半叶寒羽 - yanue.net - 关注WEB前端 探索HTML5 深入php' //分享描述
+        };
+        new share(shareParas);
+    });
+</script>
+</textarea>
+</body>
+</html>

@@ -1,0 +1,148 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="viewport" content="initial-scale=1.0, user-scalable=no"/>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+<title>在线查询经纬度 google查询地名返回经纬度 geocode geocoder的完整实例 根据google map api 实现鼠标经过地图区域提示经纬度等 </title>
+<meta name="author" content="StarSpace" />
+<meta name="generator" content="yanue.map " />
+<meta name="author" content="yanue" />
+<meta name="copyright" content="powered by yanue" />
+<meta name="keywords" content="功能最完善的地理解析经纬度 google map 地理解析经纬度 geocoder实例 geocode实例 鼠标经过地图区域提示经纬度 google map api应用 ">
+<meta name="description" content="运用google map api开发的地图系统，实现鼠标经过提示经纬度，自动填充地名地点名称，输入完成后可直接点击enter键进行解析，地理位置不准确，可以拖动重新解析，解析后经纬度信息显示完整">
+<link href="main.css" rel="stylesheet" type="text/css" />
+<style type="text/css">
+	*{margin:0;padding:0;}
+	a{text-decoration:none;}
+	a:hover{text-decoration:none;color:#f60;}
+BODY {
+	SCROLLBAR-FACE-COLOR: #f6f6f6; FONT-SIZE: 12px; SCROLLBAR-HIGHLIGHT-COLOR: #ffffff; SCROLLBAR-SHADOW-COLOR: #cccccc; COLOR: #000000; SCROLLBAR-3DLIGHT-COLOR: #cccccc; SCROLLBAR-ARROW-COLOR: #330000; SCROLLBAR-TRACK-COLOR: #fefefe; FONT-FAMILY: 宋体; SCROLLBAR-DARKSHADOW-COLOR: #ffffff; BACKGROUND-COLOR: #ffffff
+}
+TD {
+	TABLE-LAYOUT: fixed; FONT-SIZE: 12px; WORD-BREAK: break-all; LINE-HEIGHT: 150%; FONT-FAMILY: 宋体
+}
+INPUT {
+	BORDER: #cecece 1px solid;height:30px;line-height:30px;border-radius:5px;padding:0 8px;margin:5px 0;
+}
+INPUT:hover{
+	BORDER: #f60 1px solid;
+}
+h1{font-size:24px;line-height:60px;height:60px;font-family:'微软雅黑';text-align:center;margin:20px 10px;border-bottom: 1px dotted #ccc;border-top: 1px dotted #ccc;}
+
+.usertableborder{border:1px solid #ccc;width:1000px;margin:10px auto;}
+#mapLoading{width:720px;line-height:600px;border: 1px solid #ccc;margin:0 0 8px 8px;float:left;text-align:center;position:relative;}
+#mapLoading img{display:block;position:absolute;top:50%;left:280px;margin:-15px 0 0 0;}
+#map_canvas{border: 1px solid #ccc;margin:0 0 8px 8px;float:left;display:none;}
+#latlng-control {
+  background: #ffc;
+  border: 1px solid #676767;
+  font-family: arial, helvetica, sans-serif;
+  font-size: 12px;
+  padding:4px;
+  position: absolute;
+
+}
+.searchDiv{margin:0 8px;color:#f60;font-size:16px;font-family:'微软雅黑';font-weight:bold;border: 1px solid #ccc;border-bottom:none;padding:8px;position:relative;}
+.searchDiv #address{border: 1px solid #fc0;width:540px;font-size:14px;color:#666;}
+.searchDiv #address:hover{border: 1px solid #f60;}
+.searchDiv #go{border: 1px solid #f90;background:#f9f3f6;font-family:'微软雅黑';font-weight:bold;color:#f60;}
+.searchDiv #go:hover{border: 1px solid #f60;background:#f0f0f6;cursor:pointer;color:#f00;}
+.searchDiv #author{position:absolute;right:10px;top:10px;line-height:36px;font-size:12px;font-weight:normal;FONT-FAMILY: 宋体;border: 1px solid #ccc;padding:0 8px;}
+#infoPanel {
+width:243px;
+float:left;
+height:584px;
+border: 1px solid #ccc;
+border-left:none;
+background:#f9f9f9;
+margin:0 8px 0 0;
+padding:8px;
+}
+#infoPanel div {
+  margin-bottom: 5px;
+}
+.infoDiv{
+border: 1px solid #ccc;
+background:#f9f9f9;
+padding:5px;
+line-height:20px;
+}
+.infoDiv:hover{
+	BORDER: #f60 1px solid;
+}
+</style>
+</head>
+<body>
+    <div>
+    <table class="usertableborder" cellspacing="0" cellpadding="6" border="0">
+        <tr>
+        	<td>
+             <h1>Google Map查询地名返回经纬度</h1>
+        	</td>
+        </tr>
+        <tr>
+        	<td>
+          <div class='searchDiv'>
+            请输入地点：<input id="address" type="textbox" value="" />
+            <input type="button" value=" 解 析 " id="go" onclick="codeAddress()" /> 
+            <span id="author">作者：<a href="http://yanue.net/" target="_blank">yanue</a> QQ:642399406</span>
+          </div>
+          
+          <div id="mapLoading"><img src="MapLoading.gif" /><span>地图加载中。。。</span></div>
+          <div id="map_canvas" style="width:720px;height:600px;"></div>
+	        <div id="infoPanel">
+	            <div style="line-height:22px">
+	            	<b style="color:#f00"> 当前纬度：</b><input id="lat" name="lat" size=20 type="text" value="等待解析" disabled="disabled">
+	              <br />
+	              <b style="color:#f00"> 当前经度：</b><input id="lng" name="lng" size=20 type="text" value="等待解析" disabled="disabled">
+	            </div>
+	            <b style="display:none">当前位置经纬度：</b>
+	            <div id="info" class="infoDiv" style="display:none"></div>
+	            <b>最佳匹配地址：</b>
+	            <div class="infoDiv" id="endAddress">等待解析</div>
+	            <b>经纬度范围：</b>
+	            <div class="infoDiv" id="latLngRange">等待解析</div>
+	            <b>拖动解析指示：</b>
+	            <div id="markerStatus" class="infoDiv">请点击并拖动地标</div>
+	            <p><b style="color:#f00">温馨提示：</b><br/>
+        		<div class="infoDiv">	1. 请输入你要解析的地理位置<br/>
+        	    2. 如果解析出来的位置有偏差 你可以拖动地图上的点进行重新解析
+        	    </div>
+        	  </p>
+	            <p>
+	            	<b style="color:#f00">实现功能：</b><br/>
+           <div class="infoDiv">1. 鼠标经过提示经纬度<br/>
+           2. 自动填充地名地点名称<br/>
+           3. 输入完成后可直接点击enter键进行解析<br/>
+           4. 地理位置不准确，可以拖动重新解析<br/>
+           5. 解析后经纬度信息显示完整</div>
+         </p>
+          <p class="infoDiv">
+          	作者：<a href="http://yanue.net/" target="_blank">yanue</a><br/>
+          	文章：<a href="http://yanue.net/archives/32.html" target="_blank">详细介绍</a> <a href="http://yanue.net/map/toLatLng.rar">源码下载</a>
+          	
+          </p>
+	        </div>
+          </td> 
+        </tr>
+        </table> 
+    </div>
+<!--//先加载dom-->
+<script src="http://maps.google.com/maps/api/js?sensor=false&libraries=places" type="text/javascript"></script>
+<script type="text/javascript" src="toLatLng.js"></script><!--//地图上显示当前位置经纬度-->
+
+<!-- yanue.net Baidu tongji analytics -->
+
+<!-- map.yanue.net Baidu tongji analytics -->
+<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F2a1063cadb2ff3dbe7a08094b86840e7' type='text/javascript'%3E%3C/script%3E"));
+</script>
+
+<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F322c20650793bcae617cdfcde1a6bbc7' type='text/javascript'%3E%3C/script%3E"));
+</script>
+
+</body>
+</html>

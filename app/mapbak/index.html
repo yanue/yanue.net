@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<script type="text/javascript" src="http://ditu.google.com/maps/api/js?sensor=false&libraries=places"></script>
+<title>经纬度在线查询,地名(批量)查询经纬度,经纬度(批量)查询地名,google map运用geocoder.geocode实例</title>
+<meta name="author" content="yanue" />
+<meta name="copyright" content="powered by yanue" />
+<meta name="keywords" content="经纬度,查询,经纬度查询,经纬度在线查询,经纬度查找地名,经纬度(批量)查询,经纬度转换地名,地名批量查询经纬度,查询地名返回经纬度,根据经纬度批量查询地名,google map经纬度 ,yanue.net">
+<meta name="description" content="运用google map api开发的地图系统，实现经纬度(批量)在线查询,地名批量查询经纬度,google 经纬度查询地名,经纬度查找地名,查询地名返回经纬度,根据经纬度批量查询地名,google map运用geocoder.geocode实例">
+<link rel="stylesheet" type="text/css" href="css/basic.css" media="all" />
+<script type="text/javascript">
+	window.onload = function() {
+		var geo = new geoBatch();
+		var toLatLngBtn = document.getElementById('toLatLngBtn');
+		var clearAddress = document.getElementById('clearAddress');
+		var addrs = document.getElementById('addrs');
+		var latLngs = document.getElementById('latLngs');
+		var clearResult = document.getElementById('clearResult');
+		var clearLatLng = document.getElementById('clearLatLng');
+		var showResults = document.getElementById('showResults');
+		toLatLngBtn.onclick = function() {
+			//clear showResults
+			showResults.innerHTML = '';
+			var area = document.getElementById('addrs').value;
+			area = area.split('\n');
+			var sh;
+			var i = 0;
+			sh = window.setInterval(function() {
+				if (i < area.length) {
+					geo.toLatLng(area[i]);
+				} else {
+					window.clearInterval(sh);
+				}
+				i++;
+			}, 2000);
+		}
+		
+		var toAddressBtn = document.getElementById('toAddressBtn');
+    
+    toAddressBtn.onclick = function() {
+    	//clear showResults
+			showResults.innerHTML = '';
+			var latLngs = document.getElementById('latLngs').value;
+		  latLngs = latLngs.split('\n');
+			var sh;
+			var i = 0;
+			var sh = window.setInterval(function() {
+				if (i < latLngs.length) {
+					geo.toAddress(latLngs[i]);
+				} else {
+					window.clearInterval(sh);
+				}
+				i++;
+			}, 2000);
+		}
+		clearAddress.onclick = function() {
+			addrs.value = '';
+		}
+		clearLatLng.onclick = function() {
+			latLngs.value = '';
+		}
+		clearResult.onclick = function() {
+			showResults.innerHTML = '';
+		}
+	}
+	/*
+	* 函数名： geoBatch()
+	* 功能：地名解析成经纬度,经纬度解析成地名
+	* 作者：yanue
+	* 使用方法：
+	  //初始化
+	  var geo = new geoBatch();
+	  // 解析地名 传入值地名 结果：纬度lat,经度lng
+	  geo.toLatLng(地名);
+	  // 解析经纬度 传入值（纬度lat,经度lng）：26.57, 106.72 结果是地名
+	  geo.toAddress(经纬度字符串);
+	*/
+	function geoBatch() {
+		//初始化地图
+		geoBatch.map = new google.maps.Map(document.getElementById("map_canvas"),{
+					center : new google.maps.LatLng(26.57, 106.72),
+					zoom : 8,
+					mapTypeId : google.maps.MapTypeId.ROADMAP
+		});
+		//添加一个marker
+		geoBatch.marker = new google.maps.Marker({map: geoBatch.map,position: new google.maps.LatLng(26.57, 106.72)});
+		//实例化Geocoder服务
+		geoBatch.geocoder = new google.maps.Geocoder();
+	}
+	geoBatch.address = null;//需要解析的地名
+	geoBatch.latLng = null;//需要解析的经纬度字符串
+	geoBatch.prototype = {
+		//解析地名
+		toLatLng : function(address) {
+			//接收
+			geoBatch.address = address;
+			//执行geocode解析地名
+			geoBatch.geocoder.geocode({
+				//传入地名
+				'address' : geoBatch.address
+			}, function(showResults, status) {
+				//create div
+				var newElement = window.document.createElement('p');
+				if (status == google.maps.GeocoderStatus.OK) {
+					//获取解析后的经纬度
+					var location = showResults[0].geometry.location;
+					//切换地图位置
+					geoBatch.map.setCenter(location);
+					geoBatch.marker.setPosition(location);
+				
+					// location is like (26.647449, 106.63014299999998) so we should clear '(' in zhe start of this string and ')' in end;
+					var latLng = location.toString().substr(1,location.toString().indexOf(')') - 1);
+					// insert innerHTML
+					newElement.innerHTML = geoBatch.address + "：" + latLng;
+				} else {
+					// insert error innerHTML
+					newElement.innerHTML = geoBatch.address + "：error " + status;
+				}
+				//append child
+				document.getElementById('showResults').appendChild(newElement);
+			});
+		},
+		//解析经纬度
+		toAddress:function(latLng){
+			geoBatch.latLng = latLng.toString();
+			//去除中间所有空格，将中文'，'号替换成英文','并按','分割
+			geoBatch.latLng = geoBatch.latLng.replace(/[(^\s+)(\s+$)]/g,"").replace('，',',').split(',');
+			//第一个值为纬度并转化为float类型
+			var lat = parseFloat(geoBatch.latLng[0]);
+			//第二个值为经度并转化为float类型
+			var lng = parseFloat(geoBatch.latLng[1]);
+			//执行geocode解析经纬度
+		  geoBatch.geocoder.geocode({
+		  	//传入经纬度
+				'location' : new google.maps.LatLng(lat, lng)
+			},function(showResults, status){
+				//create div to show result
+				var newElement = window.document.createElement('p')
+			  if (status == google.maps.GeocoderStatus.OK) {
+			  	//获取解析后的经纬度
+					var location = showResults[0].geometry.location;
+					//切换地图位置
+					geoBatch.map.setCenter(location);
+					geoBatch.marker.setPosition(location);
+			  	//获取解析后的地址
+			  	var address = showResults[0].formatted_address;
+			    // insert result innerHTML
+					newElement.innerHTML = geoBatch.latLng + "：" + address;
+			  } else {
+					// insert error innerHTML
+					newElement.innerHTML = geoBatch.latLng + "：error " + status;
+				}
+				//append child
+			  document.getElementById('showResults').appendChild(newElement);
+			});
+		}
+	}
+</script>
+<style type="text/css">
+#main {
+	border: 1px solid #f0f0f0;
+	padding: 10px;
+}
+
+#main #left {
+	float: left;
+	width: 400px;
+	margin: 0 10px 0;
+}
+
+#main #right {
+	float: right;
+	margin: 0 10px 0 0;
+	width: 520px;
+}
+
+h2 {
+	font-size: 16px;
+	line-height: 42px;
+	height: 42px;
+	color: #333;
+	font-family: '微软雅黑';
+	border-bottom: 1px solid #f0f0f0;
+	text-shadow: 1px 1px 3px rgba(0, 0, 0, .3);
+	margin: 8px 0;
+}
+
+h2 button {
+	float: right;
+}
+
+h2 span {
+	font-weight: normal;
+	font-size: 12px;
+	color: #666;
+}
+h3 a,h2 a{
+  color:#06f;
+}
+h3 a:hover,h2 a:hover{
+  color:#03f;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, .3);
+}
+h3 {
+	font-size: 16px;
+	line-height: 30px;
+	height: 30px;
+	color: #333;
+	font-family: '微软雅黑';
+	border-bottom: 1px solid #f0f0f0;
+	text-shadow: 1px 1px 3px rgba(0, 0, 0, .3);
+	margin: 8px 0;
+}
+
+h3 em {
+	font-weight: normal;
+	font-size: 12px;
+	color: #666;
+	font-style:normal;
+}
+
+h3 span {
+	font-weight: normal;
+	font-size: 12px;
+	color: #666;
+	float: right;
+}
+
+#addrs {
+	width: 388px;
+	height:160px;
+	border: 1px solid #e0e0e0;
+	border-radius: 5px;
+	padding: 8px 5px;
+	font-size: 12px;
+	color: #666;
+}
+
+#latLngs{
+  width: 298px;
+	height: 100px;
+	border: 1px solid #e0e0e0;
+	border-radius: 5px;
+	padding: 8px 5px;
+	font-size: 12px;
+	color: #666;
+}
+
+#toAddressDiv{
+  float:left;
+  width:310px;
+}
+
+#info{
+  margin:12px 6px 0 0;
+  float:right;
+  width:180px;
+}
+
+#info p{
+  border: 1px solid #f0f0f0;
+  color:#666;
+  border-radius: 5px;
+  padding:10px 20px;
+  line-height:24px;
+}
+
+#showResults {
+	border: 1px solid #e0e0e0;
+	height: 318px;
+	padding: 8px;
+	overflow-y: auto;
+	margin: 0 0 8px 0;
+}
+
+#map_canvas{
+  background:url(images/load_s.gif) no-repeat center center;
+}
+</style>
+</head>
+<body>
+	<div id="header">
+		<p id="top">
+			<span class='back'><a href="http://yanue.net/" class="button">返回</a></span><b>半叶寒羽</b>
+			- 原创作品
+		</p>
+	</div>
+	<div class="wrap">
+		<div id="toplink">
+			<span><a href='http://yanue.net/about'>联系我</a></span>其他版本：<a href="http://map.yanue.net/toLatLng/">地名查询经纬度详细版</a> | <a href="http://map.yanue.net/gps.html">GPS转换谷歌百度经纬度</a> | <a
+				href="http://sqph.org/map" target='_blank'>希望工程电子地图</a> | <a href="http://map.yanue.net/geometry.html">公交路线查询实例版</a>
+		</div>
+		<div id="main">
+			<h1 class='title'>经纬度在线查询,地名(批量)查询经纬度,经纬度(批量)查询地名</h1>
+			<div id="content">
+				<div id="left">
+					<h2>
+						<button id='toLatLngBtn' class="button">解析地名</button>
+						输入地名<span>(每个地名一行) <a href="javascript:;" id='clearAddress'>清空输入</a></span>
+					</h2>
+<textarea name="" id="addrs" class='input' >
+贵州省贵阳市云岩区书香门第B栋3单元
+北京
+遵义</textarea>
+					<h3><span><a href=''>重新载入</a></span>地图展示<em>(基于google maps api 3)</em></h3>
+				  <div id="map_canvas" style='width: 398px; height: 298px; border: 1px solid #e0e0e0;'></div>
+				</div>
+				<div id="right">
+					<div id="toAddressDiv">
+					  <h2>
+							<button id='toAddressBtn' class="button">解析经纬度</button>
+							输入经纬度<span> <a href="javascript:;" id='clearLatLng'>清空输入</a></span>
+					  </h2>
+						<p style='line-height:24px;color:#999;'>每个经纬度换一行，格式：纬度,经度</p>
+	          <textarea name="" id="latLngs" class='input' >26.57, 106.72
+39.904214, 116.40741300000002</textarea>	
+					</div>
+					
+					<div id="info">
+						<h3><span>关于</span></h3>	
+						<p>
+						  <span>作者：<a href='http://yanue.net/'>Yanue</a><br />
+							QQ:642399406</span><br /> 
+							<a href='http://yanue.net/archives/207.html'>详细介绍</a><br />
+							<a href='http://map.yanue.net/geoBatch.rar'>源码下载</a>	<br />
+							<a href='http://yanue.net/archives/217.html'>geocoder.geocode详解</a>
+						</p>
+					</div>
+					<div class="clear"></div>
+					<h3>
+						<span><a href="javascript:;" id='clearResult'>清空结果</a></span>解析结果
+					</h3>
+					<div id="showResults">
+						<p style='color: #999;'>等待解析</p>
+					</div>
+					
+				</div>
+				<div class="clear"></div>
+			</div>
+		</div>
+	</div>
+	<div id="footer">
+		<p>
+			<span>Author：<a href="http://yanue.net/">yanue</a></span>版权所有 &copy; <a href="http://yanue.net/">半叶寒羽</a>
+		</p>
+	</div>
+<!-- map.yanue.net Baidu tongji analytics -->
+<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F2a1063cadb2ff3dbe7a08094b86840e7' type='text/javascript'%3E%3C/script%3E"));
+</script>
+</body>
+</html>

@@ -1,0 +1,51 @@
+<?php
+header("Content-Type:text/html; charset=utf-8");
+header("content-type: text/javascript; charset=utf-8");
+header("Access-Control-Allow-Origin: *"); # 跨域处理
+header("Access-Control-Allow-Headers: content-disposition, origin, content-type, accept");
+header("Access-Control-Allow-Credentials: true");
+
+// Make sure file is not cached (as it happens for example on iOS devices)
+header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
+header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
+header("Cache-Control: no-store, no-cache, must-revalidate");
+header("Cache-Control: post-check=0, pre-check=0", false);
+header("Pragma: no-cache");
+$lng=isset($_REQUEST['lng'])?$_REQUEST['lng']:null;
+$lat=isset($_GET['lat'])?$_GET['lat']:null;
+if(!($lat && $lng)){
+    exit(urldecode(json_encode(array('error'=>urlencode('缺少正确的gps经纬度参数:[纬度]lat,经度[lng]'),'copyright'=>'map.yanue.net'))));
+}
+require_once dirname(__FILE__).'/GpsOffset.php';
+$gps = new GpsOffset(dirname(__FILE__).'/google_offset.dat');
+$gLatLng = $gps->geoLatLng($lat,$lng);
+$bMap = json_decode(file_get_contents('http://api.map.baidu.com/ag/coord/convert?from=0&to=4&x='.$lng.'&y='.$lat));
+$bLatLng = array('lat'=>base64_decode($bMap->y),'lng'=>base64_decode($bMap->x));
+$copyright = copyright();
+$resData = array('error'=>0,'google'=>$gLatLng,'baidu'=>$bLatLng);
+$resData = array_merge($resData,$copyright);
+if(isset($_REQUEST['callback']) && $_REQUEST['callback']){
+        echo $_REQUEST["callback"] . '(' . json_encode($resData) . ')';
+} else {
+	echo json_encode($resData);
+}
+
+# 输出版权信息
+function copyright(){
+    $copyright = array('copyright'=>'map.yanue.net');
+    $referer = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '' ;
+    if(!$referer){
+        return $copyright;
+    }
+    $domain = parse_url($referer,PHP_URL_HOST);
+    $allowDomain = array(
+        'map.yanue.net',
+        'yanue.net',
+    );
+    # 在已经认证范围
+    if($domain && in_array($domain,$allowDomain)){
+        return array();
+    }
+    return $copyright;
+}
+
