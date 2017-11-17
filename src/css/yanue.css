@@ -1,8 +1,8 @@
 /* main*/.main{margin: 12px 0;}
 .content{margin: 12px 0;}
 .content .list{background: #fff;}
-.content .left-section{width: 828px;float: left;}
-.content .sidebar{float: right;width: 360px;}
+.content .left-section{width: 708px;float: left;}
+.content .sidebar{float: right;width: 300px;}
 .content .recommend{overflow: hidden;}
 .content .recommend .list{margin-right: -2px;width: 830px;height: 92px;overflow: hidden;}
 .content .recommend .item .bxslider{}
