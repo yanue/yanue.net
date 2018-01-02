@@ -80,6 +80,13 @@ use Library\Core\Config;
     </script>
 </head>
 <body>
+<script type="text/javascript">
+    var sogou_ad_id=943477;
+    var sogou_ad_height=300;
+    var sogou_ad_width=120;
+</script>
+<script type="text/javascript" charset="gb2312" src="http://images.sohu.com/cs/jsfile/js/f.js"></script>
+
 <?php $this->render('header', false); ?>
 <main class="wrap">
     <div style="margin-bottom: 10px;">
