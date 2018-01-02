@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <?php
+
 use Library\Core\Config;
 
 ?>
@@ -13,13 +14,15 @@ use Library\Core\Config;
           content="<?php echo isset($this->keywords) ? $this->keywords : '半叶寒羽 ‧ 专注PHP+HTML5技术'; ?>"/>
     <meta name="description"
           content="<?php echo isset($this->description) ? $this->description : '半叶寒羽 ‧ 专注PHP+HTML5技术'; ?>"/>
+    <meta name="domain_verify"
+          content="pmrgi33nmfuw4ir2ej4wc3tvmuxg4zlueiwcez3vnfsceorcgmytgnbsmzrtmyrxguzdiyzqhfrdeyjumvrtgmlfhazwkolfgbscelbcoruw2zktmf3gkir2ge2tcnbyg42donbwgi4dm7i">
     <?php
     if ($this->controller == 'post' && $this->action = 'detail') {
         $id = $this->uri->getParam('id');
         if ($id) {
             ?>
             <link rel='canonical' href='<?php echo $this->baseUrl('post-' . $id); ?>'/>
-        <?php
+            <?php
         }
     }
     ?>
@@ -47,7 +50,7 @@ use Library\Core\Config;
         });
 
         var app = app || {};
-        app.site_url = '<?php echo $this->baseUrl('',false); ?>';
+        app.site_url = '<?php echo $this->baseUrl('', false); ?>';
         app._CUID = '<?php echo \Library\Util\Session::get('_CUID'); ?>';
         app._CUSR = '<?php echo \Library\Util\Session::get('_CUSR'); ?>';
         app._CONFIG = {
@@ -75,29 +78,28 @@ use Library\Core\Config;
             });
         });
     </script>
-    <script type="text/javascript">
-        var duoshuoQuery = {short_name: "yanuemi"};
-        (function () {
-            var ds = document.createElement('script');
-            ds.type = 'text/javascript';
-            ds.async = true;
-            ds.src = 'http://static.duoshuo.com/embed.js';
-            ds.charset = 'UTF-8';
-            (document.getElementsByTagName('head')[0]
-                || document.getElementsByTagName('body')[0]).appendChild(ds);
-        })();
-    </script>
 </head>
 <body>
 <?php $this->render('header', false); ?>
 <main class="wrap">
+    <div style="margin-bottom: 10px;">
+        <script type="text/javascript">
+            /*横幅*/
+            var cpro_id = "u3176840";
+        </script>
+        <script type="text/javascript" src="//cpro.baidustatic.com/cpro/ui/c.js"></script>
+    </div>
     <?php $this->content(); ?>
 </main>
 <?php $this->render('footer', false); ?>
-<!-- map.yanue.net Baidu tongji analytics -->
-<script type="text/javascript">
-    var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
-    document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F2a1063cadb2ff3dbe7a08094b86840e7' type='text/javascript'%3E%3C/script%3E"));
+<script>
+    var _hmt = _hmt || [];
+    (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?322c20650793bcae617cdfcde1a6bbc7";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
 </script>
 </body>
 </html>

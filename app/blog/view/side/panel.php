@@ -26,6 +26,13 @@
     <p class="line"></p>
 
 </div>
+<div style="margin: 10px 0;">
+    <script type="text/javascript">
+        /*侧边栏*/
+        var cpro_id = "u3176851";
+    </script>
+    <script type="text/javascript" src="http://cpro.baidustatic.com/cpro/ui/c.js"></script>
+</div>
 <section class="ranking widget">
     <h2 class="tab-switch">
         <a href="javascript:;" data-tab="popular" class="tab current">热门文章</a>
