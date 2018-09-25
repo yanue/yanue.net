@@ -80,24 +80,9 @@ use Library\Core\Config;
     </script>
 </head>
 <body>
-<script type="text/javascript">
-    var sogou_ad_id = 943477;
-    var sogou_ad_height = 300;
-    var sogou_ad_width = 120;
-</script>
-
 
 <?php $this->render('header', false); ?>
 <main class="wrap">
-    <div style="padding-bottom: 20px;height:90px;padding-left: 20px;">
-        <script type="text/javascript">
-            var sogou_ad_id = 946295;
-            var sogou_ad_height = 90;
-            var sogou_ad_width = 960;
-        </script>
-
-        <div class="clear"></div>
-    </div>
     <?php $this->content(); ?>
 </main>
 <?php $this->render('footer', false); ?>
