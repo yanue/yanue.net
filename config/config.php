@@ -2,7 +2,7 @@
 
 # ==== php配置 ====
 $config['timezone'] = "PRC";
-$config['display_errors'] = false;
+$config['display_errors'] = true;
 $config['debug'] = false;
 
 # ==== 默认应用配置 =====

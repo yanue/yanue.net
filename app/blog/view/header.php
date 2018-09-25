@@ -20,7 +20,6 @@ $cats = \App\Blog\Helper\SideData::getAllCats();
             <ul class="top-nav">
                 <li><a href="<?php echo $this->baseUrl(''); ?>">博客首页</a></li>
                 <li><a href="<?php echo $this->baseUrl('tool'); ?>">前端工具箱</a></li>
-                <li><a href="https://github.com/yanue"  target="_blank" style="color: #5CB85C;">github</a></li>
                 <li>
                     <h4><a href="<?php echo $this->suburl('map', '', false); ?>" class="top-alt" data-sub="map">地图作品 <i
                                     class="icon arrow  icon-angle-down"></i></a></h4>
@@ -31,6 +30,7 @@ $cats = \App\Blog\Helper\SideData::getAllCats();
                         <a href="<?php echo $this->suburl('map', 'toLatLng', false); ?>">查询地名经纬度</a>
                     </p>
                 </li>
+                <li><a href="https://github.com/yanue"  target="_blank" style="color: #5CB85C;">github</a></li>
             </ul>
         </div>
     </div>

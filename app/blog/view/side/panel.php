@@ -26,6 +26,14 @@
     <p class="line"></p>
 
 </div>
+<div style="margin: 10px 0;">
+    <script type="text/javascript">
+        var sogou_ad_id=946326;
+        var sogou_ad_height=250;
+        var sogou_ad_width=300;
+    </script>
+
+</div>
 <section class="ranking widget">
     <h2 class="tab-switch">
         <a href="javascript:;" data-tab="popular" class="tab current">热门文章</a>
@@ -106,10 +114,3 @@
             data-show-admin="1" data-excerpt-length="43"></ul>
     </section>
 <?php } ?>
-
-<section class="widget visitors">
-    <h2 class="title">
-        <strong class="name">最近访客</strong>
-    </h2>
-    <ul class="ds-recent-visitors list" data-num-items="16"></ul>
-</section>

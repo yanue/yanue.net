@@ -1,61 +1,85 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<script src="http://ditu.google.cn/maps/api/js?sensor=false&libraries=places" type="text/javascript"></script>
-<title>谷歌地图地理解析和反解析geocode.geocoder详解</title>
-<meta name="author" content="yanue" />
-<meta name="copyright" content="powered by yanue" />
-<link rel="site" href="http://map.yanue.net/" />
-<script type="text/javascript">
-window.onload = function() {
+    <meta charset="UTF-8">
+    <script src="http://ditu.google.cn/maps/api/js?sensor=false&libraries=places" type="text/javascript"></script>
+    <title>谷歌地图地理解析和反解析geocode.geocoder详解</title>
+    <meta name="author" content="yanue"/>
+    <meta name="copyright" content="powered by yanue"/>
+    <link rel="site" href="http://map.yanue.net/"/>
+    <script type="text/javascript">
+        window.onload = function () {
 //初始化地图
-var map = new google.maps.Map(document.getElementById("map_canvas"),{
-	center : new google.maps.LatLng(26.57, 106.72),
-	zoom : 8,
-	mapTypeId : google.maps.MapTypeId.ROADMAP
-});
+            var map = new google.maps.Map(document.getElementById("map_canvas"), {
+                center: new google.maps.LatLng(26.57, 106.72),
+                zoom: 8,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            });
 //实例化Geocoder服务
-var geocoder = new google.maps.Geocoder();
+            var geocoder = new google.maps.Geocoder();
 
 //1.地理解析过程
 //请求数据GeocoderRequest为address，值为'贵阳'
-geocoder.geocode({address:'贵阳'},function geoResults(results, status){
-  //这里是回掉函数(即结果处理函数)
-  //状态为Ok说明有结果
-  if (status == google.maps.GeocoderStatus.OK) {
-  	//一般情况下会有多个结果
-  	//第一个结果为最佳匹配的结果（匹配地名最全的结果），这里只去第一个，其他的可以根据需要自己循环出来
-  	//格式化过后的地址
-  	alert('地理解析结果：'+results[0].formatted_address);
-  	//geometry是一个包含bounds（界限），location（纬度/经度坐标）,location_type和viewport（视图范围）
-  	//获取解析后的经纬度  	
-		alert('地理解析结果：'+results[0].geometry.location);
-  }else{
-    alert("：error " + status);
-  }
-});
+            geocoder.geocode({address: '贵阳'}, function geoResults(results, status) {
+                //这里是回掉函数(即结果处理函数)
+                //状态为Ok说明有结果
+                if (status == google.maps.GeocoderStatus.OK) {
+                    //一般情况下会有多个结果
+                    //第一个结果为最佳匹配的结果（匹配地名最全的结果），这里只去第一个，其他的可以根据需要自己循环出来
+                    //格式化过后的地址
+                    alert('地理解析结果：' + results[0].formatted_address);
+                    //geometry是一个包含bounds（界限），location（纬度/经度坐标）,location_type和viewport（视图范围）
+                    //获取解析后的经纬度
+                    alert('地理解析结果：' + results[0].geometry.location);
+                } else {
+                    alert("：error " + status);
+                }
+            });
 
 //2.地理反解析过程
 //请求数据GeocoderRequest为location，值类型为LatLng因此我们要实例化经纬度
-geocoder.geocode({location:new google.maps.LatLng(26.57, 106.72)},function geoResults(results, status){
-  //这里处理结果和上面一模一样
-  if (status == google.maps.GeocoderStatus.OK) {
-  	alert('地理反解析结果：'+results[0].formatted_address);
-		alert('地理反解析结果：'+results[0].geometry.location);
-  }else{
-    alert("：error " + status);
-  }
-});
-}
-</script>
+            geocoder.geocode({location: new google.maps.LatLng(26.57, 106.72)}, function geoResults(results, status) {
+                //这里处理结果和上面一模一样
+                if (status == google.maps.GeocoderStatus.OK) {
+                    alert('地理反解析结果：' + results[0].formatted_address);
+                    alert('地理反解析结果：' + results[0].geometry.location);
+                } else {
+                    alert("：error " + status);
+                }
+            });
+        }
+    </script>
 </head>
 <body>
-	<div id="map_canvas" style='width: 300px; height: 200px;'></div>
+<div id="header">
+    <p id="top">
+        <span class='back'>
+                        github：<a href="https://github.com/yanue">https://github.com/yanue</a>
+            <a href="http://yanue.net/" class="button">返回博客</a>
+        </span><b>半叶寒羽</b>
+        - 原创作品
+    </p>
+</div>
+<script type="text/javascript">
+    var sogou_ad_id=943477;
+    var sogou_ad_height=300;
+    var sogou_ad_width=120;
+</script>
+
+
+<div id="map_canvas" style='width: 300px; height: 200px;'></div>
+<div style="margin: 10px auto;width: 960px;">
+    <script type="text/javascript">
+        var sogou_ad_id=946295;
+        var sogou_ad_height=90;
+        var sogou_ad_width=960;
+    </script>
+
+</div>
 <!-- map.yanue.net Baidu tongji analytics -->
 <script type="text/javascript">
-var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
-document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F2a1063cadb2ff3dbe7a08094b86840e7' type='text/javascript'%3E%3C/script%3E"));
+    var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F2a1063cadb2ff3dbe7a08094b86840e7' type='text/javascript'%3E%3C/script%3E"));
 </script>
 </body>
 </html>
