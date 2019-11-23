@@ -1,0 +1,26 @@
+yanue.net {
+    tls admin@yanue.net
+    root /var/www/yanue.net/app/blog
+
+    fastcgi / /run/php-fpm/php-fpm.sock php {
+        ext .php
+        split .php
+        index index.php
+    }
+}
+
+map.yanue.net {
+    tls admin@yanue.net
+    root /var/www/yanue.net/app/map
+
+    fastcgi / /run/php-fpm/php-fpm.sock php {
+        ext .php
+        split .php
+        index index.php
+    }
+}
+
+src.yanue.net {
+    tls admin@yanue.net
+    root /var/www/yanue.net/src
+}
