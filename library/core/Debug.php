@@ -7,7 +7,7 @@ defined('FILE_WRITE_MODE') || define('FILE_WRITE_MODE', 0777);
  * Debug 调试输出信息
  *
  * @author     yanue <yanue@outlook.com>
- * @link     http://stephp.yanue.net/
+
  * @package  lib/util
  * @time     2013-07-11
  */

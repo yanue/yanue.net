@@ -9,7 +9,7 @@ if (!defined('LIB_PATH')) exit('No direct script access allowed');
  * 分发类，负责解析url分配mvc名称及请求数组
  *
  * @author     yanue <yanue@outlook.com>
- * @link     http://stephp.yanue.net/
+
  * @package  lib/core
  * @time     2013-07-11
  */

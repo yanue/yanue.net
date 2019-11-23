@@ -3,7 +3,7 @@
  * UserModel.php
  *
  * @author     yanue <yanue@outlook.com>
- * @link     http://stephp.yanue.net/
+
  * @time     2013-11-15
  */
 

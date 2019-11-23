@@ -7,7 +7,7 @@ use Library\Core\Config;
  * ajax handle for web api
  *
  * @author     yanue <yanue@outlook.com>
- * @link     http://stephp.yanue.net/
+
  * @package  lib/util
  * @time     2013-07-11
  */

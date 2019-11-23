@@ -39,7 +39,7 @@ $key = trim(filter_input(INPUT_GET, 'q', FILTER_SANITIZE_STRING));
                                 </div>
 
                                 <h2 class="post-title">
-                                    <a href="http://<?php echo Config::getItem('domain.main') . '/post-' . $item['id'] . '.html'; ?>"><?php echo $item['title']; ?></a>
+                                    <a href="https://<?php echo Config::getItem('domain.main') . '/post-' . $item['id'] . '.html'; ?>"><?php echo $item['title']; ?></a>
                                 </h2>
 
                                 <p class="post-info">

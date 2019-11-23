@@ -28,19 +28,19 @@ use Library\Core\Config;
     ?>
 
     <link rel="stylesheet" type="text/css"
-          href="http://<?php echo Config::getItem('domain.src'); ?>/css/base.css"/>
+          href="https://<?php echo Config::getItem('domain.src'); ?>/css/base.css"/>
     <link rel="stylesheet" type="text/css"
-          href="http://<?php echo Config::getItem('domain.src'); ?>/css/yanue.css"/>
+          href="https://<?php echo Config::getItem('domain.src'); ?>/css/yanue.css"/>
     <link rel="stylesheet" type="text/css"
-          href="http://<?php echo Config::getItem('domain.src'); ?>/css/font-awesome.min.css"/>
+          href="https://<?php echo Config::getItem('domain.src'); ?>/css/font-awesome.min.css"/>
     <!--[if lt IE 9]>
-    <script src="http://<?php echo Config::getItem('domain.src'); ?>/js/html5shiv.js')"
+    <script src="https://<?php echo Config::getItem('domain.src'); ?>/js/html5shiv.js')"
             type="text/javascript"></script>
     <![endif]-->
-    <script type="text/javascript" src="http://<?php echo Config::getItem('domain.src'); ?>/js/sea.js"></script>
+    <script type="text/javascript" src="https://<?php echo Config::getItem('domain.src'); ?>/js/sea.js"></script>
     <script>
         seajs.config({
-            base: 'http://<?php echo Config::getItem('domain.src'); ?>/js',
+            base: 'https://<?php echo Config::getItem('domain.src'); ?>/js',
             charset: 'utf-8',
             timeout: 30000,
             alias: {

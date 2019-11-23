@@ -17,7 +17,7 @@ defined('WEB_ROOT') || define('WEB_ROOT', realpath(dirname(__FILE__) . '/..'));
  * 应用入口初始化 - Bootstrap.php
  *
  * @author     yanue <yanue@outlook.com>
- * @link     http://stephp.yanue.net/
+
  * @time     2013-07-11
  */
 class Bootstrap

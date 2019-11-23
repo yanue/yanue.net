@@ -27,7 +27,7 @@ $post = $this->post;
                     <input type="text" class="txt" id="txtTitle" value="<?php echo $post['title']; ?>"
                            style="width: 320px;">
                     <span style="color: #f00;">*</span>
-                    <a href="http://<?php echo Config::getItem('domain.main') . '/post-' . $post['id'] . '.html'; ?>">查看文章</a>
+                    <a href="https://<?php echo Config::getItem('domain.main') . '/post-' . $post['id'] . '.html'; ?>">查看文章</a>
                     <span class="status"></span>
                 </p>
 

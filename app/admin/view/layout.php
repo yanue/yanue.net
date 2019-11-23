@@ -11,18 +11,18 @@ use Library\Core\Config;
     <meta name='author' content='yanue'/>
     <meta name='copyright' content=''/>
     <!--[if lt IE 9]>
-    <script src="http://<?php echo Config::getItem('domain.src'); ?>/scripts/html5shiv.js')"
+    <script src="https://<?php echo Config::getItem('domain.src'); ?>/scripts/html5shiv.js')"
             type="text/javascript"></script>
     <![endif]-->
     <link rel="stylesheet" type="text/css"
-          href="http://<?php echo Config::getItem('domain.src'); ?>/css/admin/base.css"/>
+          href="https://<?php echo Config::getItem('domain.src'); ?>/css/admin/base.css"/>
     <link rel="stylesheet" type="text/css"
-          href="http://<?php echo Config::getItem('domain.src'); ?>/css/admin/content.css"/>
+          href="https://<?php echo Config::getItem('domain.src'); ?>/css/admin/content.css"/>
 
-    <script type="text/javascript" src="http://<?php echo Config::getItem('domain.src'); ?>/js/sea.js"></script>
+    <script type="text/javascript" src="https://<?php echo Config::getItem('domain.src'); ?>/js/sea.js"></script>
     <script>
         seajs.config({
-            base: 'http://<?php echo Config::getItem('domain.src'); ?>/js',
+            base: 'https://<?php echo Config::getItem('domain.src'); ?>/js',
             charset: 'utf-8',
             timeout: 30000,
             alias: {

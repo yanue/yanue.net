@@ -59,7 +59,7 @@ $key = trim(filter_input(INPUT_GET, 'key', FILTER_SANITIZE_STRING));
                     <th class='name'><?php echo $item['id']; ?></th>
                     <td class="center"><input type="checkbox" class="chk" data-id="<?php echo $item['id']; ?>"/></td>
                     <td>
-                        <a href="http://<?php echo Config::getItem('domain.main') . '/post-' . $item['id'] . '.html'; ?>"><?php echo $item['title']; ?></a>
+                        <a href="https://<?php echo Config::getItem('domain.main') . '/post-' . $item['id'] . '.html'; ?>"><?php echo $item['title']; ?></a>
                         <?php if ($item['recommend']) { ?>
                             <mark class="mark mark-yellow small">荐</mark>
                         <?php } ?>

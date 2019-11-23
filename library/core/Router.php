@@ -9,7 +9,7 @@ if (!defined('LIB_PATH')) exit('No direct script access allowed');
  * 路由分发
  *
  * @author     yanue <yanue@outlook.com>
- * @link     http://stephp.yanue.net/
+
  * @package  lib/core
  * @time     2013-08-26
  */

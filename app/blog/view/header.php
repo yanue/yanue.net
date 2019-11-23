@@ -37,7 +37,7 @@ $cats = \App\Blog\Helper\SideData::getAllCats();
     <section class="wrap nav">
         <div class="site">
             <a href="<?php echo $this->baseUrl(''); ?>" class="logo"><img
-                        src="http://<?php echo Config::getItem('domain.src'); ?>/images/logo.png"
+                        src="https://<?php echo Config::getItem('domain.src'); ?>/images/logo.png"
                         alt=""/></a>
 
             <div class="sub-site">
