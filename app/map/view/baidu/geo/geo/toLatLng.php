@@ -1,4 +1,4 @@
-<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=CG8eakl6UTlEb1OakeWYvofh"></script>
+<script type="text/javascript" src="https://api.map.baidu.com/api?v=2.0&ak=CG8eakl6UTlEb1OakeWYvofh"></script>
 <link rel="stylesheet" href=""/>
 <?php
 $title = $this->title;
@@ -83,9 +83,9 @@ $description = $this->description;
             </div>
 
             <p class="infoDiv">
-                作者：<a href="http://yanue.net/" target="_blank">yanue</a><br>
-                文章：<a href="http://yanue.net/archives/32.html" target="_blank">详细介绍</a>
-                <a href="http://map.yanue.net/toLatLng.rar">源码下载</a>
+                作者：<a href="https://yanue.net/" target="_blank">yanue</a><br>
+                文章：<a href="https://yanue.net/archives/32.html" target="_blank">详细介绍</a>
+                <a href="https://map.yanue.net/toLatLng.rar">源码下载</a>
 
             </p>
         </div>

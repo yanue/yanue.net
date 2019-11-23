@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/html">
+<html xmlns="https://www.w3.org/1999/html">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf8"/>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no"/>
     <title>Google Map经纬度地名批量转换工具-快速版 - 半叶寒羽-原创作品</title>
-    <script src="http://src0.yanue.net/js/jquery/jquery.last.js" type="text/javascript"></script>
+    <script src="https://src0.yanue.net/js/jquery/jquery.last.js" type="text/javascript"></script>
     <!--[if lt IE 9]>
     <script src="https://src.yanue.net/js/html5shiv.js" type="text/javascript"></script>
     <![endif]-->
@@ -200,11 +200,11 @@
         </p>
 
         <section class="copy">
-            <p>其他版本： <a href="http://map.yanue.net">http://map.yanue.net</a></p>
+            <p>其他版本： <a href="https://map.yanue.net">https://map.yanue.net</a></p>
         </section>
 
         <section class="copy">
-            <p>半叶寒羽-地图作品 <span class="right">作者：<a href="http://yanue.net/about.html">Yanue</a></span></p>
+            <p>半叶寒羽-地图作品 <span class="right">作者：<a href="https://yanue.net/about.html">Yanue</a></span></p>
         </section>
     </aside>
     <div class="content">
@@ -255,7 +255,7 @@
         function geoToLatlng(addr) {
             $.ajax({
                 method: 'post',
-                url: 'http://maps.googleapis.com/maps/api/geocode/json?',
+                url: 'https://maps.googleapis.com/maps/api/geocode/json?',
                 data: {address: addr, sensor: false, language: 'zh_cn'},
                 success: function (res) {
                     console.log(res)
@@ -275,7 +275,7 @@
         function geoToAddr(str) {
             $.ajax({
                 method: 'post',
-                url: 'http://maps.googleapis.com/maps/api/geocode/json?',
+                url: 'https://maps.googleapis.com/maps/api/geocode/json?',
                 data: {latlng: str, sensor: false, language: 'zh_cn'},
                 success: function (res) {
                     var output = '';
@@ -302,6 +302,6 @@
 </script>
 <!-- map.yanue.net Baidu tongji analytics -->
 <script type="text/javascript">
-    var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " https://");
     document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F2a1063cadb2ff3dbe7a08094b86840e7' type='text/javascript'%3E%3C/script%3E"));
 </script>

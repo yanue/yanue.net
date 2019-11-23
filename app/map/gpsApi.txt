@@ -19,7 +19,7 @@ if(!($lat && $lng)){
 require_once dirname(__FILE__).'/GpsOffset.php';
 $gps = new GpsOffset(dirname(__FILE__).'/offset.dat');
 $gLatLng = $gps->geoLatLng($lat,$lng);
-$bMap = json_decode(file_get_contents('http://api.map.baidu.com/ag/coord/convert?from=0&to=4&x='.$lng.'&y='.$lat));
+$bMap = json_decode(file_get_contents('https://api.map.baidu.com/ag/coord/convert?from=0&to=4&x='.$lng.'&y='.$lat));
 $bLatLng = array('lat'=>base64_decode($bMap->y),'lng'=>base64_decode($bMap->x));
 $copyright = copyright();
 $resData = array('error'=>0,'google'=>$gLatLng,'baidu'=>$bLatLng);

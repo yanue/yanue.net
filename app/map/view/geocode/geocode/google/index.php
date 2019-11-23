@@ -130,7 +130,7 @@ $title = $this->title;
 
 <div class="content">
 
-    <div class="breadcrumbs"><i class="icon icon-flag"></i> 你的位置：<a href="http://yanue.net">首页</a>
+    <div class="breadcrumbs"><i class="icon icon-flag"></i> 你的位置：<a href="https://yanue.net">首页</a>
         <small><i class="icon icon-angle-right"></i></small>
         关于
         <small><i class="icon icon-angle-right"></i></small>

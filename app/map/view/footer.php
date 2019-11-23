@@ -1,7 +1,7 @@
 <footer class="footer">
     <div class="links" style="text-align: center;">
         <div class="wrap">
-            <a href="http://map.yanue.net" target="_blank">经纬度查询</a> | <a
+            <a href="https://map.yanue.net" target="_blank">经纬度查询</a> | <a
                 href="<?php echo $this->baseUrl('tool'); ?>">前端工具箱</a> |
             <a href="<?php echo $this->baseUrl('about'); ?>">关于本站</a> |
             <a href="<?php echo $this->baseUrl('sitemap'); ?>">网站地图</a> |
@@ -10,7 +10,7 @@
     </div>
     <section class="copy">
         <div class="wrap">
-            <span class="right"><a href="http://www.miibeian.gov.cn/publish/query/indexFirst.action" target="_blank">粤ICP备14013310号</a></span>
+            <span class="right"><a href="https://www.miibeian.gov.cn/publish/query/indexFirst.action" target="_blank">粤ICP备14013310号</a></span>
 
             <span class="circle" style="border-radius: 18px;
 font-size: 12px;

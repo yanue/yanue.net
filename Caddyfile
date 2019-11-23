@@ -1,3 +1,18 @@
+www.yanue.net {
+    tls admin@yanue.net
+    root /var/www/yanue.net/app/blog
+
+    fastcgi / /run/php-fpm/php-fpm.sock php {
+        ext .php
+        split .php
+        index index.php
+    }
+
+    rewrite {
+        to {path} {path}/ /index.php?{query}
+    }
+}
+
 yanue.net {
     tls admin@yanue.net
     root /var/www/yanue.net/app/blog
@@ -6,6 +21,10 @@ yanue.net {
         ext .php
         split .php
         index index.php
+    }
+
+    rewrite {
+        to {path} {path}/ /index.php?{query}
     }
 }
 
@@ -23,4 +42,10 @@ map.yanue.net {
 src.yanue.net {
     tls admin@yanue.net
     root /var/www/yanue.net/src
+
+    header / Access-Control-Allow-Origin  *
+
+    mime {
+          .woff application/font-woff
+    }
 }

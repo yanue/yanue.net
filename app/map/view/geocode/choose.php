@@ -10,9 +10,9 @@ $arr = array(
 $uri = $this->uri->getMvcUri();
 ?>
 
-<div class="breadcrumbs"><i class="icon icon-flag"></i> 你的位置：<a href="http://yanue.net">首页</a>
+<div class="breadcrumbs"><i class="icon icon-flag"></i> 你的位置：<a href="https://yanue.net">首页</a>
     <small><i class="icon icon-angle-right"></i></small>
-    <a href="http://map.yanue.net">地图作品</a>
+    <a href="https://map.yanue.net">地图作品</a>
     <small><i class="icon icon-angle-right"></i></small>
     <?php echo $title ?>
 </div>

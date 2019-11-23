@@ -16,6 +16,6 @@ class GeoController extends AppController
 {
     public function toLatLngAction()
     {
-        StaticFileManager::addJsFile('http://maps.google.com/maps/api/js?sensor=false&libraries=places&language=zh');
+        StaticFileManager::addJsFile('https://maps.google.com/maps/api/js?sensor=false&libraries=places&language=zh');
     }
 } 

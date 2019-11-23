@@ -16,6 +16,6 @@ class GeoController extends AppController
 {
     public function toLatLngAction()
     {
-        StaticFileManager::addJsFile('http://api.map.baidu.com/api?v=2.0&ak=CG8eakl6UTlEb1OakeWYvofh');
+        StaticFileManager::addJsFile('https://api.map.baidu.com/api?v=2.0&ak=CG8eakl6UTlEb1OakeWYvofh');
     }
 } 

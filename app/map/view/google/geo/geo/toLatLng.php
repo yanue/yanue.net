@@ -82,9 +82,9 @@ $description = $this->description;
             </div>
 
             <p class="infoDiv">
-                作者：<a href="http://yanue.net/" target="_blank">yanue</a><br>
-                文章：<a href="http://yanue.net/archives/32.html" target="_blank">详细介绍</a>
-                <a href="http://map.yanue.net/toLatLng.rar">源码下载</a>
+                作者：<a href="https://yanue.net/" target="_blank">yanue</a><br>
+                文章：<a href="https://yanue.net/archives/32.html" target="_blank">详细介绍</a>
+                <a href="https://map.yanue.net/toLatLng.rar">源码下载</a>
 
             </p>
         </div>
@@ -112,4 +112,4 @@ $description = $this->description;
          data-title="<?php echo $title; ?>"></div>
 </section>
 <!-- Duoshuo Comment END -->
-<script src="http://maps.google.com/maps/api/js?sensor=false&libraries=places&language=zh"></script>
+<script src="https://maps.google.com/maps/api/js?sensor=false&libraries=places&language=zh"></script>
