@@ -1,1 +1,0 @@
-php /usr/local/xunsearch/sdk/php/util/Indexer.php --source=mysql://yanue:Typo@123@115.29.224.30/yanue_blog/post --sql='select id,title,content,created,cid,tags from post where published=1' -p yanue
