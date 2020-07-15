@@ -5,29 +5,10 @@ import (
 	"bytes"
 	"encoding/binary"
 	"fmt"
-	"github.com/gin-gonic/gin"
 	"log"
 	"math"
 	"os"
 )
-
-type ApiHandlerMap struct {
-	*ApiHandler
-}
-
-func NewApiHandlerMap() *ApiHandlerMap {
-	api := new(ApiHandlerMap)
-	api.ApiHandler = NewApiHandler()
-	return api
-}
-
-// 综合信息: 如币种,交易所,合约周期
-func (api *ApiHandlerMap) GpsOffset(c *gin.Context) {
-	res := ""
-	api.OutRight(c, res)
-}
-
-const datMax = 9813675 // 该文件最大数据为9813675条
 
 type GpsOffset struct {
 	datMax int

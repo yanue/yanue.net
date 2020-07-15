@@ -51,3 +51,9 @@ func (api *ApiHandler) OutError(c *gin.Context, errno int, msg ...string) {
 		Data: struct{}{},
 	})
 }
+
+// 综合信息: 如币种,交易所,合约周期
+func (api *ApiHandler) GpsOffset(c *gin.Context) {
+	res := ""
+	api.OutRight(c, res)
+}
