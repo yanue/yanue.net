@@ -19,6 +19,7 @@ var gpsOffset = newGpsOffset()
 
 func newGpsOffset() *GpsOffset {
 	gps := new(GpsOffset)
+	gps.loadDat("./data/google_offset.dat")
 	return gps
 }
 

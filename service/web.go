@@ -8,6 +8,8 @@ import (
 	"strings"
 )
 
+var layoutTemplate = "layout.tmpl"
+
 type WebHandler struct {
 }
 
@@ -23,6 +25,7 @@ func (api *WebHandler) Home(c *gin.Context) {
 	tpl := append(baseTpl, "./template/index.html")
 	b, err := template.ParseFiles(tpl...)
 	log.Println("b,err", b, err)
+
 	c.HTML(http.StatusOK, "index.html", gin.H{
 		"title": "hello gin " + strings.ToLower(c.Request.Method) + " method",
 	})

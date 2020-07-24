@@ -2,6 +2,7 @@ package service
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/yanue/yanue.net/util"
 	"net/http"
 	"strings"
 )
@@ -54,6 +55,14 @@ func (api *ApiHandler) OutError(c *gin.Context, errno int, msg ...string) {
 
 // 综合信息: 如币种,交易所,合约周期
 func (api *ApiHandler) GpsOffset(c *gin.Context) {
-	res := ""
+	lng := util.ToFloat64(c.Query("lng"))
+	lat := util.ToFloat64(c.Query("lat"))
+	var res struct {
+		Lng float64 `json:"lng"`
+		Lat float64 `json:"lat"`
+	}
+	lat1, lng1 := gpsOffset.geoLatLng(lat, lng)
+	res.Lat = lat1
+	res.Lng = lng1
 	api.OutRight(c, res)
 }
