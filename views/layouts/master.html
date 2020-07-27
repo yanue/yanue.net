@@ -1,15 +1,36 @@
-<!-- /views/admin/master.html -->
-<!doctype html>
-
-<html>
-    <head>
-        <title>{{.title}}</title>
-        {{template "head" .}}
-    </head>
-
-    <body>
-        {{template "content" .}}
-        <hr>
-        {{include "layouts/footer"}}
-    </body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{{.title}}</title>
+  <link rel="stylesheet" href="/assets/css/base.css">
+  {{template "head" .}}
+</head>
+<body>
+<div id="main">
+  <div class="top">
+    <div class="box">
+      {{include "layouts/top"}}
+    </div>
+  </div>
+  <div id="header">
+    <div class="box">
+      {{include "layouts/header"}}
+    </div>
+  </div>
+  <div id="content">
+    <div class="box">
+      {{template "content" .}}
+    </div>
+  </div>
+  <div id="footer">
+    <div class="box">
+      {{include "layouts/footer"}}
+    </div>
+  </div>
+</div>
+{{template "foot" .}}
+{{ .floatAd }}
+{{ .statCode }}
+</body>
 </html>

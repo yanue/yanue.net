@@ -1,19 +1,26 @@
 {{define "head"}}
-  <style>
-    .hello {
-      color: red;
-    }
-
-    hr {
-      border: 1px #ccc dashed;
-    }
-  </style>
+  <link rel="stylesheet" href="/assets/css/gitalk.css">
+  <script src="/assets/js/gitalk.min.js"></script>
 {{end}}
 
+{{define "foot"}}
+{{end}}
 
 {{define "content"}}
   <h1 class="hello">This is content!!!!</h1>
+  <div id="gitalk-container"></div>
   <p>123 + 333 = </p>
   <hr>
-  <p><a href="/page">Page render</a></p>
+  <script>
+    var gitalk = new Gitalk({
+      clientID: '7b66b0c81a5a7dcce969',
+      clientSecret: 'af62a45ba6466a277521751ae165b08f109cad90',
+      repo: 'https://github.com/yanue/yanue.git',
+      owner: 'yanue',
+      admin: ['yanue'],
+      id: location.pathname,      // Ensure uniqueness and length less than 50
+      distractionFreeMode: false  // Facebook-like distraction free mode
+    })
+    gitalk.render('gitalk-container')
+  </script>
 {{end}}

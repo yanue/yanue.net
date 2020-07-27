@@ -18,6 +18,9 @@ import (
 //go:generate go-bindata -o=bindata/bindata.go -ignore="\\.DS_Store|desktop.ini" -pkg=bindata assets/... template/...
 
 func RestoreAllAssets() {
+	if DebugMode {
+		return
+	}
 	assets := bindata.AssetNames()
 	for _, s := range assets {
 		err := bindata.RestoreAsset("", s)
@@ -45,6 +48,7 @@ func main() {
 	r.Engine = engine
 	// 模板引擎
 	r.HTMLRender = ginview.Default()
+	r.StaticFile("/favicon.ico", "./assets/favicon.ico")
 
 	// 路由
 	r.route()

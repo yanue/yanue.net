@@ -1,0 +1,4 @@
+watch_exts:
+  - .css
+  - .html
+  - .js

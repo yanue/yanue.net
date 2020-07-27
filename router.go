@@ -3,6 +3,7 @@ package main
 import (
 	"bytes"
 	"github.com/gin-contrib/cors"
+	"github.com/gin-contrib/static"
 	"github.com/gin-gonic/gin"
 	"github.com/yanue/yanue.net/service"
 	"io/ioutil"
@@ -42,12 +43,10 @@ func (r *router) route() {
 	g.GET("/gpsOffset", api.GpsOffset) // google地图纠偏
 
 	// 静态资源
-	//r.Use(static.Serve("/", static.LocalFile("./dist/", false)))
-	//r.Use(static.Serve("/assets/", static.LocalFile("./assets/", false)))
+	r.Use(static.Serve("/assets/", static.LocalFile("./assets/", false)))
 
 	// 未知路由
 	r.NoRoute(func(c *gin.Context) {
-		log.Println("NoRoute", c.Request.URL.Path)
 		path := strings.Split(c.Request.URL.Path, "/")
 		if len(path) > 1 {
 			if path[1] == "api" {
