@@ -34,6 +34,7 @@ func (r *router) route() {
 
 	// 前缀路径: /api
 	r.GET("/", web.Home)
+	r.GET("/page", web.Page)
 
 	// 前缀路径: /api
 	api := service.NewApiHandler()

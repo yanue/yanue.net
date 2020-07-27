@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"github.com/foolin/goview/supports/ginview"
 	"github.com/gin-gonic/gin"
 	"github.com/yanue/yanue.net/bindata"
 	"log"
@@ -42,6 +43,8 @@ func main() {
 
 	r := new(router)
 	r.Engine = engine
+	// 模板引擎
+	r.HTMLRender = ginview.Default()
 
 	// 路由
 	r.route()
