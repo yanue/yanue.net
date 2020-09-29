@@ -1,0 +1,25 @@
+.breadcrumbs {margin: 0 0 1px;padding: 9px 20px 7px;line-height: 24px;background-color: #f6f6f6;}
+.post-detail .post-info {margin-bottom: 1px;color: #999;padding: 10px;background-color: #F9FCFC;}
+.post-detail .post-info .post-title {font-size: 24px;font-weight: normal; line-height: 60px; height: 60px; color: #000; text-align: center; text-shadow: 1px 0 3px rgba(0, 0, 0, .3);}
+.post-detail .post-content {background: #fff;font-size: 14px;word-break: break-all;word-wrap: break-word;}
+.post-footer {background-color: #fff;border-top: 1px solid #f7f7f7;padding: 15px 20px;overflow: hidden;}
+#map-wrap #inputWrap {padding: 16px }
+#map-wrap #left {float: left;width: 515px;}
+#map-wrap #right {float: right;width: 515px;}
+#map-wrap .input {border: 1px solid #e0e0e0;border-radius: 3px;padding: 8px 5px;font-size: 12px;color: #666;width: 503px;height: 100px;}
+#map-wrap .input:hover {border-color: #c0c0c0;}
+#map-wrap .button {color: #333; padding: 6px 8px; outline: none; border: 1px solid #ccc; cursor: pointer; border-radius: 3px; background-color: #eee; box-shadow: 1px 2px 3px rgba(120, 120, 120, .2); text-shadow: 1px 1px 1px rgba(0, 0, 0, .1); /*鼠标经过背景渐变过程*/ transition: all .3s ease-in-out;}
+#map-wrap .button:focus, #map-wrap .button:hover {background-color: #F9FCFC; border: 1px solid #C6C6C6; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); color: #333333;}
+#map-wrap .input-tip {font-size: 12px;margin-bottom: 6px;color: #888;}
+#map-wrap .sub-title a, h2 a {color: #06f;}
+#map-wrap .sub-title a:hover, .sub-title a:hover {color: #03f;text-shadow: 1px 1px 3px rgba(0, 0, 0, .3);}
+#map-wrap .sub-title {font-size: 16px;line-height: 30px;height: 30px;color: #333;font-family: '微软雅黑';border-bottom: 1px solid #f0f0f0;text-shadow: 1px 1px 3px rgba(0, 0, 0, .2);margin: 8px 0;}
+#map-wrap .sub-title em {font-weight: normal;font-size: 12px;color: #666;font-style: normal;}
+#map-wrap .sub-title span {font-weight: normal;font-size: 12px;color: #666;}
+#map-wrap .sub-title a, h2 a {color: #06f;}
+#map-wrap .showWrap {border: 1px solid #eee;border-left: none;border-right: none;padding: 0 16px 8px 16px;}
+#map-wrap .showMap {width: 516px;float: left;}
+#map-wrap .showMap #map_canvas {border-radius: 2px; height: 340px; border: 1px solid #e0e0e0;}
+#map-wrap .showResult {width: 515px;float: right;}
+#map-wrap .showResult #showResults {border-radius: 2px;border: 1px solid #eee;height: 324px;padding: 8px;overflow-y: auto;margin: 0 0 8px 0;color: #666666;font-size: 12px;line-height: 16px;}
+#map-wrap .showResult #showResults:hover {border-color: #e0e0e0;}
