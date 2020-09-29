@@ -11,14 +11,15 @@
 
 {{define "content"}}
   <section class="left-section">
-    <div class="breadcrumbs"><i class="icon icon-flag"></i> 你的位置：<a href="http://yanue.net">首页</a>
-      <small><i class="icon icon-angle-right"></i></small>
-      <a href="http://yanue.net/topic/fedora.html" title="Fedora">Fedora</a>
-      <small><i class="icon icon-angle-right"></i></small>
-      <span class="muted">Fedora20中安装unrar解压工具</span></div>
+    <div class="breadcrumbs">你的位置：<a href="http://yanue.net">首页</a>
+      >
+      <a href="http://map.yanue.net/">地图作品</a>
+      >
+      <span class="muted">{{ .title }}</span>
+    </div>
     <article class="post-detail">
       <header class="post-info">
-        <h1 class='post-title'>经纬度在线查询,地名(批量)查询经纬度,经纬度(批量)查询地名</h1>
+        <h1 class='post-title'>{{ .title }}</h1>
       </header>
       <main class="post-content">
         <div id="map-wrap">

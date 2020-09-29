@@ -37,6 +37,9 @@ func (r *router) route() {
 	r.GET("/", web.Home)
 	r.GET("/page", web.Page)
 	r.GET("/map", web.Map)
+	r.GET("/toLatLng", web.ToLatLng)
+	r.GET("/gps", web.Gps)
+	r.GET("/gps.html", web.Gps)
 
 	// 前缀路径: /api
 	api := service.NewApiHandler()

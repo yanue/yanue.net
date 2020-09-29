@@ -64,5 +64,8 @@ func (api *ApiHandler) GpsOffset(c *gin.Context) {
 	lat1, lng1 := gpsOffset.geoLatLng(lat, lng)
 	res.Lat = lat1
 	res.Lng = lng1
+
+	// $bMap = json_decode(file_get_contents('https://api.map.baidu.com/ag/coord/convert?from=0&to=4&x='.$lng.'&y='.$lat));
+	// $bLatLng = array('lat'=>base64_decode($bMap->y),'lng'=>base64_decode($bMap->x));
 	api.OutRight(c, res)
 }
