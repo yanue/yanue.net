@@ -9,6 +9,11 @@
   <meta name="description" content="{{.description}}"/>
   <title>{{.title}}</title>
   <link rel="stylesheet" href="/assets/css/base.css">
+  <script>
+    window.onerror = function (e) {
+      return true;    // 不报错
+    }
+  </script>
   {{template "head" .}}
 </head>
 <body>

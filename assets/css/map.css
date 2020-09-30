@@ -1,4 +1,4 @@
-.breadcrumbs {margin: 0 0 1px;padding: 9px 20px 7px 10px;line-height: 24px;background-color: #f6f6f6;}
+.breadcrumbs {margin: 0 0 1px 0;padding: 9px 20px 7px 10px;line-height: 24px;background-color: #f6f6f6;}
 .post-detail .post-info {margin-bottom: 1px;color: #999;padding: 10px;background-color: #F9FCFC;}
 .post-detail .post-info .post-title {font-size: 24px;font-weight: normal; line-height: 60px; height: 60px; color: #000; text-align: center; text-shadow: 1px 0 3px rgba(0, 0, 0, .3);}
 .post-detail .post-content {background: #fff;font-size: 14px;word-break: break-all;word-wrap: break-word;}
@@ -23,3 +23,6 @@
 #map-wrap .showResult {width: 515px;float: right;}
 #map-wrap .showResult #showResults {border-radius: 2px;border: 1px solid #eee;height: 324px;padding: 8px;overflow-y: auto;margin: 0 0 8px 0;color: #666666;font-size: 12px;line-height: 16px;}
 #map-wrap .showResult #showResults:hover {border-color: #e0e0e0;}
+.post-detail .comment {background: #fff;}
+.post-detail .comment .comment-head {background: #F9FCFC;font-size: 14px;line-height: 36px;padding: 0 15px;border-bottom: 1px solid #eee; border-left: 4px solid #1abc9c;margin-left: -4px}
+.post-detail .comment .comment-content {padding: 15px;}

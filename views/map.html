@@ -68,9 +68,12 @@
           <div class="clear"></div>
         </div>
       </main>
-      <nav class="post-nav">
-        <i class="circle">评</i> 评论内容<a name="comments"></a>
-      </nav>
+      <div class="comment">
+        <p class="comment-head">评论</p>
+        <div class="comment-content">
+          {{include "layouts/comment"}}
+        </div>
+      </div>
     </article>
   </section>
 

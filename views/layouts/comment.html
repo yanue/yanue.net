@@ -1,0 +1,37 @@
+<div id="vcomments"></div>
+<script src="/assets/js/Valine.min.js"></script>
+<script>
+  window.onload = function () {
+    try {
+      new Valine({
+        el: '#vcomments',
+        appId: 'LFy5VVuwpC11UKRuYiLcRe6S',
+        appKey: 'enbA6OeSWH6NoDFFH8QbiYJc',
+        placeholder: '发表你的看法...',
+        meta: false,
+        visitor: true,
+      })
+    } catch (e) {
+      console.log("err", e)
+    }
+  }
+</script>
+<style>
+  .v {position: relative;}
+  .vpower.txt-right {position: absolute;right: 16px;top: 10px;z-index: 99;font-size: 10px;}
+  .v[data-class=v] .vwrap {padding: 0;border-radius: 3px;}
+  .v[data-class=v] .veditor {padding-top: 0;margin-bottom: 20px;}
+  .v[data-class=v] .vwrap .vedit {padding: 6px;}
+  .v[data-class=v] .vrow {margin: 0;padding: 0;position: absolute;z-index: 100;bottom: 0;left: 0;right: 0;}
+  .v[data-class=v] .vrow .vcol.vcol-40 {position: absolute;bottom: 0;z-index: 100;}
+  .v[data-class=v] .vrow .vcol.vcol-30 {display: none;}
+  .v[data-class=v] .vrow .vcol.vcol-70 .vbtn {position: absolute;right: 10px;bottom: 4px;border-color: #ccc;}
+  .v[data-class=v] .vrow .vcol.vcol-70 .vbtn:hover {border-color: #999;}
+  .v .vwrap .vedit .vctrl .vemoji-btn {display: none;}
+  .v .vwrap .vedit .vctrl .vpreview-btn {display: none;}
+  .v .vwrap .vheader {width: 100%;bottom: 0;position: absolute;background: #f7f7f7;z-index: 99;border-top: 1px solid #efefef;}
+  .v .vwrap .vheader .vinput.vnick {margin-left: 10px;width: 200px;}
+  .v .vwrap .vheader .vinput.vmail {width: 200px;}
+  .v .vwrap .vheader .vinput.vlink {width: 200px;}
+  .v[data-class=v] .vwrap .vemojis {position: absolute;bottom: -50px;left: 0;right: 0;z-index: 101;}
+</style>
