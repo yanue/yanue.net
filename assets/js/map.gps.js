@@ -1,4 +1,4 @@
-window.onload = function () {
+$(function () {
   function GpsToLatLng() {
     this.init();
   }
@@ -101,4 +101,4 @@ window.onload = function () {
   }
   var gps = new GpsToLatLng();
   gps.geoLatLng();
-}
+});

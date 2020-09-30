@@ -9,11 +9,6 @@
   <meta name="description" content="{{.description}}"/>
   <title>{{.title}}</title>
   <link rel="stylesheet" href="/assets/css/base.css">
-  <script>
-    window.onerror = function (e) {
-      return true;    // 不报错
-    }
-  </script>
   {{template "head" .}}
 </head>
 <body>
@@ -40,5 +35,10 @@
 {{template "foot" .}}
 {{ .floatAd }}
 {{ .statCode }}
+<script>
+  window.onerror = function (message, source, lineno, colno, error) {
+    console.log('捕获到异常：', {message, source, lineno, colno, error});
+  }
+</script>
 </body>
 </html>

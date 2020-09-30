@@ -2,18 +2,15 @@
 <script src="/assets/js/Valine.min.js"></script>
 <script>
   window.onload = function () {
-    try {
-      new Valine({
-        el: '#vcomments',
-        appId: 'LFy5VVuwpC11UKRuYiLcRe6S',
-        appKey: 'enbA6OeSWH6NoDFFH8QbiYJc',
-        placeholder: '发表你的看法...',
-        meta: false,
-        visitor: true,
-      })
-    } catch (e) {
-      console.log("err", e)
-    }
+    new Valine({
+      el: '#vcomments',
+      appId: 'LFy5VVuwpC11UKRuYiLcRe6S-gzGzoHsz',
+      appKey: 'enbA6OeSWH6NoDFFH8QbiYJc',
+      placeholder: '发表你的看法...',
+      meta: false,
+      visitor: true,
+      requiredFields: ['nick']
+    })
   }
 </script>
 <style>
@@ -34,4 +31,5 @@
   .v .vwrap .vheader .vinput.vmail {width: 200px;}
   .v .vwrap .vheader .vinput.vlink {width: 200px;}
   .v[data-class=v] .vwrap .vemojis {position: absolute;bottom: -50px;left: 0;right: 0;z-index: 101;}
+  .v[data-class=v] .vreply-wrapper .vwrap .cancel-reply {position: absolute;right: 0;color: #f60;z-index: 102;}
 </style>

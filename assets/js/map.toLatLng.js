@@ -1,4 +1,4 @@
-window.onload = function () {
+$(function () {
   // 百度地图API功能
   var map = new BMap.Map("map_canvas");
   map.enableScrollWheelZoom();
@@ -109,4 +109,4 @@ window.onload = function () {
       }
     });
   }
-}
+});
