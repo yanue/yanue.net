@@ -6,6 +6,7 @@
         <a href="<?php echo $this->baseUrl('tool'); ?>">前端工具箱</a> |
         <a href="<?php echo $this->baseUrl('sitemap'); ?>">网站地图</a> |
         <a href="https://github.com/yanue">github</a> |
-        <a href="<?php echo $this->baseUrl('links'); ?>">友情链接</a> | 粤ICP备14013310号
+        <a href="<?php echo $this->baseUrl('links'); ?>">友情链接</a> | <a target="_blank" href="http://www.beian.miit.gov.cn/">粤ICP备14013310号-1
+</a>
     </p>
 </footer>
