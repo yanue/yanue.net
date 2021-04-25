@@ -6,8 +6,8 @@
 #map-wrap #inputWrap {padding: 16px }
 #map-wrap #left {float: left;width: 515px;}
 #map-wrap #right {float: right;width: 515px;}
-#map-wrap .input {border: 1px solid #e0e0e0;border-radius: 3px;padding: 8px 5px;font-size: 12px;color: #666;width: 503px;height: 100px;}
-#map-wrap .input:hover {border-color: #c0c0c0;}
+#map-wrap .textarea {border: 1px solid #e0e0e0;border-radius: 3px;padding: 8px 5px;font-size: 12px;color: #666;width: 503px;height: 100px;}
+#map-wrap .textarea:hover {border-color: #c0c0c0;}
 #map-wrap .button {color: #333; padding: 6px 8px; outline: none; border: 1px solid #ccc; cursor: pointer; border-radius: 3px; background-color: #eee; box-shadow: 1px 2px 3px rgba(120, 120, 120, .2); text-shadow: 1px 1px 1px rgba(0, 0, 0, .1); /*鼠标经过背景渐变过程*/ transition: all .3s ease-in-out;}
 #map-wrap .button:focus, #map-wrap .button:hover {background-color: #F9FCFC; border: 1px solid #C6C6C6; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); color: #333333;}
 #map-wrap .input-tip {font-size: 12px;margin-bottom: 6px;color: #888;}
@@ -26,3 +26,10 @@
 .post-detail .comment {background: #fff;}
 .post-detail .comment .comment-head {background: #F9FCFC;font-size: 14px;line-height: 36px;padding: 0 15px;border-bottom: 1px solid #eee; border-left: 4px solid #1abc9c;margin-left: -4px}
 .post-detail .comment .comment-content {padding: 15px;}
+input.input {border: 1px solid #ccc;border-radius: 2px;color: #666666;font-size: 13px;padding: 5px;}
+input.input:focus {border: 1px solid #ccc;background: #f9f9f9;color: #333;box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);}
+#map-wrap p {line-height: 150%;}
+#map-wrap p label {width: 70px;display: inline-block;text-align: right;}
+#map-wrap .toplink {border-bottom: 1px solid #eee;line-height: 36px;padding: 0 16px;font-size: 12px;}
+#map-wrap .toplink label {color: #999;display: inline-block;margin-right: 10px;}
+#map-wrap .toplink a:hover {color: #e30;}

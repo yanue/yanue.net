@@ -35,7 +35,10 @@ $(function () {
   $('#geocodeBtn').click(function (e) {
     var addr = $('#address').val();
     if (addr) {
+      $('#addressTip').hide();
       toLatlng(addr);
+    } else {
+      $('#addressTip').show();
     }
 
     e.stopImmediatePropagation();

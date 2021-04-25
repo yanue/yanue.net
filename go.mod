@@ -1,6 +1,6 @@
 module github.com/yanue/yanue.net
 
-go 1.14
+go 1.16
 
 require (
 	github.com/foolin/goview v0.3.0

@@ -37,3 +37,7 @@ textarea {outline: none}
 #header .nav {}
 #content {margin: 10px 0;}
 #footer {color: #666666;}
+body {font-family: '微软雅黑';}
+.gray {color: gray;}
+.red {color: red;}
+.blue {color: #06f;}

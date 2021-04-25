@@ -4,35 +4,14 @@ import (
 	"fmt"
 	"github.com/foolin/goview/supports/ginview"
 	"github.com/gin-gonic/gin"
-	"github.com/yanue/yanue.net/bindata"
 	"log"
 	"net/http"
 	"os"
 	"os/exec"
 )
 
-// step1. go get -u github.com/go-bindata/go-bindata
-// step2. go:generate
-// link: https://jaycechant.info/2020/go-bindata-golang-static-resources-embedding/
-// Before buildling, run go generate.
-//go:generate go-bindata -o=bindata/bindata.go -ignore="\\.DS_Store|desktop.ini" -pkg=bindata assets/... template/...
-
-func RestoreAllAssets() {
-	if DebugMode {
-		return
-	}
-	assets := bindata.AssetNames()
-	for _, s := range assets {
-		err := bindata.RestoreAsset("", s)
-		if err != nil {
-			log.Println("RestoreAsset err:", err.Error())
-		}
-	}
-}
-
 func init() {
 	log.SetFlags(log.Lshortfile | log.LstdFlags)
-	RestoreAllAssets()
 	InitGoogleDat()
 }
 
