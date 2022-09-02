@@ -1,8 +1,221 @@
 {{define "head"}}
+  <link href="/assets/toastui/toastui-editor.min.css" rel="stylesheet"/>
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css"
+  />
+  <link
+    rel="stylesheet"
+    href="https://uicdn.toast.com/editor-plugin-code-syntax-highlight/latest/toastui-editor-plugin-code-syntax-highlight.min.css"
+  />
+  <!-- Editor -->
+  <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
+  <!-- prismjs Languages -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/prism.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/components/prism-clojure.min.js"></script>
+  <!-- Editor's Plugin -->
+  <script
+    src="https://uicdn.toast.com/editor-plugin-code-syntax-highlight/latest/toastui-editor-plugin-code-syntax-highlight.min.js"></script>
 {{end}}
 
 {{define "foot"}}
 {{end}}
 
 {{define "content"}}
+  <div id="viewer">
+    <div style="white-space: pre-line;">
+        {{ .content }}
+    </div>
+  </div>
+  <script>
+    window.onload = function () {
+      const {Editor} = toastui;
+      const {codeSyntaxHighlight} = Editor.plugin;
+
+      const editor = Editor.factory({
+        // ...
+        initialValue: "{{ .content }}",
+        plugins: [codeSyntaxHighlight],
+        viewer: true
+      });
+    }
+  </script>
+  <div class="slimContent snipcss0-0-0-1 snipcss-hCUNU" style="overflow: hidden; width: auto; height: 937px;">
+    <div class="widget snipcss0-1-1-2"><h3 class="widget-title snipcss0-2-2-3 snip-h3">公告</h3>
+      <div class="widget-body snipcss0-2-2-4">
+        <div id="board" class="snipcss0-3-4-5">
+          <div class="content snipcss0-4-5-6">网易星球邀请码：AD3LCW，有机会赢取1.39克拉黑钻【珂兰钻石】，价值7万8，老司机快上车～～请在浏览器中复制粘贴该链接
+            <a class="text-primary snipcss0-5-6-7 snip-a" href="https://163.lu/GTe6P3" target="_blank">https://163.lu/GTe6P3</a>
+            或者扫描以下二维码，并下载登录
+            <div class="snipcss0-5-6-8"><img src="./images/xingqiu-qrcode.jpg" width="140" height="140"
+                                             class="snipcss0-6-8-9 snip-img"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="widget snipcss0-1-1-10"><h3 class="widget-title snipcss0-2-10-11 snip-h3">分类</h3>
+      <div class="widget-body snipcss0-2-10-12">
+        <ul class="category-list snipcss0-3-12-13 snip-ul">
+          <li class="category-list-item snipcss0-4-13-14 snip-li"><a
+              class="category-list-link snipcss0-5-14-15 snip-a"
+              href="/categories/个人/">个人</a><span
+              class="category-list-count snipcss0-5-14-16">1</span></li>
+          <li class="category-list-item snipcss0-4-13-17 snip-li"><a
+              class="category-list-link snipcss0-5-17-18 snip-a"
+              href="/categories/front-end-development/">前端</a><span
+              class="category-list-count snipcss0-5-17-19">1</span></li>
+          <li class="category-list-item snipcss0-4-13-20 snip-li"><a
+              class="category-list-link snipcss0-5-20-21 snip-a"
+              href="/categories/build-website/">建站</a><span
+              class="category-list-count snipcss0-5-20-22">1</span></li>
+          <li class="category-list-item snipcss0-4-13-23 snip-li"><a
+              class="category-list-link snipcss0-5-23-24 snip-a"
+              href="/categories/开发/">开发</a><span
+              class="category-list-count snipcss0-5-23-25">1</span></li>
+          <li class="category-list-item snipcss0-4-13-26 snip-li"><a
+              class="category-list-link snipcss0-5-26-27 snip-a"
+              href="/categories/开发工具/">开发工具</a><span
+              class="category-list-count snipcss0-5-26-28">1</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="widget snipcss0-1-1-29"><h3 class="widget-title snipcss0-2-29-30 snip-h3">标签</h3>
+      <div class="widget-body snipcss0-2-29-31">
+        <ul class="tag-list snipcss0-3-31-32 snip-ul">
+          <li class="tag-list-item snipcss0-4-32-33 snip-li"><a class="tag-list-link snipcss0-5-33-34 snip-a"
+                                                                href="/tags/Github/">Github</a><span
+              class="tag-list-count snipcss0-5-33-35">1</span></li>
+          <li class="tag-list-item snipcss0-4-32-36 snip-li"><a class="tag-list-link snipcss0-5-36-37 snip-a"
+                                                                href="/tags/gulp/">Gulp</a><span
+              class="tag-list-count snipcss0-5-36-38">1</span></li>
+          <li class="tag-list-item snipcss0-4-32-39 snip-li"><a class="tag-list-link snipcss0-5-39-40 snip-a"
+                                                                href="/tags/Hexo/">Hexo</a><span
+              class="tag-list-count snipcss0-5-39-41">4</span></li>
+          <li class="tag-list-item snipcss0-4-32-42 snip-li"><a class="tag-list-link snipcss0-5-42-43 snip-a"
+                                                                href="/tags/social/">Social</a><span
+              class="tag-list-count snipcss0-5-42-44">1</span></li>
+          <li class="tag-list-item snipcss0-4-32-45 snip-li"><a class="tag-list-link snipcss0-5-45-46 snip-a"
+                                                                href="/tags/工具/">工具</a><span
+              class="tag-list-count snipcss0-5-45-47">1</span></li>
+          <li class="tag-list-item snipcss0-4-32-48 snip-li"><a class="tag-list-link snipcss0-5-48-49 snip-a"
+                                                                href="/tags/状态/">状态</a><span
+              class="tag-list-count snipcss0-5-48-50">1</span></li>
+          <li class="tag-list-item snipcss0-4-32-51 snip-li"><a class="tag-list-link snipcss0-5-51-52 snip-a"
+                                                                href="/tags/程序员/">程序员</a><span
+              class="tag-list-count snipcss0-5-51-53">1</span></li>
+          <li class="tag-list-item snipcss0-4-32-54 snip-li"><a class="tag-list-link snipcss0-5-54-55 snip-a"
+                                                                href="/tags/计划/">计划</a><span
+              class="tag-list-count snipcss0-5-54-56">1</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="widget snipcss0-1-1-57"><h3 class="widget-title snipcss0-2-57-58 snip-h3">标签云</h3>
+      <div class="widget-body tagcloud snipcss0-2-57-59"><a href="/tags/Github/" style="font-size:13px"
+                                                            class="snipcss0-3-59-60 snip-a">Github</a> <a
+          href="/tags/gulp/" style="font-size:13px" class="snipcss0-3-59-61 snip-a">Gulp</a> <a href="/tags/Hexo/"
+                                                                                                style="font-size:14px"
+                                                                                                class="snipcss0-3-59-62 snip-a">Hexo</a>
+        <a href="/tags/social/" style="font-size:13px" class="snipcss0-3-59-63 snip-a">Social</a> <a
+          href="/tags/工具/"
+          style="font-size:13px"
+          class="snipcss0-3-59-64 snip-a">工具</a>
+        <a href="/tags/状态/" style="font-size:13px" class="snipcss0-3-59-65 snip-a">状态</a> <a href="/tags/程序员/"
+                                                                                                 style="font-size:13px"
+                                                                                                 class="snipcss0-3-59-66 snip-a">程序员</a>
+        <a href="/tags/计划/" style="font-size:13px" class="snipcss0-3-59-67 snip-a">计划</a></div>
+    </div>
+    <div class="widget snipcss0-1-1-68"><h3 class="widget-title snipcss0-2-68-69 snip-h3">归档</h3>
+      <div class="widget-body snipcss0-2-68-70">
+        <ul class="archive-list snipcss0-3-70-71 snip-ul">
+          <li class="archive-list-item snipcss0-4-71-72 snip-li"><a class="archive-list-link snipcss0-5-72-73 snip-a"
+                                                                    href="/archives/2018/03/">三月 2018</a><span
+              class="archive-list-count snipcss0-5-72-74">2</span></li>
+          <li class="archive-list-item snipcss0-4-71-75 snip-li"><a class="archive-list-link snipcss0-5-75-76 snip-a"
+                                                                    href="/archives/2017/12/">十二月 2017</a><span
+              class="archive-list-count snipcss0-5-75-77">1</span></li>
+          <li class="archive-list-item snipcss0-4-71-78 snip-li"><a class="archive-list-link snipcss0-5-78-79 snip-a"
+                                                                    href="/archives/2017/11/">十一月 2017</a><span
+              class="archive-list-count snipcss0-5-78-80">1</span></li>
+          <li class="archive-list-item snipcss0-4-71-81 snip-li"><a class="archive-list-link snipcss0-5-81-82 snip-a"
+                                                                    href="/archives/2017/09/">九月 2017</a><span
+              class="archive-list-count snipcss0-5-81-83">1</span></li>
+          <li class="archive-list-item snipcss0-4-71-84 snip-li"><a class="archive-list-link snipcss0-5-84-85 snip-a"
+                                                                    href="/archives/2017/08/">八月 2017</a><span
+              class="archive-list-count snipcss0-5-84-86">3</span></li>
+          <li class="archive-list-item snipcss0-4-71-87 snip-li"><a class="archive-list-link snipcss0-5-87-88 snip-a"
+                                                                    href="/archives/2017/04/">四月 2017</a><span
+              class="archive-list-count snipcss0-5-87-89">1</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="widget snipcss0-1-1-90"><h3 class="widget-title snipcss0-2-90-91 snip-h3">最新文章</h3>
+      <div class="widget-body snipcss0-2-90-92">
+        <ul class="recent-post-list list-unstyled no-thumbnail snipcss0-3-92-93 snip-ul">
+          <li class="snipcss0-4-93-94 snip-li">
+            <div class="item-inner snipcss0-5-94-95"><p class="item-category snipcss0-6-95-96 snip-p"><a
+                  class="category-link snipcss0-7-96-97 snip-a" href="/categories/开发/">开发</a></p>
+              <p class="item-title snipcss0-6-95-98 snip-p"><a href="/2018/03/28/那些有趣的注释，有没有你曾用过的.html"
+                                                               class="title snipcss0-7-98-99 snip-a">那些有趣的注释，有没有你曾用过的</a>
+              </p>
+              <p class="item-date snipcss0-6-95-100 snip-p">
+                <time datetime="2018-03-28T12:45:41.000Z" itemprop="datePublished" class="snipcss0-7-100-101">
+                  2018-03-28
+                </time>
+              </p>
+            </div>
+          </li>
+          <li class="snipcss0-4-93-102 snip-li">
+            <div class="item-inner snipcss0-5-102-103"><p class="item-category snipcss0-6-103-104 snip-p"><a
+                  class="category-link snipcss0-7-104-105 snip-a" href="/categories/个人/">个人</a></p>
+              <p class="item-title snipcss0-6-103-106 snip-p"><a href="/2018/03/25/年后的状态，懒！.html"
+                                                                 class="title snipcss0-7-106-107 snip-a">年后的状态，懒！</a>
+              </p>
+              <p class="item-date snipcss0-6-103-108 snip-p">
+                <time datetime="2018-03-25T06:59:41.000Z" itemprop="datePublished" class="snipcss0-7-108-109">
+                  2018-03-25
+                </time>
+              </p>
+            </div>
+          </li>
+          <li class="snipcss0-4-93-110 snip-li">
+            <div class="item-inner snipcss0-5-110-111"><p class="item-category snipcss0-6-111-112 snip-p"><a
+                  class="category-link snipcss0-7-112-113 snip-a" href="/categories/开发工具/">开发工具</a></p>
+              <p class="item-title snipcss0-6-111-114 snip-p"><a
+                  href="/2017/12/17/visual-studio-code-personal-use-plug-in-colation.html"
+                  class="title snipcss0-7-114-115 snip-a">Visual Studio Code个人使用插件整理</a></p>
+              <p class="item-date snipcss0-6-111-116 snip-p">
+                <time datetime="2017-12-17T10:32:51.000Z" itemprop="datePublished" class="snipcss0-7-116-117">
+                  2017-12-17
+                </time>
+              </p>
+            </div>
+          </li>
+          <li class="snipcss0-4-93-118 snip-li">
+            <div class="item-inner snipcss0-5-118-119"><p class="item-category snipcss0-6-119-120 snip-p"></p>
+              <p class="item-title snipcss0-6-119-121 snip-p"><a
+                  href="/2017/11/01/hexo-blog-theme-pure-usage-description.html"
+                  class="title snipcss0-7-121-122 snip-a">Hexo博客主题pure使用说明</a></p>
+              <p class="item-date snipcss0-6-119-123 snip-p">
+                <time datetime="2017-11-01T13:45:08.000Z" itemprop="datePublished" class="snipcss0-7-123-124">
+                  2017-11-01
+                </time>
+              </p>
+            </div>
+          </li>
+          <li class="snipcss0-4-93-125 snip-li">
+            <div class="item-inner snipcss0-5-125-126"><p class="item-category snipcss0-6-126-127 snip-p"></p>
+              <p class="item-title snipcss0-6-126-128 snip-p"><a
+                  href="/2017/09/06/how-to-use-mathjax-to-render-latex-mathematical-formula-in-hexo.html"
+                  class="title snipcss0-7-128-129 snip-a">如何在Hexo中使用Mathjax渲染LaTeX数学公式</a></p>
+              <p class="item-date snipcss0-6-126-130 snip-p">
+                <time datetime="2017-09-06T01:19:34.000Z" itemprop="datePublished" class="snipcss0-7-130-131">
+                  2017-09-06
+                </time>
+              </p>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>   </body>
 {{end}}

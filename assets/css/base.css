@@ -14,7 +14,7 @@ table {border-collapse: collapse;border-spacing: 0;}
 hr {display: block;height: 1px;border: 0;border-top: 1px solid #cccccc;margin: 1em 0;padding: 0;}
 input, select {vertical-align: middle;outline: none;}
 /* reset css end*/
-body {background: url("/assets/img/bg.gif");font-size: 12px;color: #444;position: relative;}
+body {background: #f5f5f5;font-size: 12px;color: #444;position: relative;}
 a {color: #555;text-decoration: none;transition: all .2s ease-in-out;}
 #main {}
 textarea {outline: none}
@@ -32,8 +32,8 @@ textarea {outline: none}
 .top .top-nav li .sub-nav {position: absolute;background: #404040;width: 120px;display: none; z-index: 2;}
 .top .right a {display: inline-block;padding: 0 5px;}
 .box {width: 1080px;margin: 0 auto;}
-#header {line-height: 50px;height: 50px;overflow: hidden;background: #fff;border-bottom: 1px solid #e0e0e0;box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.05)}
 .clear {clear: both;}
+#header {line-height: 50px;height: 50px;overflow: hidden;background: #fff;border-bottom: 1px solid #e0e0e0;box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.05)}
 #header .nav {}
 #content {margin: 10px 0;}
 #footer {color: #666666;}
@@ -41,3 +41,4 @@ body {font-family: '微软雅黑';}
 .gray {color: gray;}
 .red {color: red;}
 .blue {color: #06f;}
+.sidebar{position: absolute;}

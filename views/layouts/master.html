@@ -9,27 +9,25 @@
   <meta name="description" content="{{.description}}"/>
   <title>{{.title}}</title>
   <link rel="stylesheet" href="/assets/css/base.css">
-  {{template "head" .}}
+    {{template "head" .}}
 </head>
-<body>
+<body class="line-numbers"
+      data-prismjs-copy="复制文本"
+      data-prismjs-copy-error="按Ctrl+C复制"
+      data-prismjs-copy-success="文本已复制！">
 <div id="main">
   <div class="top">
     <div class="box">
-      {{include "layouts/top"}}
-    </div>
-  </div>
-  <div id="header">
-    <div class="box">
-      {{include "layouts/header"}}
+        {{include "layouts/top"}}
     </div>
   </div>
   <div id="content">
     <div class="box">
-      {{template "content" .}}
+        {{template "content" .}}
     </div>
   </div>
   <div id="footer">
-    {{include "layouts/footer"}}
+      {{include "layouts/footer"}}
   </div>
 </div>
 {{template "foot" .}}

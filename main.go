@@ -8,11 +8,13 @@ import (
 	"net/http"
 	"os"
 	"os/exec"
+	"yanue/model"
 )
 
 func init() {
 	log.SetFlags(log.Lshortfile | log.LstdFlags)
 	InitGoogleDat()
+	model.InitDB()
 }
 
 func main() {

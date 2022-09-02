@@ -1,0 +1,29 @@
+{{define "head"}}
+  <link rel="stylesheet" href="/assets/toastui/prism.css">
+  <link rel="stylesheet" href="/assets/toastui/toastui-editor-viewer.min.css">
+
+  <script src="/assets/toastui/prism.js"></script>
+  <script src="/assets/toastui/toastui-editor-viewer.min.js"></script>
+  <script src="/assets/toastui/toastui-editor-plugin-code-syntax-highlight-all.min.js"></script>
+{{end}}
+
+{{define "foot"}}
+{{end}}
+
+{{define "content"}}
+  <div id="viewer">
+    <div style="white-space: pre-line;">
+        {{ .content }}
+    </div>
+  </div>
+  <script class="code-js">
+    const Viewer = toastui.Editor;
+    // const {codeSyntaxHighlight} = Viewer.plugin;
+
+    const viewer = new Viewer({
+      el: document.querySelector('#viewer'),
+      initialValue: "{{ .content }}",
+      // plugins: [[codeSyntaxHighlight]]
+    });
+  </script>
+{{end}}

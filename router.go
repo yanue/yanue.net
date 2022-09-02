@@ -5,11 +5,11 @@ import (
 	"github.com/gin-contrib/cors"
 	"github.com/gin-contrib/static"
 	"github.com/gin-gonic/gin"
-	"github.com/yanue/yanue.net/service"
-	"io/ioutil"
+	"io"
 	"log"
 	"net/http"
 	"strings"
+	"yanue/api"
 )
 
 var srv *http.Server
@@ -31,20 +31,26 @@ func (r *router) cors() {
 }
 
 func (r *router) route() {
-	web := service.NewWebHandler()
+	web := api.NewWebHandler()
 
 	// 前缀路径: /api
 	r.GET("/", web.Home)
+	r.GET("/post-:id", web.Post)
+	r.GET("/post/:id", web.Post)
 	r.GET("/page", web.Page)
 	r.GET("/map", web.Map)
 	r.GET("/toLatLng", web.ToLatLng)
 	r.GET("/gps", web.Gps)
 	r.GET("/gps.html", web.Gps)
 
+	admin := api.NewAdminHandler()
+	r.GET("/login", admin.Login)
+	r.GET("/admin", admin.Admin)
+
 	// 前缀路径: /api
-	api := service.NewApiHandler()
+	webApi := api.NewApiHandler()
 	g := r.Group("/api/map", ginRawData())
-	g.GET("/gpsOffset", api.GpsOffset) // google地图纠偏
+	g.GET("/gpsOffset", webApi.GpsOffset) // google地图纠偏
 
 	// 静态资源
 	r.Use(static.Serve("/assets/", static.LocalFile("./assets/", false)))
@@ -54,7 +60,7 @@ func (r *router) route() {
 		path := strings.Split(c.Request.URL.Path, "/")
 		if len(path) > 1 {
 			if path[1] == "api" {
-				c.AbortWithStatusJSON(http.StatusNotFound, service.JsonResp{
+				c.AbortWithStatusJSON(http.StatusNotFound, api.JsonResp{
 					Code: 404,
 					Msg:  "ErrPageNotFound",
 					Data: struct{}{},
@@ -73,7 +79,7 @@ func ginRawData() gin.HandlerFunc {
 			log.Println("ginRawData", err.Error())
 		}
 		ctx.Set("_rawData", string(data))
-		ctx.Request.Body = ioutil.NopCloser(bytes.NewBuffer(data))
+		ctx.Request.Body = io.NopCloser(bytes.NewBuffer(data))
 		ctx.Next()
 	}
 }

@@ -1,4 +1,4 @@
-package service
+package api
 
 import (
 	"bufio"
@@ -128,13 +128,13 @@ func bytesToInt(bys []byte) int {
 	return int(tmp)
 }
 
-//经度到像素X值
+// 经度到像素X值
 func (gps *GpsOffset) lngToPixel(lng float64, zoom int) float64 {
 	tmp := 256 << zoom
 	return (lng + 180) * float64(tmp) / 360
 }
 
-//纬度到像素Y值
+// 纬度到像素Y值
 func (gps *GpsOffset) latToPixel(lat float64, zoom int) float64 {
 	sinY := math.Sin(lat * math.Pi / 180)
 	y := math.Log((1 + sinY) / (1 - sinY))
@@ -142,13 +142,13 @@ func (gps *GpsOffset) latToPixel(lat float64, zoom int) float64 {
 	return float64(tmp) * (1 - y/(2*math.Pi))
 }
 
-//像素X到经度
+// 像素X到经度
 func (gps *GpsOffset) pixelToLng(pixelX float64, zoom int) float64 {
 	tmp := 256 << zoom
 	return pixelX*360/float64(tmp) - 180
 }
 
-//像素Y到纬度
+// 像素Y到纬度
 func (gps *GpsOffset) pixelToLat(pixelY float64, zoom int) float64 {
 	tmp := 128 << zoom
 	y := 2 * math.Pi * (1 - pixelY/float64(tmp))

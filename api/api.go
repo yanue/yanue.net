@@ -1,10 +1,10 @@
-package service
+package api
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/yanue/yanue.net/util"
 	"net/http"
 	"strings"
+	"yanue/util"
 )
 
 type JsonResp struct {
@@ -53,7 +53,6 @@ func (api *ApiHandler) OutError(c *gin.Context, errno int, msg ...string) {
 	})
 }
 
-// 综合信息: 如币种,交易所,合约周期
 func (api *ApiHandler) GpsOffset(c *gin.Context) {
 	lng := util.ToFloat64(c.Query("lng"))
 	lat := util.ToFloat64(c.Query("lat"))
