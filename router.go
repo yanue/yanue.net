@@ -3,6 +3,8 @@ package main
 import (
 	"bytes"
 	"github.com/gin-contrib/cors"
+	"github.com/gin-contrib/sessions"
+	"github.com/gin-contrib/sessions/cookie"
 	"github.com/gin-contrib/static"
 	"github.com/gin-gonic/gin"
 	"io"
@@ -10,6 +12,7 @@ import (
 	"net/http"
 	"strings"
 	"yanue/api"
+	"yanue/model"
 )
 
 var srv *http.Server
@@ -44,8 +47,16 @@ func (r *router) route() {
 	r.GET("/gps.html", web.Gps)
 
 	admin := api.NewAdminHandler()
-	r.GET("/login", admin.Login)
+
 	r.GET("/admin", admin.Admin)
+	r.POST("/login", admin.DoLogin)
+	r.PUT("/admin/:id", model.UserModel.JwtMiddleWare(), admin.Save)
+	r.DELETE("/admin/:id", model.UserModel.JwtMiddleWare(), admin.Del)
+	r.POST("/admin/create", model.UserModel.JwtMiddleWare(), admin.Create)
+	// 设置生成sessionId的密钥
+	store := cookie.NewStore([]byte("yanue.net"))
+	// admin是返回給前端的sessionId名
+	r.Use(sessions.Sessions("admin", store))
 
 	// 前缀路径: /api
 	webApi := api.NewApiHandler()

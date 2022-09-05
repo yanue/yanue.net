@@ -6,7 +6,9 @@ import (
 	"encoding/json"
 	"fmt"
 	"log"
+	"math/rand"
 	"strconv"
+	"time"
 )
 
 // Int64ToByte converts an int64 to bytes array in BigEndian
@@ -140,4 +142,18 @@ func ToJsonString(input interface{}) string {
 		log.Println("ToJsonString error:", err.Error())
 	}
 	return string(js)
+}
+
+var letterBytes = []byte("0123456789abcdefghijklmnopqrstuvwxyz")
+
+// GenRandomBytes 以当前时间为种子，生成一个指定长度的字符数组
+func GenRandomBytes(length int) []byte {
+	// 为了避免连续调用导致形成完全一样的种子，在时间的基础上再加一个随机数
+	r := rand.New(rand.NewSource(time.Now().UnixNano() + rand.Int63()))
+	b := make([]byte, length)
+	l := len(letterBytes)
+	for i := range b {
+		b[i] = letterBytes[r.Intn(l)]
+	}
+	return b
 }

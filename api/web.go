@@ -17,7 +17,7 @@ func NewWebHandler() *WebHandler {
 }
 
 // 首页
-func (api *WebHandler) Home(c *gin.Context) {
+func (s *WebHandler) Home(c *gin.Context) {
 	post, err := model.Model.GetPost(166)
 	if err != nil {
 		c.HTML(http.StatusOK, "404", gin.H{})
@@ -27,7 +27,7 @@ func (api *WebHandler) Home(c *gin.Context) {
 	}
 }
 
-func (api *WebHandler) Map(c *gin.Context) {
+func (s *WebHandler) Map(c *gin.Context) {
 	c.HTML(http.StatusOK, "map", gin.H{
 		"title":       "经纬度在线查询,地名(批量)查询经纬度,经纬度(批量)查询地名",
 		"keywords":    "经纬度,查询,经纬度查询,经纬度在线查询,经纬度查找地名,经纬度(批量)查询,经纬度转换地名,地名批量查询经纬度,查询地名返回经纬度,根据经纬度批量查询地名,google map经纬度 ,yanue.net",
@@ -35,7 +35,7 @@ func (api *WebHandler) Map(c *gin.Context) {
 	})
 }
 
-func (api *WebHandler) ToLatLng(c *gin.Context) {
+func (s *WebHandler) ToLatLng(c *gin.Context) {
 	c.HTML(http.StatusOK, "toLatLng", gin.H{
 		"title":       "在线查询经纬度,通过地名查询经纬度(手动精确定位)",
 		"keywords":    "经纬度,查询,经纬度查询,经纬度在线查询,经纬度查找地名,查询地名返回经纬度(手动精确定位),鼠标经过地图区域提示经纬度",
@@ -43,7 +43,7 @@ func (api *WebHandler) ToLatLng(c *gin.Context) {
 	})
 }
 
-func (api *WebHandler) Gps(c *gin.Context) {
+func (s *WebHandler) Gps(c *gin.Context) {
 	c.HTML(http.StatusOK, "gps", gin.H{
 		"title":       "GPS坐标转换经纬度,GPS转谷歌百度地图经纬度",
 		"keywords":    "GPS,GPS转换,GPS坐标转换经纬度，GPS转谷歌地图经纬度，GPS免费接口,GPS免费转换接口,gpsApi.php,map.yanue.net,半叶寒羽-原创作品,GPS定位,GPS to lat lng，GPS Coordinate Converter",
@@ -51,13 +51,15 @@ func (api *WebHandler) Gps(c *gin.Context) {
 	})
 }
 
-func (api *WebHandler) Page(c *gin.Context) {
-
+func (s *WebHandler) Page(c *gin.Context) {
+	c.HTML(http.StatusOK, "page.html", gin.H{
+		"title": "hello gin " + strings.ToLower(c.Request.Method) + " method",
+	})
 }
 
 // like: /post-1.html or /post/2.html
 
-func (api *WebHandler) Post(c *gin.Context) {
+func (s *WebHandler) Post(c *gin.Context) {
 	id := c.Param("id")
 	id = strings.TrimSuffix(id, ".html")
 	post, err := model.Model.GetPost(util.ToInt(id))

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="author" content="yanue"/>
+  <meta name="copyright" content="yanue.net"/>
+  <title>后台-登录</title>
+  <link rel="stylesheet" href="/assets/css/admin.css">
+</head>
+<body>
+<main class="login-body">
+  <div class="login-page">
+    <div class="title">后台登录</div>
+    <div class="form">
+      <form id="loginForm" class="login-form" action="javascript:;" method="post">
+        <input type="text" name="username" placeholder="用户"/>
+        <input type="password" name="password" placeholder="密码"/>
+        <button id="login-btn" type="submit">登录</button>
+      </form>
+    </div>
+  </div>
+  <script>
+    window.onload = function () {
+      function setCookie(cname, cvalue, exdays) {
+        var d = new Date();
+        d.setTime(d.getTime() + (exdays * 12 * 60 * 60 * 1000));
+        var expires = "expires=" + d.toGMTString();
+        document.cookie = cname + "=" + cvalue + "; " + expires;
+      }
+
+      let disabled = false
+      document.querySelector('#loginForm').addEventListener('submit', (e) => {
+        if (disabled) {
+          return
+        }
+        disabled = true
+        var data = Object.fromEntries(new FormData(e.target).entries());
+        fetch("/login", {
+          method: 'POST',
+          credentials: 'same-origin',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data),
+        }).then(response => response.json()).then(resp => {
+          if (resp.code !== 0) {
+            alert(resp.msg)
+          } else {
+            setCookie("token", resp.data.token)
+            setCookie("uid", resp.data.uid)
+            // setTimeout(function () {
+            //   window.location.reload()
+            // }, 1000)
+          }
+        }).catch((err) => {
+          alert(err)
+        }).finally(() => {
+
+        })
+      });
+    }
+  </script>
+</main>
+</body>
+</html>

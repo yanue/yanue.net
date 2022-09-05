@@ -1,118 +1,228 @@
-{{define "head"}}
-  <script src="/assets/toastui/toastui-editor-all.min.js"></script>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="author" content="yanue"/>
+  <meta name="copyright" content="yanue.net"/>
+  <title>后台</title>
+  <link rel="stylesheet" href="/assets/css/admin.css">
+  <link rel="stylesheet" href="/assets/toastui/prism.css">
   <link href="/assets/toastui/toastui-editor.min.css" rel="stylesheet"/>
-  <script>
-    window.onload = function () {
-      const editor = new toastui.Editor({
-        el: document.querySelector('#editor'),
-        height: '600px',
-        initialEditType: 'markdown',
-        previewStyle: 'vertical'
-      });
-    }
-  </script>
-{{end}}
-
-
-{{define "foot"}}
-{{end}}
-
-{{define "content"}}
-  <section class="content">
-    <h2 class="title">
-      添加文章
-    </h2>
-
-    <form class="form" id="postForm" action="javascript:;">
-      <div class="left-panel">
-        <p>
-          <span class="label">标题</span>
-          <input type="text" class="txt" id="txtTitle" value=""
-                 style="width: 320px;">
-          <span style="color: #f00;">*</span>
-          <a href="" target="_blank">查看文章</a>
-          <span class="status"></span>
-        </p>
-
-        <p>
-          <span class="label">副标题</span>
-          <input type="text" class="txt" id="txtSubTitle" value=""
-                 style="width: 180px;">
-          <span class="status"></span>
-        </p>
-
-        <p><span class="label">预览图片</span>
-          <input type="text" id="coverImg" class="txt" value=""/>
-          <span class="upload-widget" data-unique="1"></span>
-          <img src="" class="imgPreview" alt="" style="height: 60px;vertical-align: middle;"/>
-        </p>
-
-        <div>
-          <span class="label">正文</span>
-          <div id="editor"></div>
-        </div>
-
-        <p>
-          <span class="label">关键字</span>
-          <input type="text" class="txt" id="keywords"
-                 value=""/>
-        </p>
-
-        <p>
-          <span class="label">时间</span>
-          <input type="text" class="txt" id="created"
-                 value=""/>
-          (可选,不填则为系统当前时间,填写则格式必需为 )
-        </p>
+  <script src="/assets/toastui/toastui-editor-all.min.js"></script>
+  <script src="/assets/toastui/prism.js"></script>
+  <script src="/assets/toastui/toastui-editor-plugin-code-syntax-highlight-all.min.js"></script>
+</head>
+<body>
+{{$id := .id}}
+{{$page := .page}}
+{{$cid := .post.Cid}}
+<main class="main">
+  <section class="sidebar">
+    <div class="title">
+      文章列表
+      <div class="action">
+        <a href="/admin?id=add" class="btn btn-primary">添加文章</a>
       </div>
+    </div>
+    <ul class="list">
+        {{ range .list }}
+          <li>
+            <div class="name">
+                {{ if (eq .Id $id) }}
+                  <span style="color: red">{{.Id}}-{{ .Title }}</span>
+                {{ else }}
+                  <a href="/admin?page={{$page}}&id={{.Id}}">{{.Id}}-{{ .Title }}</a>
+                {{ end }}
+            </div>
+            <p class="action">
 
-      <aside class="right-panel">
-        <section class="widget">
-
-        </section>
-        <section class="widget tag-clouds">
-          <p class="widget-title">
-            标签
-          </p>
-
-          <div class="widget-content">
-            <p>
-              <input type="text" class="txt tagVal" value=""/>
-              <input type="button" class="btn btn-light addTag" value="添加"/>
             </p>
-          </div>
-        </section>
-
-        <section class="widget">
-          <p class="widget-title">是否推荐</p>
-
-          <p class="widget-content">
-            是<input type="radio" name="recommend" class="recommend" id=""
-                     value="1">
-            否<input type="radio" name="recommend" class="recommend" id="" checked="checked"
-                     value="0">
-          </p>
-
-        </section>
-
-        <section class="widget">
-          <p class="widget-title">是否发布</p>
-
-          <p class="widget-content">
-            是<input type="radio" name="published" class="published" id="" checked="checked"
-                     value="1">
-            否<input type="radio" name="published" class="published" id=""
-                     value="0">
-            (发布后才会显示)
-          </p>
-        </section>
-
-        <p>
-          <input type="submit" class="btn-gray submitBtn" value="提交" data-id="">
-          <input type="reset" class="btn-light" value="重置">
-        </p>
-      </aside>
-    </form>
-
+          </li>
+        {{ end }}
+    </ul>
+    <div>
+      <span>共 {{ .count }} 条, 每页 {{ .size }} 条, 当前 {{.page}}/{{ .totalPage }} 页</span>
+    </div>
+    <div class="page">
+        {{range .pages}}
+            {{ if .Current }}
+              <span class="btn btn-small btn-danger">{{ .Page }}</span>
+            {{ else }}
+              <a class="btn btn-small btn-primary" href="{{.Link}}">{{ .Page }}</a>
+            {{end}}
+        {{ end }}
+    </div>
   </section>
-{{end}}
+  <section class="content">
+      {{ if .show_form }}
+        <form class="form" id="postForm" method="post" action="javascript:;">
+          <div class="action">
+            <input type="submit" class="submit-btn btn btn-danger" value="保存文章" id="saveArticle">
+            <a href="javascript:;" class="btn btn-del">删除文章</a>
+          </div>
+            {{ if gt .id 0 }}
+              <div class="title">
+                修改文章 <span>(<a href="/post/{{ .post.Id }}" target="_blank">查看</a>)</span>
+              </div>
+            {{ else }}
+              <h2 class="title">
+                添加文章
+              </h2>
+            {{ end }}
+
+          <div class="fields">
+            <div class="column">
+              <div>
+                <p>
+                  <span class="label">标题</span>
+                  <input type="text" name="title" id="title" class="txt" value="{{.post.Title}}" style="width: 500px;">
+                  <span style="color: #f00;">*</span>
+                </p>
+                <p>
+                  <span class="label">分类</span>
+                  <select name="cid">
+                      {{ range .cats }}
+                        <option value="{{ .Id }}"
+                                {{ if eq .Id $cid }} selected {{ end}}
+                        >{{ .Name }}</option>
+                      {{ end }}
+                  </select>
+                </p>
+                <p>
+                  <span class="label">是否推荐</span>
+                  <label>
+                    是 <input type="radio" name="recommend"
+                              value="1">
+                  </label>
+                  <label>
+                    否 <input type="radio" name="recommend" checked="checked" value="0">
+                  </label>
+                </p>
+              </div>
+              <div>
+                <p>
+                  <span class="label">标签</span>
+                  <input type="text" class="txt" value="{{.post.Tags}}" style="width: 500px;">
+                </p>
+                <p>
+                  <span class="label">是否发布</span>
+                  <label>
+                    是
+                    <input type="radio" name="published" checked="checked"
+                           value="1">
+                  </label>
+                  <label>
+                    否
+                    <input type="radio" name="published" value="0">
+                  </label>
+                </p>
+              </div>
+            </div>
+          </div>
+          <input type="hidden" name="id" value="{{$id}}">
+          <div id="editor"></div>
+          <script>
+            function getCookie(cname) {
+              var name = cname + "=";
+              var ca = document.cookie.split(';');
+              for (var i = 0; i < ca.length; i++) {
+                var c = ca[i].trim();
+                if (c.indexOf(name) === 0) {
+                  return c.substring(name.length, c.length);
+                }
+              }
+              return "";
+            }
+
+            window.onload = function () {
+              const id = {{ $id }}
+              const Editor = toastui.Editor;
+              const {codeSyntaxHighlight} = Editor.plugin;
+              const token = ""
+              const editor = new Editor({
+                el: document.querySelector('#editor'),
+                height: '760px',
+                initialEditType: 'markdown',
+                previewStyle: 'vertical',
+                initialValue: '{{ .post.Content }}',
+                plugins: [[codeSyntaxHighlight, {highlighter: Prism}]]
+              });
+
+              document.querySelector('#postForm').addEventListener('submit', (e) => {
+                var data = Object.fromEntries(new FormData(e.target).entries());
+                data['id'] = parseInt(data['id'])
+                data['published'] = parseInt(data['published'])
+                data['cid'] = parseInt(data['cid'])
+                data['recommend'] = parseInt(data['recommend'])
+                data['content'] = editor.getMarkdown();
+                console.log(data);
+                let ok = window.confirm("请确认需要保存吗?")
+                if (!ok) {
+                  return
+                }
+                let method = 'POST'
+                let url = "/admin/create"
+                if (id > 0) {
+                  url = "/admin/" + id
+                  method = "PUT"
+                }
+                fetch(url, {
+                  method: method,
+                  credentials: 'same-origin',
+                  headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + getCookie('token')
+                  },
+                  cookie: document.cookie,
+                  body: JSON.stringify(data),
+                }).then(response => response.json()).then(resp => {
+                  if (resp.code !== 0) {
+                    alert(resp.msg)
+                  }
+                }).catch((err) => {
+                  alert(err)
+                }).finally(() => {
+                  setTimeout(function () {
+                    window.location.reload()
+                  }, 500)
+                })
+              });
+
+              document.querySelector('.btn-del').addEventListener('click', (e) => {
+                let ok = window.confirm("请确认需要删除吗?")
+                if (!ok) {
+                  return
+                }
+                let data = {"id": parseInt(id)}
+                fetch("/admin/" + id, {
+                  method: 'DELETE',
+                  credentials: 'same-origin',
+                  headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + getCookie('token')
+                  },
+                  cookie: document.cookie,
+                  body: JSON.stringify(data),
+                }).then(response => response.json()).then(resp => {
+                  if (resp.code !== 0) {
+                    alert(resp.msg)
+                  }
+                }).catch((err) => {
+                  alert(err)
+                }).finally(() => {
+                  setTimeout(function () {
+                    const params = new URLSearchParams(window.location.search)
+                    window.location.reload()
+                  }, 500)
+                })
+              });
+            }
+          </script>
+        </form>
+      {{ else }}
+          {{ .err }}
+      {{ end }}
+  </section>
+</main>
+</body>
+</html>

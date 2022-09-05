@@ -1,6 +1,7 @@
 package api
 
 import (
+	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"strings"
@@ -27,7 +28,7 @@ type ApiHandler struct {
 	ApiInterface
 }
 
-func (api *ApiHandler) OutRight(c *gin.Context, data interface{}) {
+func (s *ApiHandler) OutRight(c *gin.Context, data interface{}) {
 	c.JSON(http.StatusOK, &JsonResp{
 		Code: 0,
 		Msg:  "",
@@ -35,7 +36,7 @@ func (api *ApiHandler) OutRight(c *gin.Context, data interface{}) {
 	})
 }
 
-func (api *ApiHandler) OutError(c *gin.Context, errno int, msg ...string) {
+func (s *ApiHandler) OutError(c *gin.Context, errno int, msg ...string) {
 	var errMsg string
 
 	if len(msg) > 0 {
@@ -53,7 +54,16 @@ func (api *ApiHandler) OutError(c *gin.Context, errno int, msg ...string) {
 	})
 }
 
-func (api *ApiHandler) GpsOffset(c *gin.Context) {
+func (s *ApiHandler) Sign(params map[string]interface{}) (string, error) {
+	var claim = jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims(params))
+	return claim.SignedString([]byte(""))
+}
+
+func (s *ApiHandler) GetUid(c *gin.Context) int {
+	return c.GetInt("uid")
+}
+
+func (s *ApiHandler) GpsOffset(c *gin.Context) {
 	lng := util.ToFloat64(c.Query("lng"))
 	lat := util.ToFloat64(c.Query("lat"))
 	var res struct {
@@ -66,5 +76,5 @@ func (api *ApiHandler) GpsOffset(c *gin.Context) {
 
 	// $bMap = json_decode(file_get_contents('https://api.map.baidu.com/ag/coord/convert?from=0&to=4&x='.$lng.'&y='.$lat));
 	// $bLatLng = array('lat'=>base64_decode($bMap->y),'lng'=>base64_decode($bMap->x));
-	api.OutRight(c, res)
+	s.OutRight(c, res)
 }
