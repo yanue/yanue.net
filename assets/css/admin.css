@@ -1,0 +1,103 @@
+/* reset css start*/
+html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, abbr, address, cite, code, del, dfn, em, img, ins, kbd, q, samp, small, strong, sub, sup, var, b, i, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, main, article, aside, canvas, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary, time, mark, audio, video {margin: 0;padding: 0;border: 0;outline: 0;font-size: 100%;vertical-align: baseline;background: transparent;}
+body {line-height: 1;}
+main, article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {display: block;}
+nav, ul {list-style: none;outline: none;}
+blockquote, q {quotes: none;}
+blockquote:before, blockquote:after, q:before, q:after {content: none;}
+a {margin: 0;padding: 0;font-size: 100%;vertical-align: baseline;background: transparent;}
+ins {background-color: #ff9;color: #000;text-decoration: none;}
+mark {background-color: #ff9;padding: 0 4px;color: #666;font-size: 14px;}
+del {text-decoration: line-through;}
+abbr[title], dfn[title] {border-bottom: 1px dotted;cursor: help;}
+table {border-collapse: collapse;border-spacing: 0;}
+hr {display: block;height: 1px;border: 0;border-top: 1px solid #cccccc;margin: 1em 0;padding: 0;}
+input, select {vertical-align: middle;outline: none;}
+/* reset css end*/
+.clear {clear: both;}
+a {text-decoration: none;}
+.main {width: 100%;height: 100%;position: relative;overflow: hidden;}
+.title {color: #000;height: 36px;line-height: 36px;font-size: 16px;}
+.sidebar {position: fixed;top: 0;left: 0;right: 360px;bottom: 0;width: 360px;padding: 10px;background: #f6f6f6;font-size: 14px;line-height: 160%;overflow-y: auto;}
+.sidebar .title {position: fixed;top: 0;background: #f6f6f6;width: 360px;border-bottom: 1px solid #e0e0e0;padding: 10px 0 0;}
+.sidebar .list {margin-top: 50px;}
+.sidebar .name {color: #000;width: 300px;overflow: hidden;height: 32px;line-height: 32px;}
+.sidebar .action {position: fixed;left: 280px;width: 100px;top: 5px;z-index: 999;}
+.content {position: fixed;top: 0;left: 360px;right: 0;bottom: 0;border-left: 1px solid #eee;background: #fff;overflow-y: auto;padding: 10px;}
+.content .form {line-height: 160%;}
+.content .form .fields {border: 1px solid #e0e0e0;margin-bottom: 10px;padding: 10px;border-radius: 3px;}
+.content .form .column { column-count: 2; column-rule-style: solid; column-rule-width: 1px;column-rule-color: #e0e0e0; column-gap: 40px;}
+.content .form .label {width: 120px;text-align: left;display: inline-block;}
+.content .action {position: fixed;right: 30px;top: 10px;z-index: 999;}
+.btn {display: inline-block;*display: inline;*zoom: 1;padding: 6px 12px 4px;margin-bottom: 0;font-size: 12px;line-height: 20px;text-align: center;vertical-align: middle;cursor: pointer;border: 0;border-radius: 0;}
+.btn-primary {color: #ffffff;background-color: #428bca}
+.btn-danger {color: #ffffff;background-color: #d9534f}
+.btn:hover, .btn:focus {text-decoration: none}
+.btn:focus {outline: thin dotted #333;outline-offset: -2px}
+.btn-block {display: block;width: 100%;padding-left: 0;padding-right: 0;-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box}
+.btn-block + .btn-block {margin-top: 5px}
+.login-body {
+  background: #76b852;
+  background: -webkit-linear-gradient(right, #76b852, #8DC26F);
+  background: -moz-linear-gradient(right, #76b852, #8DC26F);
+  background: -o-linear-gradient(right, #76b852, #8DC26F);
+  background: linear-gradient(to left, #76b852, #8DC26F);
+  font-family: "Roboto", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+}
+.login-page {
+  width: 360px;
+  padding: 150px 0 0;
+  margin: auto;
+}
+.login-page .title {
+  text-align: center;
+  font-size: 18px;
+  line-height: 50px;
+  height: 50px;
+  color: #184900;
+}
+.login-page .form {
+  position: relative;
+  z-index: 1;
+  background: #FFFFFF;
+  max-width: 360px;
+  margin: 0 auto 100px;
+  padding: 45px;
+  text-align: center;
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+}
+.login-page .form input {
+  font-family: "Roboto", sans-serif;
+  outline: 0;
+  background: #f2f2f2;
+  width: 100%;
+  border: 0;
+  margin: 0 0 15px;
+  padding: 15px;
+  box-sizing: border-box;
+  font-size: 14px;
+}
+.login-page .form button {
+  font-family: "Roboto", sans-serif;
+  text-transform: uppercase;
+  outline: 0;
+  background: #4CAF50;
+  width: 100%;
+  border: 0;
+  padding: 15px;
+  color: #FFFFFF;
+  font-size: 14px;
+  -webkit-transition: all 0.3 ease;
+  transition: all 0.3 ease;
+  cursor: pointer;
+}
+.login-page .form button:hover, .login-page .form button:active {
+  background: #43A047;
+}
