@@ -7,7 +7,6 @@
   <meta name="copyright" content="yanue.net"/>
   <meta name="keywords" content="{{.keywords}}"/>
   <meta name="description" content="{{.description}}"/>
-  <title>{{.title}}</title>
   <link rel="stylesheet" href="/assets/css/base.css">
     {{template "head" .}}
 </head>
@@ -16,18 +15,13 @@
       data-prismjs-copy-error="按Ctrl+C复制"
       data-prismjs-copy-success="文本已复制！">
 <div id="main">
-  <div class="top">
-    <div class="box">
-        {{include "layouts/top"}}
-    </div>
+  <div class="left-side">
+      {{include "layouts/side"}}
   </div>
   <div id="content">
     <div class="box">
         {{template "content" .}}
     </div>
-  </div>
-  <div id="footer">
-      {{include "layouts/footer"}}
   </div>
 </div>
 {{template "foot" .}}

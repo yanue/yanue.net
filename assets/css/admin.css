@@ -46,68 +46,10 @@ a {text-decoration: none;}
 .btn:focus {outline: thin dotted #333;outline-offset: -2px}
 .btn-block {display: block;width: 100%;padding-left: 0;padding-right: 0;-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box}
 .btn-block + .btn-block {margin-top: 5px}
-.login-body {
-  background: #76b852;
-  background: -webkit-linear-gradient(right, #76b852, #8DC26F);
-  background: -moz-linear-gradient(right, #76b852, #8DC26F);
-  background: -o-linear-gradient(right, #76b852, #8DC26F);
-  background: linear-gradient(to left, #76b852, #8DC26F);
-  font-family: "Roboto", sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  position: fixed;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-}
-.login-page {
-  width: 360px;
-  padding: 150px 0 0;
-  margin: auto;
-}
-.login-page .title {
-  text-align: center;
-  font-size: 18px;
-  line-height: 50px;
-  height: 50px;
-  color: #184900;
-}
-.login-page .form {
-  position: relative;
-  z-index: 1;
-  background: #FFFFFF;
-  max-width: 360px;
-  margin: 0 auto 100px;
-  padding: 45px;
-  text-align: center;
-  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
-}
-.login-page .form input {
-  font-family: "Roboto", sans-serif;
-  outline: 0;
-  background: #f2f2f2;
-  width: 100%;
-  border: 0;
-  margin: 0 0 15px;
-  padding: 15px;
-  box-sizing: border-box;
-  font-size: 14px;
-}
-.login-page .form button {
-  font-family: "Roboto", sans-serif;
-  text-transform: uppercase;
-  outline: 0;
-  background: #4CAF50;
-  width: 100%;
-  border: 0;
-  padding: 15px;
-  color: #FFFFFF;
-  font-size: 14px;
-  -webkit-transition: all 0.3 ease;
-  transition: all 0.3 ease;
-  cursor: pointer;
-}
-.login-page .form button:hover, .login-page .form button:active {
-  background: #43A047;
-}
+.login-body {background: #76b852;background: linear-gradient(to left, #76b852, #8DC26F);font-family: "Roboto", sans-serif;-webkit-font-smoothing: antialiased;-moz-osx-font-smoothing: grayscale;position: fixed;left: 0;right: 0;top: 0;bottom: 0;}
+.login-page {width: 360px;padding: 150px 0 0;margin: auto;}
+.login-page .title {text-align: center;font-size: 18px;line-height: 50px;height: 50px;color: #184900;}
+.login-page .form {position: relative;z-index: 1;background: #FFFFFF;max-width: 360px;margin: 0 auto 100px;padding: 45px;text-align: center;box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);}
+.login-page .form input {font-family: "Roboto", sans-serif;outline: 0;background: #f2f2f2;width: 100%;border: 0;margin: 0 0 15px;padding: 15px;box-sizing: border-box;font-size: 14px;}
+.login-page .form button {font-family: "Roboto", sans-serif;text-transform: uppercase;outline: 0;background: #4CAF50;width: 100%;border: 0;padding: 15px;color: #FFFFFF;font-size: 14px;-webkit-transition: all 0.3s ease;transition: all 0.3s ease;cursor: pointer;}
+.login-page .form button:hover, .login-page .form button:active {background: #43A047;}

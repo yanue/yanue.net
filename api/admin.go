@@ -29,7 +29,7 @@ func (s *AdminHandler) Admin(c *gin.Context) {
 
 	user, err := model.UserModel.TokenVerify(util.ToInt(uid), token)
 	if err != nil {
-		c.HTML(http.StatusOK, "login.html", gin.H{})
+		c.HTML(http.StatusOK, "admin/login.html", gin.H{})
 		return
 	}
 	fmt.Println("user", user)
@@ -52,7 +52,7 @@ func (s *AdminHandler) Admin(c *gin.Context) {
 	if id > 0 && err != nil {
 		showForm = false
 	}
-	c.HTML(http.StatusOK, "admin.html", gin.H{
+	c.HTML(http.StatusOK, "admin/admin.html", gin.H{
 		"list":      list,
 		"count":     cnt,
 		"totalPage": totalPage,
