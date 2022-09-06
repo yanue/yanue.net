@@ -29,7 +29,7 @@ func main() {
 	r.Engine = engine
 	// 模板引擎
 	r.HTMLRender = ginview.Default()
-	r.StaticFile("/favicon.ico", "./assets/favicon.ico")
+	r.StaticFile("/favicon.ico", "./assets/img/favicon.ico")
 
 	// 路由
 	r.route()

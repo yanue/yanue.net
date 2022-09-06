@@ -48,9 +48,9 @@
           } else {
             setCookie("token", resp.data.token)
             setCookie("uid", resp.data.uid)
-            // setTimeout(function () {
-            //   window.location.reload()
-            // }, 1000)
+            setTimeout(function () {
+              window.location.reload()
+            }, 500)
           }
         }).catch((err) => {
           alert(err)

@@ -18,7 +18,7 @@ func NewAdminHandler() *AdminHandler {
 	return web
 }
 
-var pageSize = 25
+var pageSize = 20
 
 func (s *AdminHandler) Admin(c *gin.Context) {
 	// 设置cookie

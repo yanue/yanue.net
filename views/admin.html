@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="author" content="yanue"/>
   <meta name="copyright" content="yanue.net"/>
-  <title>后台</title>
+  <title>yanue-后台管理中心</title>
   <link rel="stylesheet" href="/assets/css/admin.css">
   <link rel="stylesheet" href="/assets/toastui/prism.css">
   <link href="/assets/toastui/toastui-editor.min.css" rel="stylesheet"/>
@@ -17,16 +17,23 @@
 {{$page := .page}}
 {{$cid := .post.Cid}}
 <main class="main">
+  <div class="header">
+    <img src="/assets/img/logo.png" class="logo">
+    <span>后台管理中心</span>
+    <span class="right">
+      <a href="/admin?id=add">添加文章</a>
+      |
+      <a href="javascript:;" id="logout">退出登录</a>
+    </span>
+  </div>
   <section class="sidebar">
     <div class="title">
-      文章列表
-      <div class="action">
-        <a href="/admin?id=add" class="btn btn-primary">添加文章</a>
-      </div>
+      <span class="left">文章列表</span>
+      <div class="clear"></div>
     </div>
     <ul class="list">
         {{ range .list }}
-          <li>
+          <li class="item">
             <div class="name">
                 {{ if (eq .Id $id) }}
                   <span style="color: red">{{.Id}}-{{ .Title }}</span>
@@ -34,12 +41,20 @@
                   <a href="/admin?page={{$page}}&id={{.Id}}">{{.Id}}-{{ .Title }}</a>
                 {{ end }}
             </div>
-            <p class="action">
-
+            <p class="tags">
+                {{ if eq .Recommend 1 }}
+                  <span class="recommend tag" title="已推荐">荐</span>
+                {{ end }}
+                {{ if eq .Published 1 }}
+                  <span class="pub tag" title="已发布">已</span>
+                {{ else }}
+                  <span class="unpub tag" title="未发布">未</span>
+                {{ end }}
             </p>
           </li>
         {{ end }}
     </ul>
+    <div class="clear"></div>
     <div>
       <span>共 {{ .count }} 条, 每页 {{ .size }} 条, 当前 {{.page}}/{{ .totalPage }} 页</span>
     </div>
@@ -56,7 +71,7 @@
   <section class="content">
       {{ if .show_form }}
         <form class="form" id="postForm" method="post" action="javascript:;">
-          <div class="action">
+          <div class="right">
             <input type="submit" class="submit-btn btn btn-danger" value="保存文章" id="saveArticle">
             <a href="javascript:;" class="btn btn-del">删除文章</a>
           </div>
@@ -91,11 +106,14 @@
                 <p>
                   <span class="label">是否推荐</span>
                   <label>
-                    是 <input type="radio" name="recommend"
-                              value="1">
+                    是 <input type="radio" name="recommend" value="1"
+                              {{ if eq .post.Recommend 1 }} checked="checked" {{ end }}
+                    >
                   </label>
                   <label>
-                    否 <input type="radio" name="recommend" checked="checked" value="0">
+                    否 <input type="radio" name="recommend" value="0"
+                              {{ if eq .post.Recommend 0 }} checked="checked" {{ end }}
+                    >
                   </label>
                 </p>
               </div>
@@ -108,12 +126,15 @@
                   <span class="label">是否发布</span>
                   <label>
                     是
-                    <input type="radio" name="published" checked="checked"
-                           value="1">
+                    <input type="radio" name="published" value="1"
+                            {{ if eq .post.Published 1 }} checked="checked" {{ end }}
+                    >
                   </label>
                   <label>
                     否
-                    <input type="radio" name="published" value="0">
+                    <input type="radio" name="published" value="0"
+                            {{ if eq .post.Published 0 }} checked="checked" {{ end }}
+                    >
                   </label>
                 </p>
               </div>
@@ -132,6 +153,14 @@
                 }
               }
               return "";
+            }
+
+            function deleteCookies() {
+              var allCookies = document.cookie.split(';');
+              // The "expire" attribute of every cookie is
+              // Set to "Thu, 01 Jan 1970 00:00:00 GMT"
+              for (var i = 0; i < allCookies.length; i++)
+                document.cookie = allCookies[i] + "=;expires="
             }
 
             window.onload = function () {
@@ -211,10 +240,16 @@
                   alert(err)
                 }).finally(() => {
                   setTimeout(function () {
-                    const params = new URLSearchParams(window.location.search)
                     window.location.reload()
                   }, 500)
                 })
+              });
+
+              document.querySelector('#logout').addEventListener('click', (e) => {
+                deleteCookies()
+                setTimeout(function () {
+                  window.location.reload()
+                }, 1000)
               });
             }
           </script>

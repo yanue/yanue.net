@@ -14,21 +14,31 @@ table {border-collapse: collapse;border-spacing: 0;}
 hr {display: block;height: 1px;border: 0;border-top: 1px solid #cccccc;margin: 1em 0;padding: 0;}
 input, select {vertical-align: middle;outline: none;}
 /* reset css end*/
+.left {float: left;}
+.right {float: right;}
 .clear {clear: both;}
 a {text-decoration: none;}
 .main {width: 100%;height: 100%;position: relative;overflow: hidden;}
+.header {height: 29px;z-index: 9999;overflow: hidden;padding: 15px 10px 5px 50px;background: #225609;border-bottom: 1px solid #184900;color: #fff;}
+.header img.logo {width: 32px;height: 32px;vertical-align: middle;position: absolute;left: 12px;top: 8px;}
+.header span {display: inline-block;}
+.header a {color: #fff;}
 .title {color: #000;height: 36px;line-height: 36px;font-size: 16px;}
-.sidebar {position: fixed;top: 0;left: 0;right: 360px;bottom: 0;width: 360px;padding: 10px;background: #f6f6f6;font-size: 14px;line-height: 160%;overflow-y: auto;}
-.sidebar .title {position: fixed;top: 0;background: #f6f6f6;width: 360px;border-bottom: 1px solid #e0e0e0;padding: 10px 0 0;}
-.sidebar .list {margin-top: 50px;}
-.sidebar .name {color: #000;width: 300px;overflow: hidden;height: 32px;line-height: 32px;}
-.sidebar .action {position: fixed;left: 280px;width: 100px;top: 5px;z-index: 999;}
-.content {position: fixed;top: 0;left: 360px;right: 0;bottom: 0;border-left: 1px solid #eee;background: #fff;overflow-y: auto;padding: 10px;}
+.sidebar {position: fixed;top: 50px;left: 0;right: 360px;bottom: 0;width: 360px;padding: 10px;background: #f6f6f6;font-size: 14px;line-height: 160%;overflow-y: auto;}
+.sidebar .title {border-bottom: 1px solid #e0e0e0;margin-bottom: 5px;}
+.sidebar .list {margin-top: 10px;}
+.sidebar .list .item {position: relative;}
+.sidebar .name {color: #000;width: 280px;overflow: hidden;height: 32px;line-height: 32px;float: left;}
+.sidebar .tags {float: left;width: 60px;text-align: right}
+.sidebar .tag {width: 20px;height: 20px;line-height: 20px;display: inline-block;border-radius: 2px;color: #fff;margin-right: 2px;font-size: 10px;text-align: center;}
+.sidebar .tag.pub {background: #76b852;}
+.sidebar .tag.recommend {background: #428bca;}
+.sidebar .tag.unpub {background: #d9534f;}
+.content {position: fixed;top: 50px;left: 360px;right: 0;bottom: 0;border-left: 1px solid #eee;background: #fff;overflow-y: auto;padding: 10px;}
 .content .form {line-height: 160%;}
 .content .form .fields {border: 1px solid #e0e0e0;margin-bottom: 10px;padding: 10px;border-radius: 3px;}
 .content .form .column { column-count: 2; column-rule-style: solid; column-rule-width: 1px;column-rule-color: #e0e0e0; column-gap: 40px;}
 .content .form .label {width: 120px;text-align: left;display: inline-block;}
-.content .action {position: fixed;right: 30px;top: 10px;z-index: 999;}
 .btn {display: inline-block;*display: inline;*zoom: 1;padding: 6px 12px 4px;margin-bottom: 0;font-size: 12px;line-height: 20px;text-align: center;vertical-align: middle;cursor: pointer;border: 0;border-radius: 0;}
 .btn-primary {color: #ffffff;background-color: #428bca}
 .btn-danger {color: #ffffff;background-color: #d9534f}
