@@ -14,15 +14,9 @@
       data-prismjs-copy="复制文本"
       data-prismjs-copy-error="按Ctrl+C复制"
       data-prismjs-copy-success="文本已复制！">
-<div id="main">
-  <div class="left-side">
-      {{include "layouts/side"}}
-  </div>
-  <div id="content">
-    <div class="box">
-        {{template "content" .}}
-    </div>
-  </div>
+<div class="main">
+    {{include "layouts/side"}}
+    {{template "content" .}}
 </div>
 {{template "foot" .}}
 {{ .floatAd }}

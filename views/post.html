@@ -7,22 +7,90 @@
   <script src="/assets/toastui/toastui-editor-plugin-code-syntax-highlight-all.min.js"></script>
 {{end}}
 
-{{define "foot"}}
-{{end}}
 
 {{define "content"}}
-  <h1>{{ .title }}</h1>
-  <div id="viewer">
-    <div style="white-space: pre-line;">
-        {{ .content }}
+  <div class="content">
+    <div class="wrap">
+      <div class="box">
+        <div class="item">
+          <h2 class="title">
+              {{ .post.Title}}
+          </h2>
+          <div class="meta">
+            <p class="meta-date">
+              日期
+              <i class="icon icon-calendar-check"></i>
+                {{ .post.Time }}
+            </p>
+            <p class="meta-cat">
+              分类
+              <i class="icon icon-folder"></i>
+              <a href="/cat/{{ .post.Cat }}">{{.post.Cat}}</a>
+            </p>
+            <p class="meta-tag">
+              标签
+              <i class="icon icon-tags"></i>
+                {{ range .post.Tags }}
+                  <span class="tag">
+                            <a href="/tag/{{ . }}">{{ . }}</a>
+                          </span>
+                {{ end }}
+            </p>
+            <p class="meta-view">
+              <i class="icon icon-view"></i>
+              <span>浏览 {{ .post.Views }}</span>
+            </p>
+            <p class="meta-word">
+              字数统计: {{ .post.Word }}(字)
+            </p>
+          </div>
+        </div>
+        <div id="viewer" class="md-viewer">
+          <div style="white-space: pre-line;">
+              {{ .post.Content }}
+          </div>
+        </div>
+        <script class="code-js">
+          const Viewer = toastui.Editor;
+          const viewer = new Viewer({
+            el: document.querySelector('#viewer'),
+            initialValue: "{{ .post.Content }}",
+          });
+        </script>
+        <div class="clear"></div>
+        <div class="fill-foot"></div>
+      </div>
+      <div class="footer">
+        <div class="prev">
+            {{ if gt .prevId 0 }}
+              <a href="/post-{{ .prevId }}.html">
+                < 上一篇 {{ .prevTitle }}
+              </a>
+            {{ else }}
+              <span>
+              < 上一篇 没有了
+            </span>
+            {{ end }}
+        </div>
+        <div class="next">
+            {{ if gt .nextId 0 }}
+              <a href="/post-{{ .nextId }}.html">
+                下一篇 {{ .nextTitle }} >
+              </a>
+            {{ else }}
+              <span>
+               下一篇 没有了 >
+            </span>
+            {{ end }}
+        </div>
+      </div>
     </div>
   </div>
-  <script class="code-js">
-    const Viewer = toastui.Editor;
+{{end}}
 
-    const viewer = new Viewer({
-      el: document.querySelector('#viewer'),
-      initialValue: "{{ .content }}",
-    });
-  </script>
+<div class="aside">
+    {{include "layouts/aside"}}
+</div>
+
+{{define "foot"}}
 {{end}}

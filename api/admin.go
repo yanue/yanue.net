@@ -1,7 +1,6 @@
 package api
 
 import (
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"math"
 	"net/http"
@@ -23,17 +22,12 @@ var pageSize = 20
 func (s *AdminHandler) Admin(c *gin.Context) {
 	// 设置cookie
 	token, err := c.Cookie("token")
-	fmt.Println("err", token, err)
 	uid, err := c.Cookie("uid")
-	fmt.Println("err", uid, err)
-
 	user, err := model.UserModel.TokenVerify(util.ToInt(uid), token)
 	if err != nil {
 		c.HTML(http.StatusOK, "admin/login.html", gin.H{})
 		return
 	}
-	fmt.Println("user", user)
-
 	page := util.ToInt(c.Query("page"))
 	id := util.ToInt(c.Query("id"))
 	where := ""
@@ -63,6 +57,7 @@ func (s *AdminHandler) Admin(c *gin.Context) {
 		"size":      pageSize,
 		"post":      post,
 		"cats":      cats,
-		"pages":     genPage(page, totalPage),
+		"user":      user.Id,
+		"pages":     genPage("/admin", page, totalPage),
 	})
 }

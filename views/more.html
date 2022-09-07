@@ -7,7 +7,8 @@
   <div class="content">
     <div class="wrap">
       <div class="box">
-        <div class="head">首页</div>
+        <div class="head">分类</div>
+        <div class="head">标签</div>
         <div class="list">
           <ul>
               {{ range .list}}
@@ -47,8 +48,19 @@
               {{ end }}
           </ul>
         </div>
-        <div class="more">
-          <a href="/more?page=2">更多</a>
+        <div class="fill-foot"></div>
+      </div>
+      <div class="footer">
+        <div class="pagination">
+          分页
+            {{range .pages}}
+                {{ if .Current }}
+                  <span class="btn btn-small btn-danger">{{ .Page }}</span>
+                {{ else }}
+                  <a class="btn btn-small btn-primary" href="{{.Link}}">{{ .Page }}</a>
+                {{end}}
+            {{ end }}
+          <span class="tip">共 {{ .count }} 条, 每页 {{ .size }} 条, 当前 {{.page}}/{{ .totalPage }} 页</span>
         </div>
       </div>
     </div>

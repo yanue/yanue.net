@@ -38,6 +38,7 @@ func (r *router) route() {
 
 	// 前缀路径: /api
 	r.GET("/", web.Home)
+	r.GET("/more", web.More)
 	r.GET("/post-:id", web.Post)
 	r.GET("/post/:id", web.Post)
 	r.GET("/page", web.Page)

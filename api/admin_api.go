@@ -147,16 +147,3 @@ type Page struct {
 	Link    string
 	Current bool
 }
-
-func genPage(page int, totalPage int) []Page {
-	list := make([]Page, 0)
-	for i := 1; i <= totalPage; i++ {
-		nowPage := i
-		list = append(list, Page{
-			Page:    nowPage,
-			Link:    fmt.Sprintf("/admin?page=%d", nowPage),
-			Current: nowPage == page,
-		})
-	}
-	return list
-}

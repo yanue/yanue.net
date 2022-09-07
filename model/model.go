@@ -18,6 +18,23 @@ func (s *model) GetPost(id int) (item *Post, err error) {
 	return
 }
 
+func (s *model) NextPost(id int) (item *Post, err error) {
+	item = new(Post)
+	err = db.Where("id>?", id).Order("id asc").First(item).Error
+	return
+}
+
+func (s *model) PrevPost(id int) (item *Post, err error) {
+	item = new(Post)
+	err = db.Where("id<?", id).Order("id desc").First(item).Error
+	return
+}
+
+func (s *model) PostView(id int) (err error) {
+	err = db.Exec("update post set views = views+1 where id=?", id).Error
+	return
+}
+
 func (s *model) GetPostList(where string, page int, limit int) (list []*Post, err error) {
 	if page < 1 {
 		page = 1
@@ -53,9 +70,15 @@ func (s *model) Count(where string) int {
 	return int(count)
 }
 
-func (s *model) GetCats() (cats []*PostCat, err error) {
-	cats = make([]*PostCat, 0)
-	err = db.Model(&PostCat{}).Find(&cats).Error
+func (s *model) GetCats() (cats map[int]string, err error) {
+	cats = make(map[int]string, 0)
+	list := make([]*PostCat, 0)
+	err = db.Model(&PostCat{}).Find(&list).Error
+	if err == nil {
+		for _, cat := range list {
+			cats[cat.Id] = cat.Name
+		}
+	}
 	return
 }
 
