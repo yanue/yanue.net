@@ -20,9 +20,15 @@ func NewWebHandler() *WebHandler {
 func (s *WebHandler) Home(c *gin.Context) {
 	list, _ := model.Model.GetPostList("published=1", 0, 9)
 	cats, _ := model.Model.GetCats()
-
 	c.HTML(http.StatusOK, "index", gin.H{
 		"list": adaptPosts(list, cats),
+		"side": getSideData(),
+	})
+}
+
+func (s *WebHandler) Archives(c *gin.Context) {
+	c.HTML(http.StatusOK, "archives", gin.H{
+		"side": getSideData(),
 	})
 }
 
@@ -58,6 +64,7 @@ func (s *WebHandler) Post(c *gin.Context) {
 			"nextId":    nextId,
 			"prevTitle": prevTitle,
 			"prevId":    prevId,
+			"side":      getSideData(),
 		})
 	}
 }
@@ -84,6 +91,7 @@ func (s *WebHandler) More(c *gin.Context) {
 		"size":      pageSize,
 		"totalPage": totalPage,
 		"pages":     genPage("/more", page, totalPage),
+		"side":      getSideData(),
 	})
 }
 

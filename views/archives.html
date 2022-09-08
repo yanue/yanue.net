@@ -1,0 +1,46 @@
+{{define "head"}}
+
+{{end}}
+
+
+{{define "content"}}
+  <div class="content">
+    <div class="wrap">
+      <div class="box">
+        <header class="article-header">
+          <h1 class="title">归档</h1>
+          <p class="text-muted">
+          </p>
+        </header>
+        <ul>
+            {{ range $item := .side.archives}}
+              <li class="panel">
+                <h2 class="panel-title">
+                  <span>{{ $item.Month }}</span>
+                  <span class="num">({{ $item.Count }})</span>
+                </h2>
+                <div class="panel-body">
+                    {{ range  $item.List }}
+                      <p class="sub-title">
+                        <a href="/post-{{ .Id }}.html">
+                          <span class="date">{{ .Date }}</span>
+                          <span>{{.Title}}</span>
+                          <span class="num">({{ .Views }}次浏览)</span>
+                        </a>
+                      </p>
+                    {{ end }}
+                </div>
+              </li>
+            {{ end }}
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="aside">
+      {{include "layouts/aside"}}
+  </div>
+{{end}}
+
+{{define "foot"}}
+
+{{end}}
