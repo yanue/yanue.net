@@ -5,7 +5,6 @@ import (
 	"math"
 	"net/http"
 	"strings"
-	"time"
 	"yanue/model"
 	"yanue/util"
 )
@@ -18,32 +17,12 @@ func NewWebHandler() *WebHandler {
 	return web
 }
 
-type Post struct {
-	*model.Post
-	Time string
-	Word int
-	Tags []string
-	Cat  string
-}
-
-// 首页
 func (s *WebHandler) Home(c *gin.Context) {
 	list, _ := model.Model.GetPostList("published=1", 0, 9)
 	cats, _ := model.Model.GetCats()
-	newList := make([]Post, 0)
-	for _, post := range list {
-		newList = append(newList, Post{
-			Post: post,
-			Time: time.Unix(int64(post.Created), 0).Format("2006年01月02日 15:04"),
-			Word: len([]rune(post.Content)),
-			Tags: strings.Split(post.Tags, ","),
-			Cat:  cats[post.Cid],
-		})
-	}
+
 	c.HTML(http.StatusOK, "index", gin.H{
-		"title":   "",
-		"content": "",
-		"list":    newList,
+		"list": adaptPosts(list, cats),
 	})
 }
 
@@ -70,18 +49,10 @@ func (s *WebHandler) Post(c *gin.Context) {
 		}
 		// 更新浏览次数
 		_ = model.Model.PostView(postId)
-		word := len([]rune(post.Content))
-		newPost := Post{
-			Post: post,
-			Time: time.Unix(int64(post.Created), 0).Format("2006年01月02日 15:04"),
-			Word: len([]rune(post.Content)),
-			Tags: strings.Split(post.Tags, ","),
-			Cat:  cats[post.Cid],
-		}
+		newPost := adaptPost(post, cats)
 		c.HTML(http.StatusOK, "post", gin.H{
 			"title":     post.Title,
 			"content":   post.Content,
-			"word":      word,
 			"post":      newPost,
 			"nextTitle": nextTitle,
 			"nextId":    nextId,
@@ -105,16 +76,7 @@ func (s *WebHandler) More(c *gin.Context) {
 	if page > totalPage {
 		page = totalPage
 	}
-	newList := make([]Post, 0)
-	for _, post := range list {
-		newList = append(newList, Post{
-			Post: post,
-			Time: time.Unix(int64(post.Created), 0).Format("2006年01月02日 15:04"),
-			Word: len([]rune(post.Content)),
-			Tags: strings.Split(post.Tags, ","),
-			Cat:  cats[post.Cid],
-		})
-	}
+	newList := adaptPosts(list, cats)
 	c.HTML(http.StatusOK, "more", gin.H{
 		"list":      newList,
 		"count":     cnt,
@@ -125,10 +87,8 @@ func (s *WebHandler) More(c *gin.Context) {
 	})
 }
 
-func (s *WebHandler) Page(c *gin.Context) {
-	c.HTML(http.StatusOK, "page.html", gin.H{
-		"title": "hello gin " + strings.ToLower(c.Request.Method) + " method",
-	})
+func (s *WebHandler) About(c *gin.Context) {
+	c.HTML(http.StatusOK, "about", gin.H{})
 }
 
 func (s *WebHandler) Map(c *gin.Context) {
@@ -140,7 +100,7 @@ func (s *WebHandler) Map(c *gin.Context) {
 }
 
 func (s *WebHandler) ToLatLng(c *gin.Context) {
-	c.HTML(http.StatusOK, "toLatLng", gin.H{
+	c.HTML(http.StatusOK, "map_toLatLng", gin.H{
 		"title":       "在线查询经纬度,通过地名查询经纬度(手动精确定位)",
 		"keywords":    "经纬度,查询,经纬度查询,经纬度在线查询,经纬度查找地名,查询地名返回经纬度(手动精确定位),鼠标经过地图区域提示经纬度",
 		"description": "在线查询经纬度,通过地名查询经纬度(手动精确定位)，实现鼠标经过提示经纬度，自动填充地名地点名称，输入完成后可直接点击enter键进行解析，地理位置不准确，可以拖动重新解析，解析后经纬度信息显示完整",
@@ -148,7 +108,7 @@ func (s *WebHandler) ToLatLng(c *gin.Context) {
 }
 
 func (s *WebHandler) Gps(c *gin.Context) {
-	c.HTML(http.StatusOK, "gps", gin.H{
+	c.HTML(http.StatusOK, "map_gps", gin.H{
 		"title":       "GPS坐标转换经纬度,GPS转谷歌百度地图经纬度",
 		"keywords":    "GPS,GPS转换,GPS坐标转换经纬度，GPS转谷歌地图经纬度，GPS免费接口,GPS免费转换接口,gpsApi.php,map.yanue.net,半叶寒羽-原创作品,GPS定位,GPS to lat lng，GPS Coordinate Converter",
 		"description": "GPS,GPS转换,GPS坐标转换经纬度，GPS转谷歌地图经纬度，GPS免费接口,GPS免费转换接口,gpsApi.php,map.yanue.net,半叶寒羽-原创作品,GPS,GPS to lat lng，GPS Coordinate Converter,GPS转中文地址,GPS转Google地址!详情见https://map.yanue.net/gps.html",

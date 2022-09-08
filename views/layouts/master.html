@@ -8,12 +8,10 @@
   <meta name="keywords" content="{{.keywords}}"/>
   <meta name="description" content="{{.description}}"/>
   <link rel="stylesheet" href="/assets/css/base.css">
+  <script src="/assets/js/iconfont.js"></script>
     {{template "head" .}}
 </head>
-<body class="line-numbers"
-      data-prismjs-copy="复制文本"
-      data-prismjs-copy-error="按Ctrl+C复制"
-      data-prismjs-copy-success="文本已复制！">
+<body>
 <div class="main">
     {{include "layouts/side"}}
     {{template "content" .}}

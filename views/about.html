@@ -1,0 +1,88 @@
+{{define "head"}}
+  <link rel="stylesheet" href="/assets/toastui/prism.css">
+  <link rel="stylesheet" href="/assets/toastui/toastui-editor-viewer.min.css">
+
+  <script src="/assets/toastui/toastui-editor-viewer.min.js"></script>
+  <script src="/assets/toastui/prism.js"></script>
+  <script src="/assets/toastui/toastui-editor-plugin-code-syntax-highlight-all.min.js"></script>
+{{end}}
+
+{{define "content"}}
+  <div class="content">
+    <div class="wrap">
+      <div class="box">
+        <header class="article-header">
+          <h1 class="title">关于</h1>
+          <p class="text-muted">
+            喜欢新事物, 对新的技术有追求, 从web前端入行, 从事PHP多年再到Golang后端, 混迹10年有余, 目前还是半桶水.
+          </p>
+        </header>
+        <div id="viewer" class="md-viewer">
+        </div>
+        <script class="code-js">
+          var about = {
+            "name": "yanue",
+            "gender": "男",
+            "profession": "Gopher & Web Developer",
+            "experience": "10年",
+            "address": "广东省深圳市",
+            "education": "本科",
+            "github": "https://github.com/yanue",
+            "blog": "https://yanue.net",
+            "email": "yanue@outlook.com",
+            "skills": [
+              [
+                "Golang",
+                "PHP",
+                "Python",
+                "Swift"
+              ],
+              ["Mysql", "MongoDB", "Redis"],
+              [
+                "Javascript",
+                "Nodejs",
+                "Html5",
+                "CSS3",
+                "jQuery",
+                "ES6",
+                "Vue",
+                "React"
+              ],
+              [
+                "Git",
+                "SVN"
+              ]
+            ],
+            "devTools": [
+              "Goland",
+              "Webstorm",
+              "Pycharm",
+              "DataGrid",
+              "Notepad++",
+              "WSL"
+            ]
+          }
+          const Viewer = toastui.Editor;
+          const viewer = new Viewer({
+            el: document.querySelector('#viewer'),
+            initialValue: "```json5 \n" + JSON.stringify(about, undefined, 2) + "\n```",
+          });
+        </script>
+        <div class="comment">
+            {{include "layouts/comment"}}
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="aside">
+    <div class="wrap">
+      <div style="height: 20px;"></div>
+        {{include "layouts/about"}}
+    </div>
+  </div>
+{{end}}
+
+{{define "foot"}}
+
+{{end}}
+

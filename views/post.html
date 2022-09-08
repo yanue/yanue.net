@@ -45,7 +45,10 @@
             </p>
           </div>
         </div>
-        <div id="viewer" class="md-viewer">
+        <div id="viewer" class="md-viewer line-numbers"
+             data-prismjs-copy="复制文本"
+             data-prismjs-copy-error="按Ctrl+C复制"
+             data-prismjs-copy-success="文本已复制！">
           <div style="white-space: pre-line;">
               {{ .post.Content }}
           </div>
@@ -58,6 +61,9 @@
           });
         </script>
         <div class="clear"></div>
+        <div class="comment">
+            {{include "layouts/comment"}}
+        </div>
         <div class="fill-foot"></div>
       </div>
       <div class="footer">
