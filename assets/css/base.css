@@ -87,22 +87,26 @@ a.btn:hover {color: #ffffff;background-color: #d9534f}
   .sidebar {width: 150px;!important}
   .content {left: 151px;right: 0;!important}
   .aside {width: 0;!important}
+  .copyright {width: 150px;!important}
 }
 /*当页面宽度大于1000px且小于1200px的时候执行，1000-1280*/
 @media screen and (min-width: 1000px) and (max-width: 1280px) {
   .sidebar {width: 150px;!important}
   .content {left: 151px;right: 200px;!important}
   .aside {width: 200px;!important}
+  .copyright {width: 150px;!important}
 }
 /*当页面宽度大于1280px且小于1366px的时候执行,1280-1366*/
 @media screen and (min-width: 1280px) and (max-width: 1440px) {
   .sidebar {width: 200px;!important}
   .content {left: 201px;right: 250px;!important}
   .aside {width: 250px;!important}
+  .copyright {width: 200px;!important}
 }
 /*当页面宽度大于1440px且小于1600px的时候执行,1440-1600*/
 @media screen and (min-width: 1440px) and (max-width: 1600px) {
   .sidebar {width: 300px;!important}
   .content {left: 301px;right: 320px;!important}
   .aside {width: 320px;!important}
+  .copyright {width: 300px;!important}
 }
