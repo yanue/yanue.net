@@ -45,11 +45,11 @@ a.btn:hover {color: #ffffff;background-color: #d9534f}
 .sidebar .navbar-header .name {font-size: 16px;color: #0c8999;text-shadow: 1px 2px 3px rgba(121, 7, 7, 0.1);margin-top: 10px;border-bottom: 1px solid #e6e6e6;padding-bottom: 20px;}
 .sidebar .navbar-header .title {font-size: 14px;color: #333;text-shadow: 1px 2px 3px rgba(121, 7, 7, 0.1);margin-top: 20px;overflow: hidden;height: 30px;line-height: 30px;}
 .sidebar .navbar-header .location {font-size: 12px;color: #999;text-shadow: 1px 2px 3px rgba(121, 7, 7, 0.1);margin-top: 10px;border-bottom: 1px solid #e6e6e6;padding-bottom: 20px;}
-.sidebar .navbar-header .map-link {font-size: 14px;color: #333;margin-top: 20px;border-bottom: 1px solid #e6e6e6;padding-bottom: 20px;}
+.sidebar .navbar-header .map-link {font-size: 16px;color: #333;margin-top: 20px;border-bottom: 1px solid #e6e6e6;padding-bottom: 20px;}
 .sidebar .navbar-header .map-link a {display: block;}
 .sidebar .navbar-header .map-link:hover a { transition: all 0.3s ease-in-out;color: #0c8999;}
 .sidebar .menu {padding: 20px 0;}
-.sidebar .menu .menu-item {font-size: 15px;line-height: 40px;text-align: center;}
+.sidebar .menu .menu-item {font-size: 16px;line-height: 50px;text-align: center;}
 .sidebar .menu .menu-item a {color: #000;display: block;}
 .sidebar .menu .menu-item.active {background: #fff;cursor: pointer; transition: all 0.3s ease-in-out;}
 .sidebar .menu .menu-item:hover a, .sidebar .menu .menu-item.active a {color: #0c8999;}

@@ -9,6 +9,8 @@
         <a href="https://nhn.github.io/tui.editor/latest/" target="_blank">tui.editor</a>
       </p>
       <p>源码: <a href="https://github.com/yanue/yanue.net" target="_blank">https://github.com/yanue/yanue.net</a></p>
+      <p>参考ui: <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">https://github.com/cofess/hexo-theme-pure</a>
+      </p>
     </div>
   </div>
 
@@ -35,22 +37,6 @@
           {{ range  $item := .side.Tags }}
             <li>
               <a href="/tags/{{ $item.Name }}">
-                <span class="name">{{ $item.Name }}</span>
-                <label class="num">({{ $item.Count }})</label>
-              </a>
-            </li>
-          {{ end }}
-      </ul>
-    </div>
-  </div>
-
-  <div class="widget">
-    <h3 class="widget-title">归档</h3>
-    <div class="widget-body">
-      <ul class="list-square">
-          {{ range  $item := .side.Archives }}
-            <li>
-              <a href="/archives">
                 <span class="name">{{ $item.Name }}</span>
                 <label class="num">({{ $item.Count }})</label>
               </a>
