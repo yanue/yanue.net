@@ -14,7 +14,7 @@ $(function () {
   var exportName = ""
   var n = 1
 
-  $('#toLatLngBtn').live('click', function (e) {
+  $('#toLatLngBtn').on('click', function (e) {
     exportName = "通过地址解析经纬度(yanue.net)-" + (n++);
     result = [] // 重置数据
     result[0] = ["序号", "输入地址", "解析经度", "解析纬度", "返回信息(encodeURI)"]
@@ -31,7 +31,7 @@ $(function () {
     e.stopImmediatePropagation();
   });
 
-  $('#toAddressBtn').live('click', function (e) {
+  $('#toAddressBtn').on('click', function (e) {
     exportName = "通过经纬度解析地址(yanue.net)-" + (n++);
     result = [] // 重置数据
     result[0] = ["序号", "输入经度", "输入纬度", "解析地址", "返回信息(encodeURI)"]

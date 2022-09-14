@@ -42,11 +42,11 @@
             <p class="meta-word">
               字数统计: {{ .post.Word }}(字)
             </p>
-            {{ if $isLogin }}
-              <p>
-                <a href="/admin?id={{.post.Id}}" class="red" target="_blank">编辑</a>
-              </p>
-            {{ end }}
+              {{ if $isLogin }}
+                <p>
+                  <a href="/admin?id={{.post.Id}}" class="red" target="_blank">编辑</a>
+                </p>
+              {{ end }}
           </div>
         </div>
         <div id="viewer" class="md-viewer line-numbers"
@@ -65,33 +65,32 @@
           });
         </script>
         <div class="clear"></div>
-        <div class="comment">
-            {{include "layouts/comment"}}
-        </div>
-        <div class="fill-foot"></div>
-      </div>
-      <div class="footer">
-        <div class="prev">
-            {{ if gt .prevId 0 }}
-              <a href="/post-{{ .prevId }}.html">
-                < 上一篇 {{ .prevTitle }}
-              </a>
-            {{ else }}
-              <span>
+        <div class="footer">
+          <div class="prev">
+              {{ if gt .prevId 0 }}
+                <a href="/post-{{ .prevId }}.html">
+                  < 上一篇 {{ .prevTitle }}
+                </a>
+              {{ else }}
+                <span>
               < 上一篇 没有了
             </span>
-            {{ end }}
-        </div>
-        <div class="next">
-            {{ if gt .nextId 0 }}
-              <a href="/post-{{ .nextId }}.html">
-                下一篇 {{ .nextTitle }} >
-              </a>
-            {{ else }}
-              <span>
+              {{ end }}
+          </div>
+          <div class="next">
+              {{ if gt .nextId 0 }}
+                <a href="/post-{{ .nextId }}.html">
+                  下一篇 {{ .nextTitle }} >
+                </a>
+              {{ else }}
+                <span>
                下一篇 没有了 >
             </span>
-            {{ end }}
+              {{ end }}
+          </div>
+        </div>
+        <div class="comment">
+            {{include "layouts/comment"}}
         </div>
       </div>
     </div>

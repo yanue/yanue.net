@@ -34,7 +34,7 @@ $(function () {
     // 获取input值进行查询
     'geoLatLng': function (val) {
       var _this = this;
-      $("#getLatLng").live('click', function () {
+      $("#getLatLng").on('click', function () {
         $("#status").css({'display': 'inline-block'});
         var gpsLat = $("#txtGPSLat").val();
         var gpsLng = $("#txtGPSLng").val();

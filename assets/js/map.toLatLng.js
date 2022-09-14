@@ -26,7 +26,7 @@ $(function () {
   });
 
   // 拖动解析
-  $('#address').live('change', function () {
+  $('#address').on('change', function () {
     var addr = $(this).val();
     toLatlng(addr);
   });

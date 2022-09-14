@@ -1,3 +1,48 @@
+/* reset css start*/
+html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, abbr, address, cite, code, del, dfn, em, img, ins, kbd, q, samp, small, strong, sub, sup, var, b, i, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, main, article, aside, canvas, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary, time, mark, audio, video {margin: 0;padding: 0;border: 0;outline: 0;font-size: 100%;vertical-align: baseline;background: transparent;}
+body {line-height: 1;}
+main, article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {display: block;}
+nav, ul {list-style: none;outline: none;}
+blockquote, q {quotes: none;}
+blockquote:before, blockquote:after, q:before, q:after {content: none;}
+a {margin: 0;padding: 0;font-size: 100%;vertical-align: baseline;background: transparent;}
+ins {background-color: #ff9;color: #000;text-decoration: none;}
+mark {background-color: #ff9;padding: 0 4px;color: #666;font-size: 14px;}
+del {text-decoration: line-through;}
+abbr[title], dfn[title] {border-bottom: 1px dotted;cursor: help;}
+table {border-collapse: collapse;border-spacing: 0;}
+hr {display: block;height: 1px;border: 0;border-top: 1px solid #cccccc;margin: 1em 0;padding: 0;}
+input, select {vertical-align: middle;outline: none;}
+/* reset css end*/
+body {background: url("/assets/img/bg.gif");font-size: 12px;color: #444;position: relative;}
+a {color: #555;text-decoration: none;transition: all .2s ease-in-out;}
+#main {}
+textarea {outline: none}
+.left {float: left;}
+.right {float: right;}
+.top {line-height: 30px;height: 30px;background: #4A4A4A;color: #eee;font-size: 12px;}
+.top a {color: #ddd;}
+.top a:hover {color: #4CAE4C;}
+.top .top-nav .arrow {display: inline-block;transition: .3s ease-in;font-weight: 400;}
+.top .top-nav {font-weight: normal;}
+.top .top-nav li {float: left;position: relative;}
+.top .top-nav li:hover {background: #404040;}
+.top .top-nav li:hover .arrow {-webkit-transform: rotate(180deg);transform: rotate(180deg);}
+.top .top-nav li a {padding: 0 12px;display: block;}
+.top .top-nav li .sub-nav {position: absolute;background: #404040;width: 120px;display: none; z-index: 2;}
+.top .right a {display: inline-block;padding: 0 5px;}
+.box {width: 1080px;margin: 0 auto;}
+.clear {clear: both;}
+#header {line-height: 50px;height: 50px;overflow: hidden;background: #fff;border-bottom: 1px solid #e0e0e0;box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.05)}
+#header .nav {}
+#content {margin: 10px 0;}
+.nav {color: #000;font-size: 16px;}
+.nav .gray {font-size: 12px;font-weight: normal;color: #999;}
+#footer {color: #666666;}
+body {font-family: '微软雅黑';}
+.gray {color: gray;}
+.red {color: red;}
+.blue {color: #06f;}
 .breadcrumbs {margin: 0 0 1px 0;padding: 9px 20px 7px 10px;line-height: 24px;background-color: #f6f6f6;}
 .post-detail .post-info {margin-bottom: 1px;color: #999;padding: 10px;background-color: #F9FCFC;}
 .post-detail .post-info .post-title {font-size: 24px;font-weight: normal; line-height: 60px; height: 60px; color: #000; text-align: center; text-shadow: 1px 0 3px rgba(0, 0, 0, .3);}

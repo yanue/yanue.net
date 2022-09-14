@@ -30,7 +30,6 @@ textarea {outline: none}
 .btn.btn-small {padding: 3px 9px;border-radius: 2px;}
 a.btn:hover {color: #ffffff;background-color: #d9534f}
 .icon {width: 1em;height: 1em;vertical-align: -0.15em;fill: currentColor;overflow: hidden;}
-.box {width: 1136px;margin: 0 auto 0 auto;padding-bottom: 20px;}
 .clear {clear: both;}
 ::-webkit-scrollbar {width: 0;height: 0;background: 0 0}
 ::-webkit-scrollbar-thumb {background: rgba(0, 0, 0, 1)}
@@ -39,17 +38,18 @@ a.btn:hover {color: #ffffff;background-color: #d9534f}
 .blue {color: #06f;}
 .main {width: 100%;height: 100%;}
 .wrap {width: 100%;height: 100%;overflow-y: auto;position: relative;}
+.box { padding: 0 30px;}
 .sidebar {width: 300px;background: #FBFBFB;position: fixed;left: 0;top: 0; bottom: 0;border-right: 1px solid #eee;}
 .sidebar .navbar-header { text-align: center; margin-top: 20px; line-height: 100%;}
 .sidebar .navbar-header img.img-avatar {height: 80px;width: 80px;display: block;margin: 0 auto;}
 .sidebar .navbar-header .name {font-size: 16px;color: #0c8999;text-shadow: 1px 2px 3px rgba(121, 7, 7, 0.1);margin-top: 10px;border-bottom: 1px solid #e6e6e6;padding-bottom: 20px;}
-.sidebar .navbar-header .title {font-size: 14px;color: #333;text-shadow: 1px 2px 3px rgba(121, 7, 7, 0.1);margin-top: 20px;}
+.sidebar .navbar-header .title {font-size: 14px;color: #333;text-shadow: 1px 2px 3px rgba(121, 7, 7, 0.1);margin-top: 20px;overflow: hidden;height: 30px;line-height: 30px;}
 .sidebar .navbar-header .location {font-size: 12px;color: #999;text-shadow: 1px 2px 3px rgba(121, 7, 7, 0.1);margin-top: 10px;border-bottom: 1px solid #e6e6e6;padding-bottom: 20px;}
 .sidebar .navbar-header .map-link {font-size: 14px;color: #333;margin-top: 20px;border-bottom: 1px solid #e6e6e6;padding-bottom: 20px;}
 .sidebar .navbar-header .map-link a {display: block;}
 .sidebar .navbar-header .map-link:hover a { transition: all 0.3s ease-in-out;color: #0c8999;}
 .sidebar .menu {padding: 20px 0;}
-.sidebar .menu .menu-item {font-size: 15px;padding: 0 0 0 30px;line-height: 40px;}
+.sidebar .menu .menu-item {font-size: 15px;line-height: 40px;text-align: center;}
 .sidebar .menu .menu-item a {color: #000;display: block;}
 .sidebar .menu .menu-item.active {background: #fff;cursor: pointer; transition: all 0.3s ease-in-out;}
 .sidebar .menu .menu-item:hover a, .sidebar .menu .menu-item.active a {color: #0c8999;}
@@ -62,10 +62,9 @@ a.btn:hover {color: #ffffff;background-color: #d9534f}
 .content .wrap .item .article-title { font-size: 30px;font-weight: normal;color: #000;padding: 40px 0 15px 0; }
 .content .wrap .md-viewer {font-size: 14px;}
 .content .wrap .fill-foot {height: 50px;}
-.content .wrap .footer {position: fixed;bottom: 0;left: 301px;right: 252px;border-top: 1px solid #eee;background: #FBFBFB;height: 50px;line-height: 50px;padding: 0 20px;color: #999;}
-.content .wrap .footer a {font-size: 14px;}
-.content .wrap .footer .prev { width: 40%;float: left;overflow: hidden;}
-.content .wrap .footer .next { width: 40%;float: right;overflow: hidden;text-align: right;}
+.content .wrap .footer {background: #FBFBFB;height: 50px;line-height: 50px;padding: 0 20px;color: #999;overflow: hidden;font-size: 14px;}
+.content .wrap .footer .prev { width: 50%;float: left;overflow: hidden;}
+.content .wrap .footer .next { width: 50%;float: right;overflow: hidden;text-align: right;}
 .content .wrap .more {line-height: 40px;font-size: 14px;background: #f9f7fd;border: 1px solid #f0f0f0;text-align: center;margin-top: 20px;}
 .content .wrap .article-header {margin-top: 30px;margin-bottom: 20px;font-size: 14px;color: #666;}
 .content .wrap .article-header .title { font-weight: 500;font-size: 30px;line-height: 50px;color: #000;}
@@ -82,3 +81,28 @@ a.btn:hover {color: #ffffff;background-color: #d9534f}
 .widget .label {font-weight: 400;background-color: #e0e0e0;border-radius: 5px;display: inline-block;padding: 0 6px;color: #666;font-size: 12px;}
 .widget .num {font-size: 12px;color: #999;}
 .widget .list-square li:before {color: #ccc;content: "▪";font-size: 12px;margin-right: 6px;transition: .2s ease;}
+.copyright {font-size: 12px;position: absolute;bottom: 10px;left: 0;width: 300px;height: 30px;line-height: 30px;text-align: center;color: #999;}
+/*当页面宽度小于1000px的时候执行<1000*/
+@media screen and (max-width: 1000px) {
+  .sidebar {width: 150px;!important}
+  .content {left: 151px;right: 0;!important}
+  .aside {width: 0;!important}
+}
+/*当页面宽度大于1000px且小于1200px的时候执行，1000-1280*/
+@media screen and (min-width: 1000px) and (max-width: 1280px) {
+  .sidebar {width: 150px;!important}
+  .content {left: 151px;right: 200px;!important}
+  .aside {width: 200px;!important}
+}
+/*当页面宽度大于1280px且小于1366px的时候执行,1280-1366*/
+@media screen and (min-width: 1280px) and (max-width: 1440px) {
+  .sidebar {width: 200px;!important}
+  .content {left: 201px;right: 250px;!important}
+  .aside {width: 250px;!important}
+}
+/*当页面宽度大于1440px且小于1600px的时候执行,1440-1600*/
+@media screen and (min-width: 1440px) and (max-width: 1600px) {
+  .sidebar {width: 300px;!important}
+  .content {left: 301px;right: 320px;!important}
+  .aside {width: 320px;!important}
+}

@@ -28,14 +28,13 @@
     </div>
   </div>
 
-
   <div class="widget">
-    <h3 class="widget-title">归档</h3>
+    <h3 class="widget-title">标签</h3>
     <div class="widget-body">
       <ul class="list-square">
-          {{ range  $item := .side.Archives }}
+          {{ range  $item := .side.Tags }}
             <li>
-              <a href="/archives/{{ $item.Name }}">
+              <a href="/tags/{{ $item.Name }}">
                 <span class="name">{{ $item.Name }}</span>
                 <label class="num">({{ $item.Count }})</label>
               </a>
@@ -45,14 +44,13 @@
     </div>
   </div>
 
-
   <div class="widget">
-    <h3 class="widget-title">标签</h3>
+    <h3 class="widget-title">归档</h3>
     <div class="widget-body">
       <ul class="list-square">
-          {{ range  $item := .side.Tags }}
+          {{ range  $item := .side.Archives }}
             <li>
-              <a href="/tags/{{ $item.Name }}">
+              <a href="/archives">
                 <span class="name">{{ $item.Name }}</span>
                 <label class="num">({{ $item.Count }})</label>
               </a>
