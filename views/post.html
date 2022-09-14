@@ -2,8 +2,8 @@
   <link rel="stylesheet" href="/assets/toastui/prism.css">
   <link rel="stylesheet" href="/assets/toastui/toastui-editor-viewer.min.css">
 
-  <script src="/assets/toastui/toastui-editor-viewer.min.js"></script>
   <script src="/assets/toastui/prism.js"></script>
+  <script src="/assets/toastui/toastui-editor-viewer.min.js"></script>
   <script src="/assets/toastui/toastui-editor-plugin-code-syntax-highlight-all.min.js"></script>
 {{end}}
 
@@ -12,10 +12,9 @@
   <div class="content">
     <div class="wrap">
       <div class="box">
-        <div class="item">
-          <h2 class="title">
-              {{ .post.Title}}
-          </h2>
+          {{ $isLogin:=.isLogin }}
+        <div class="article-header">
+          <h2 class="title">{{ .post.Title }}</h2>
           <div class="meta">
             <p class="meta-date">
               日期
@@ -25,7 +24,7 @@
             <p class="meta-cat">
               分类
               <i class="icon icon-folder"></i>
-              <a href="/cat/{{ .post.Cat }}">{{.post.Cat}}</a>
+              <a href="/categories/{{ .post.Cat }}">{{.post.Cat}}</a>
             </p>
             <p class="meta-tag">
               标签
@@ -43,6 +42,11 @@
             <p class="meta-word">
               字数统计: {{ .post.Word }}(字)
             </p>
+            {{ if $isLogin }}
+              <p>
+                <a href="/admin?id={{.post.Id}}" class="red" target="_blank">编辑</a>
+              </p>
+            {{ end }}
           </div>
         </div>
         <div id="viewer" class="md-viewer line-numbers"
@@ -92,11 +96,11 @@
       </div>
     </div>
   </div>
+  <div class="aside">
+      {{include "layouts/aside"}}
+  </div>
 {{end}}
 
-<div class="aside">
-    {{include "layouts/aside"}}
-</div>
 
 {{define "foot"}}
 {{end}}

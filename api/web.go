@@ -1,6 +1,7 @@
 package api
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"math"
 	"net/http"
@@ -21,14 +22,54 @@ func (s *WebHandler) Home(c *gin.Context) {
 	list, _ := model.Model.GetPostList("published=1", 0, 9)
 	cats, _ := model.Model.GetCats()
 	c.HTML(http.StatusOK, "index", gin.H{
-		"list": adaptPosts(list, cats),
-		"side": getSideData(),
+		"list":      adaptPosts(list, cats),
+		"side":      getSideData(),
+		"activeNav": "home",
 	})
 }
 
 func (s *WebHandler) Archives(c *gin.Context) {
 	c.HTML(http.StatusOK, "archives", gin.H{
-		"side": getSideData(),
+		"side":      getSideData(),
+		"title":     "归档",
+		"activeNav": "archives",
+		"find":      "",
+	})
+}
+
+func (s *WebHandler) Tags(c *gin.Context) {
+	side := getSideData()
+	cat := c.Param("tag")
+	find := ""
+	for _, archive := range side.Tags {
+		if cat == archive.Name {
+			find = cat
+		}
+	}
+	c.HTML(http.StatusOK, "tags", gin.H{
+		"side":      getSideData(),
+		"find":      find,
+		"title":     "标签",
+		"activeNav": "tags",
+		"count":     len(side.Tags),
+	})
+}
+
+func (s *WebHandler) Categories(c *gin.Context) {
+	side := getSideData()
+	cat := c.Param("cat")
+	find := ""
+	for _, archive := range side.Cats {
+		if cat == archive.Name {
+			find = cat
+		}
+	}
+	c.HTML(http.StatusOK, "categories", gin.H{
+		"side":      side,
+		"find":      find,
+		"title":     "分类",
+		"activeNav": "categories",
+		"count":     len(side.Cats),
 	})
 }
 
@@ -55,6 +96,7 @@ func (s *WebHandler) Post(c *gin.Context) {
 		}
 		// 更新浏览次数
 		_ = model.Model.PostView(postId)
+		_, isLogin := isAdminLogon(c)
 		newPost := adaptPost(post, cats)
 		c.HTML(http.StatusOK, "post", gin.H{
 			"title":     post.Title,
@@ -64,6 +106,8 @@ func (s *WebHandler) Post(c *gin.Context) {
 			"nextId":    nextId,
 			"prevTitle": prevTitle,
 			"prevId":    prevId,
+			"isLogin":   isLogin,
+			"activeNav": "home",
 			"side":      getSideData(),
 		})
 	}
@@ -90,13 +134,18 @@ func (s *WebHandler) More(c *gin.Context) {
 		"page":      page,
 		"size":      pageSize,
 		"totalPage": totalPage,
+		"activeNav": "home",
+		"title":     fmt.Sprintf("第%v页", page),
 		"pages":     genPage("/more", page, totalPage),
 		"side":      getSideData(),
 	})
 }
 
 func (s *WebHandler) About(c *gin.Context) {
-	c.HTML(http.StatusOK, "about", gin.H{})
+	c.HTML(http.StatusOK, "about", gin.H{
+		"title":     "关于我",
+		"activeNav": "about",
+	})
 }
 
 func (s *WebHandler) Map(c *gin.Context) {

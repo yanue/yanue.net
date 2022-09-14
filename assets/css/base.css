@@ -16,17 +16,19 @@ input, select {vertical-align: middle;outline: none;}
 /* reset css end*/
 body {font-size: 12px;color: #444;position: relative;font-family: PingHei, "PingFang SC", "Helvetica Neue", "Work Sans", "Hiragino Sans GB", "Microsoft YaHei", SimSun, sans-serif}
 a {color: #333;text-decoration: none;transition: all .2s ease-in-out;}
-a:hover {color: #266eb6;}
+a:hover {color: #0c8999;}
+a.active {color: #0c8999;}
+a .num {font-size: 12px;color: #999;display: inline-block;}
 textarea {outline: none}
 .left {float: left;}
 .right {float: right;}
 .btn {display: inline-block;*display: inline;*zoom: 1;padding: 6px 12px 4px;margin-bottom: 0;font-size: 12px;line-height: 20px;text-align: center;vertical-align: middle;cursor: pointer;border: 0;border-radius: 0;}
-.btn-primary {color: #ffffff;background-color: #428bca}
+.btn-primary {color: #ffffff;background-color: #0c8999}
 .btn-danger {color: #ffffff;background-color: #d9534f}
 .btn:hover, .btn:focus {text-decoration: none}
-.btn:focus {outline: thin dotted #333;outline-offset: -2px}
-.btn-block {display: block;width: 100%;padding-left: 0;padding-right: 0;-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box}
-.btn-block + .btn-block {margin-top: 5px}
+.btn:focus {outline: thin dotted #333;outline-offset: -2px;}
+.btn.btn-small {padding: 3px 9px;border-radius: 2px;}
+a.btn:hover {color: #ffffff;background-color: #d9534f}
 .icon {width: 1em;height: 1em;vertical-align: -0.15em;fill: currentColor;overflow: hidden;}
 .box {width: 1136px;margin: 0 auto 0 auto;padding-bottom: 20px;}
 .clear {clear: both;}
@@ -40,34 +42,39 @@ textarea {outline: none}
 .sidebar {width: 300px;background: #FBFBFB;position: fixed;left: 0;top: 0; bottom: 0;border-right: 1px solid #eee;}
 .sidebar .navbar-header { text-align: center; margin-top: 20px; line-height: 100%;}
 .sidebar .navbar-header img.img-avatar {height: 80px;width: 80px;display: block;margin: 0 auto;}
-.sidebar .navbar-header .name {font-size: 16px;color: #8254ff;text-shadow: 1px 2px 3px rgba(121, 7, 7, 0.1);margin-top: 10px;border-bottom: 1px solid #e6e6e6;padding-bottom: 20px;}
+.sidebar .navbar-header .name {font-size: 16px;color: #0c8999;text-shadow: 1px 2px 3px rgba(121, 7, 7, 0.1);margin-top: 10px;border-bottom: 1px solid #e6e6e6;padding-bottom: 20px;}
 .sidebar .navbar-header .title {font-size: 14px;color: #333;text-shadow: 1px 2px 3px rgba(121, 7, 7, 0.1);margin-top: 20px;}
 .sidebar .navbar-header .location {font-size: 12px;color: #999;text-shadow: 1px 2px 3px rgba(121, 7, 7, 0.1);margin-top: 10px;border-bottom: 1px solid #e6e6e6;padding-bottom: 20px;}
 .sidebar .navbar-header .map-link {font-size: 14px;color: #333;margin-top: 20px;border-bottom: 1px solid #e6e6e6;padding-bottom: 20px;}
-.sidebar .navbar-header .map-link:hover a { transition: all 0.3s ease-in-out;color: #8254ff;}
+.sidebar .navbar-header .map-link a {display: block;}
+.sidebar .navbar-header .map-link:hover a { transition: all 0.3s ease-in-out;color: #0c8999;}
 .sidebar .menu {padding: 20px 0;}
 .sidebar .menu .menu-item {font-size: 15px;padding: 0 0 0 30px;line-height: 40px;}
-.sidebar .menu .menu-item:hover {background: #fff;cursor: pointer;}
-.sidebar .menu .menu-item a {color: #000;}
-.sidebar .menu .menu-item:hover a { transition: all 0.3s ease-in-out;color: #8254ff;}
+.sidebar .menu .menu-item a {color: #000;display: block;}
+.sidebar .menu .menu-item.active {background: #fff;cursor: pointer; transition: all 0.3s ease-in-out;}
+.sidebar .menu .menu-item:hover a, .sidebar .menu .menu-item.active a {color: #0c8999;}
 .content {position: fixed;left: 301px;right: 400px;top: 0;bottom: 0;}
 .content .wrap .head {border-bottom: 1px solid #e0e0e0;font-size: 16px;height: 50px;line-height: 50px;}
 .content .wrap .item {border-bottom: 1px solid #eee;}
 .content .wrap .item .title {font-size: 18px;font-weight: normal;color: #000;padding: 30px 0 12px 0;}
-.content .wrap .item .meta {font-size: 12px;color: #999;padding: 0 0 15px 0;}
-.content .wrap .item .meta p {display: inline-block;margin-right: 15px;}
-.content .wrap .md-viewer {padding: 10px 0 0 0;font-size: 14px;}
+.content .wrap .meta {font-size: 12px;color: #999;padding: 0 0 15px 0;}
+.content .wrap .meta p {display: inline-block;margin-right: 15px;}
+.content .wrap .item .article-title { font-size: 30px;font-weight: normal;color: #000;padding: 40px 0 15px 0; }
+.content .wrap .md-viewer {font-size: 14px;}
 .content .wrap .fill-foot {height: 50px;}
 .content .wrap .footer {position: fixed;bottom: 0;left: 301px;right: 252px;border-top: 1px solid #eee;background: #FBFBFB;height: 50px;line-height: 50px;padding: 0 20px;color: #999;}
 .content .wrap .footer a {font-size: 14px;}
 .content .wrap .footer .prev { width: 40%;float: left;overflow: hidden;}
 .content .wrap .footer .next { width: 40%;float: right;overflow: hidden;text-align: right;}
-.content .wrap .more {line-height: 40px;font-size: 16px;background: #f6f6f6;border: 1px solid #f0f0f0;text-align: center;margin-top: 20px;}
+.content .wrap .more {line-height: 40px;font-size: 14px;background: #f9f7fd;border: 1px solid #f0f0f0;text-align: center;margin-top: 20px;}
 .content .wrap .article-header {margin-top: 30px;margin-bottom: 20px;font-size: 14px;color: #666;}
-.content .wrap .article-header .title { font-weight: 500;font-size: 30px;line-height: 50px;color: #000;margin-bottom: 10px;}
+.content .wrap .article-header .title { font-weight: 500;font-size: 30px;line-height: 50px;color: #000;}
+.content .wrap .article-header .text-muted { line-height: 30px;height: 30px;}
+.content .wrap .nav {font-size: 16px;}
+.content .wrap .nav a {display: inline-block;padding-right: 8px;}
 .content .panel {margin-top: 10px;line-height: 32px;font-size: 16px;}
 .content .panel .panel-title { font-weight: 500;font-size: 20px;height: 50px;line-height: 50px;color: #000;}
-.content .panel .num { color: #999;display: inline-block;}
+.content .panel .num { color: #999;display: inline-block;font-size: 13px;}
 .content .panel .panel-body .date {color: #999;display: inline-block;margin-right: 20px;}
 .aside {position: fixed;width: 398px;background: #FBFBFB;right: 0;top: 0;bottom: 0;border-left: 1px solid #eee;}
 .widget {margin: 20px 0;line-height: 180%;font-size: 14px;padding: 0 20px;}

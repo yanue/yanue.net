@@ -10,14 +10,15 @@
         <header class="article-header">
           <h1 class="title">归档</h1>
           <p class="text-muted">
+            共 {{ .side.Count }} 篇文章
           </p>
         </header>
         <ul>
-            {{ range $item := .side.archives}}
+            {{ range $item := .side.Archives}}
               <li class="panel">
                 <h2 class="panel-title">
-                  <span>{{ $item.Month }}</span>
-                  <span class="num">({{ $item.Count }})</span>
+                  <span class="name">{{ $item.Name }}</span>
+                  <label class="num">({{ $item.Count }})</label>
                 </h2>
                 <div class="panel-body">
                     {{ range  $item.List }}

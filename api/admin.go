@@ -20,11 +20,8 @@ func NewAdminHandler() *AdminHandler {
 var pageSize = 20
 
 func (s *AdminHandler) Admin(c *gin.Context) {
-	// 设置cookie
-	token, err := c.Cookie("token")
-	uid, err := c.Cookie("uid")
-	user, err := model.UserModel.TokenVerify(util.ToInt(uid), token)
-	if err != nil {
+	user, isLogin := isAdminLogon(c)
+	if !isLogin {
 		c.HTML(http.StatusOK, "admin/login.html", gin.H{})
 		return
 	}
@@ -55,7 +52,7 @@ func (s *AdminHandler) Admin(c *gin.Context) {
 		"id":        id,
 		"page":      page,
 		"size":      pageSize,
-		"post":      post,
+		"post":      adaptPost(post, cats),
 		"cats":      cats,
 		"user":      user.Id,
 		"pages":     genPage("/admin", page, totalPage),

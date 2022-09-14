@@ -26,7 +26,7 @@
     </div>
     <div id="main-navbar">
       <ul class="menu ">
-        <li class="menu-item menu-item-home">
+        <li class="menu-item {{if eq .activeNav "home"}}active{{end}}">
           <a href="/." class="link">
             <i class="icon icon-home-fill">
             </i>
@@ -35,7 +35,7 @@
             </span>
           </a>
         </li>
-        <li class="menu-item">
+        <li class="menu-item {{if eq .activeNav "archives"}}active{{end}}">
           <a href="/archives" class="link">
             <i class="icon icon-archives-fill">
             </i>
@@ -44,8 +44,8 @@
             </span>
           </a>
         </li>
-        <li class="menu-item">
-          <a href="/cat" class="link">
+        <li class="menu-item {{if eq .activeNav "categories"}}active{{end}}">
+          <a href="/categories" class="link">
             <i class="icon icon-folder">
             </i>
             <span class="menu-title">
@@ -53,7 +53,7 @@
             </span>
           </a>
         </li>
-        <li class="menu-item">
+        <li class="menu-item {{if eq .activeNav "tags"}}active{{end}}">
           <a href="/tags" class="link">
             <i class="icon icon-tags">
             </i>
@@ -62,7 +62,7 @@
             </span>
           </a>
         </li>
-        <li class="menu-item menu-item-about">
+        <li class="menu-item {{if eq .activeNav "about"}}active{{end}}">
           <a href="/about" class="link">
             <i class="icon icon-cup-fill">
             </i>

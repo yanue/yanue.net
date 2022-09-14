@@ -39,6 +39,7 @@ a {text-decoration: none;}
 .content .form .fields {border: 1px solid #e0e0e0;margin-bottom: 10px;padding: 10px;border-radius: 3px;}
 .content .form .column { column-count: 2; column-rule-style: solid; column-rule-width: 1px;column-rule-color: #e0e0e0; column-gap: 40px;}
 .content .form .label {width: 120px;text-align: left;display: inline-block;}
+.title .gray {color: #999;font-size: 12px;}
 .btn {display: inline-block;*display: inline;*zoom: 1;padding: 6px 12px 4px;margin-bottom: 0;font-size: 12px;line-height: 20px;text-align: center;vertical-align: middle;cursor: pointer;border: 0;border-radius: 0;}
 .btn-primary {color: #ffffff;background-color: #428bca}
 .btn-danger {color: #ffffff;background-color: #d9534f}

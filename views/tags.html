@@ -1,0 +1,59 @@
+{{define "head"}}
+
+{{end}}
+
+
+{{define "content"}}
+  <div class="content">
+    <div class="wrap">
+        {{ $find:=.find }}
+      <div class="box">
+        <header class="article-header">
+          <h1 class="title">标签</h1>
+          <div class="text-muted">
+            共 {{ .count }} 个分类
+          </div>
+        </header>
+        <div class="nav">
+          <a href="/tags" class="{{ if eq $find "" }}active{{end}}">全部</a>
+            {{ range  $item := .side.Tags  }}
+              <a href="/tags/{{ $item.Name }}" class="{{ if eq $find $item.Name }}active{{end}}">
+                <span class="name">{{ $item.Name }}</span>
+                <label class="num">({{ $item.Count }})</label>
+              </a>
+            {{ end }}
+        </div>
+        <ul>
+            {{ range $item := .side.Tags}}
+                {{ if or (eq $find $item.Name ) (eq $find "") }}
+                  <li class="panel">
+                    <h2 class="panel-title">
+                      <span>#{{ $item.Name }}</span>
+                      <span class="num">({{ $item.Count }})</span>
+                    </h2>
+                    <div class="panel-body">
+                        {{ range  $item.List }}
+                          <p class="sub-title">
+                            <a href="/post-{{ .Id }}.html">
+                              <span class="date">{{ .Date }}</span>
+                              <span>{{.Title}}</span>
+                              <span class="num">({{ .Views }}次浏览)</span>
+                            </a>
+                          </p>
+                        {{ end }}
+                    </div>
+                  </li>
+                {{ end }}
+            {{ end }}
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="aside">
+      {{include "layouts/aside"}}
+  </div>
+{{end}}
+
+{{define "foot"}}
+
+{{end}}

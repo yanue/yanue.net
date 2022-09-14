@@ -16,11 +16,11 @@
     <h3 class="widget-title">分类</h3>
     <div class="widget-body">
       <ul class="list-square">
-          {{ range $key, $value := .side.cats }}
+          {{ range  $item := .side.Cats  }}
             <li>
-              <a href="/cat/{{ $key }}">
-                <span>{{ $key }}</span>
-                <label class="num">({{ $value }})</label>
+              <a href="/categories/{{ $item.Name }}">
+                <span class="name">{{ $item.Name }}</span>
+                <label class="num">({{ $item.Count }})</label>
               </a>
             </li>
           {{ end }}
@@ -33,10 +33,10 @@
     <h3 class="widget-title">归档</h3>
     <div class="widget-body">
       <ul class="list-square">
-          {{ range  $item := .side.archives }}
+          {{ range  $item := .side.Archives }}
             <li>
-              <a href="/tag/{{ $item.Month }}">
-                <span>{{ $item.Month }}</span>
+              <a href="/archives/{{ $item.Name }}">
+                <span class="name">{{ $item.Name }}</span>
                 <label class="num">({{ $item.Count }})</label>
               </a>
             </li>
@@ -50,11 +50,11 @@
     <h3 class="widget-title">标签</h3>
     <div class="widget-body">
       <ul class="list-square">
-          {{ range $key, $value := .side.tags }}
+          {{ range  $item := .side.Tags }}
             <li>
-              <a href="/cat/{{ $key }}">
-                <span>{{ $key }}</span>
-                <label class="num">({{ $value }})</label>
+              <a href="/tags/{{ $item.Name }}">
+                <span class="name">{{ $item.Name }}</span>
+                <label class="num">({{ $item.Count }})</label>
               </a>
             </li>
           {{ end }}

@@ -2,10 +2,12 @@ package api
 
 import (
 	"fmt"
+	"github.com/gin-gonic/gin"
 	"sort"
 	"strings"
 	"time"
 	"yanue/model"
+	"yanue/util"
 )
 
 type Post struct {
@@ -51,41 +53,41 @@ func genPage(path string, page int, totalPage int) []Page {
 }
 
 type Archive struct {
-	Month string
 	Count int
+	Name  string
 	List  []*Post
 }
 
-func doArchive(list []*model.Post, catNames map[int]string) (archives []Archive, tags map[string]int, cats map[string]int) {
+func doArchive(list []*model.Post, catNames map[int]string) (archives, tags, cats []Archive) {
 	archiveMaps := make(map[string][]*Post, 0)
-	tags = make(map[string]int, 0)
-	cats = make(map[string]int, 0)
-	catCounts := make(map[int]int, 0)
+	catMaps := make(map[string][]*Post, 0)
+	tagMaps := make(map[string][]*Post, 0)
 	for _, post := range list {
 		item := adaptPost(post, catNames)
 		for _, tag := range item.Tags {
-			tags[tag] += 1
+			tagMaps[tag] = append(tagMaps[tag], item)
 		}
-		catCounts[post.Cid] += 1
+		catMaps[item.Cat] = append(catMaps[item.Cat], item)
 		month := time.Unix(int64(post.Created), 0).Format("2006年01月")
 		archiveMaps[month] = append(archiveMaps[month], item)
 	}
-	for cid, count := range catCounts {
-		cats[catNames[cid]] = count
+	for name, posts := range archiveMaps {
+		archives = append(archives, Archive{Name: name, Count: len(posts), List: posts})
+	}
+	for name, posts := range catMaps {
+		cats = append(cats, Archive{Name: name, Count: len(posts), List: posts})
+	}
+	for name, posts := range tagMaps {
+		tags = append(tags, Archive{Name: name, Count: len(posts), List: posts})
 	}
 	sort.SliceStable(archives, func(i int, j int) bool {
-		return archives[i].Month > archives[j].Month
+		return archives[i].Name > archives[j].Name
 	})
-	archives = make([]Archive, 0)
-	for month, posts := range archiveMaps {
-		archives = append(archives, Archive{
-			Month: month,
-			Count: len(posts),
-			List:  posts,
-		})
-	}
-	sort.SliceStable(archives, func(i int, j int) bool {
-		return archives[i].Month > archives[j].Month
+	sort.SliceStable(cats, func(i int, j int) bool {
+		return cats[i].Name > cats[j].Name
+	})
+	sort.SliceStable(tags, func(i int, j int) bool {
+		return tags[i].Name > tags[j].Name
 	})
 	return
 }
@@ -106,13 +108,39 @@ func getTags(tagStr string) (tags []string) {
 	return
 }
 
-func getSideData() (data map[string]any) {
+type SideData struct {
+	Archives []Archive
+	Tags     []Archive
+	Cats     []Archive
+	Count    int
+}
+
+func getSideData() (data SideData) {
 	list, _ := model.Model.GetPostList("published=1", 0, 1000)
 	catNames, _ := model.Model.GetCats()
 	archives, tags, cats := doArchive(list, catNames)
-	data = make(map[string]any, 0)
-	data["archives"] = archives
-	data["tags"] = tags
-	data["cats"] = cats
+	data = SideData{
+		Archives: archives,
+		Tags:     tags,
+		Cats:     cats,
+		Count:    len(list),
+	}
+	return
+}
+
+func isAdminLogon(c *gin.Context) (user *model.AdminUser, ok bool) {
+	var err error
+	// 设置cookie
+	token, err := c.Cookie("token")
+	uid, err := c.Cookie("uid")
+	user, err = model.UserModel.TokenVerify(util.ToInt(uid), token)
+	if err != nil {
+		return
+	}
+	// 登录已过期
+	if time.Now().Unix()-int64(user.LastLogin) > 12*3600 {
+		return
+	}
+	ok = true
 	return
 }

@@ -7,10 +7,15 @@
   <title>yanue-后台管理中心</title>
   <link rel="stylesheet" href="/assets/css/admin.css">
   <link rel="stylesheet" href="/assets/toastui/prism.css">
-  <link href="/assets/toastui/toastui-editor.min.css" rel="stylesheet"/>
-  <script src="/assets/toastui/toastui-editor-all.min.js"></script>
+  <link rel="stylesheet" href="/assets/toastui/color-picker.min.css">
+  <link rel="stylesheet" href="/assets/toastui/toastui-editor.min.css"/>
+  <link rel="stylesheet" href="/assets/toastui/toastui-editor-plugin-code-syntax-highlight.min.css"/>
+  <link rel="stylesheet" href="/assets/toastui/toastui-editor-plugin-color-syntax.min.css"/>
   <script src="/assets/toastui/prism.js"></script>
+  <script src="/assets/toastui/color-picker.min.js"></script>
+  <script src="/assets/toastui/toastui-editor-all.min.js"></script>
   <script src="/assets/toastui/toastui-editor-plugin-code-syntax-highlight-all.min.js"></script>
+  <script src="/assets/toastui/toastui-editor-plugin-color-syntax.min.js"></script>
 </head>
 <body>
 {{$id := .id}}
@@ -77,7 +82,9 @@
           </div>
             {{ if gt .id 0 }}
               <div class="title">
-                修改文章 <span>(<a href="/post/{{ .post.Id }}" target="_blank">查看</a>)</span>
+                修改文章 <span>(<a href="/post/{{ .post.Id }}" target="_blank">查看{{ .post.Id }}</a>)</span>
+                <span class="gray">发布时间: {{ .post.Time }}</span>
+                <span class="gray">浏览次数: {{ .post.Views }}</span>
               </div>
             {{ else }}
               <h2 class="title">
@@ -90,16 +97,16 @@
               <div>
                 <p>
                   <span class="label">标题</span>
-                  <input type="text" name="title" id="title" class="txt" value="{{.post.Title}}" style="width: 500px;">
+                  <input type="text" name="title" value="{{.post.Title}}" style="width: 500px;">
                   <span style="color: #f00;">*</span>
                 </p>
                 <p>
                   <span class="label">分类</span>
                   <select name="cid">
-                      {{ range .cats }}
-                        <option value="{{ .Id }}"
-                                {{ if eq .Id $cid }} selected {{ end}}
-                        >{{ .Name }}</option>
+                      {{ range $_id,$_name := .cats }}
+                        <option value="{{ $_id }}"
+                                {{ if eq $_id $cid }} selected {{ end}}
+                        >{{ $_name }}</option>
                       {{ end }}
                   </select>
                 </p>
@@ -120,7 +127,7 @@
               <div>
                 <p>
                   <span class="label">标签</span>
-                  <input type="text" class="txt" value="{{.post.Tags}}" style="width: 500px;">
+                  <input type="text" name="tags" value="{{.post.Post.Tags}}" style="width: 500px;">
                 </p>
                 <p>
                   <span class="label">是否发布</span>
@@ -166,15 +173,14 @@
             window.onload = function () {
               const id = {{ $id }}
               const Editor = toastui.Editor;
-              const {codeSyntaxHighlight} = Editor.plugin;
-              const token = ""
+              const {codeSyntaxHighlight, colorSyntax} = Editor.plugin;
               const editor = new Editor({
                 el: document.querySelector('#editor'),
-                height: '760px',
+                height: '720px',
                 initialEditType: 'markdown',
                 previewStyle: 'vertical',
                 initialValue: '{{ .post.Content }}',
-                plugins: [[codeSyntaxHighlight, {highlighter: Prism}]]
+                plugins: [[codeSyntaxHighlight, {highlighter: Prism}], colorSyntax]
               });
 
               document.querySelector('#postForm').addEventListener('submit', (e) => {
