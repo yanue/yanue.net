@@ -4,16 +4,15 @@
  * @author NHN FE Development Lab <dl_javascript@nhn.com>
  * @license MIT
  */
-.ProseMirror {font-family: "Helvetica Neue", Helvetica, Arial, "PingFang SC", "Hiragino Sans GB", "Heiti SC", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;color: #222;font-size: 14px;overflow-y: auto;overflow-X: hidden;height: calc(100% - 36px)}
+.ProseMirror {color: #222;font-size: 14px;overflow-y: auto;overflow-X: hidden;height: calc(100% - 36px)}
 .ProseMirror .placeholder {color: #999}
 .ProseMirror-selectednode, .ProseMirror:focus {outline: none}
 .html-block.ProseMirror-selectednode, table.ProseMirror-selectednode {border-radius: 2px;outline: 2px solid #00a9ff}
-.toastui-editor-contents {margin: 0;padding: 0;font-size: 15px;font-family: "Helvetica Neue", Helvetica, Arial, "PingFang SC", "Hiragino Sans GB", "Heiti SC", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;z-index: 20}
-.toastui-editor-contents :not(table) {line-height: 160%;box-sizing: content-box}
+.toastui-editor-contents {font-family: 'Open Sans', 'Noto Sans SC', sans-serif;line-height: 1.8em;font-size: 16px;color: #000;}
+.toastui-editor-contents :not(table) {line-height: 1.8em;box-sizing: content-box}
 .toastui-editor-contents pre {font-size: 13px;}
 .toastui-editor-contents address, .toastui-editor-contents cite, .toastui-editor-contents dfn, .toastui-editor-contents em, .toastui-editor-contents i, .toastui-editor-contents var {font-style: italic}
 .toastui-editor-contents strong {font-weight: 500}
-.toastui-editor-contents p {margin: 10px 0;color: #222}
 .toastui-editor-contents > div > div:first-of-type h1, .toastui-editor-contents > h1:first-of-type {margin-top: 14px}
 .toastui-editor-contents h1, .toastui-editor-contents h2, .toastui-editor-contents h3, .toastui-editor-contents h4, .toastui-editor-contents h5, .toastui-editor-contents h6 {font-weight: 700;color: #222}
 .toastui-editor-contents h1 {font-size: 24px;line-height: 28px;border-bottom: 3px double #999;margin: 52px 0 15px;padding-bottom: 7px}
