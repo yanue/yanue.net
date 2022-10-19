@@ -1,10 +1,7 @@
 {{define "head"}}
   <link rel="stylesheet" href="/assets/toastui/prism.css">
-  <link rel="stylesheet" href="/assets/toastui/toastui-editor-viewer.min.css">
-
+  <link rel="stylesheet" href="/assets/css/markdown.css">
   <script src="/assets/toastui/prism.js"></script>
-  <script src="/assets/toastui/toastui-editor-viewer.min.js"></script>
-  <script src="/assets/toastui/toastui-editor-plugin-code-syntax-highlight-all.min.js"></script>
 {{end}}
 
 
@@ -49,21 +46,9 @@
               {{ end }}
           </div>
         </div>
-        <div id="viewer" class="md-viewer line-numbers"
-             data-prismjs-copy="复制文本"
-             data-prismjs-copy-error="按Ctrl+C复制"
-             data-prismjs-copy-success="文本已复制！">
-          <div style="white-space: pre-line;">
-              {{ .post.Content }}
-          </div>
+        <div class="markdown-body output_wrapper">
+            {{ .post.Content | unescape }}
         </div>
-        <script class="code-js">
-          const Viewer = toastui.Editor;
-          const viewer = new Viewer({
-            el: document.querySelector('#viewer'),
-            initialValue: "{{ .post.Content }}",
-          });
-        </script>
         <div class="clear"></div>
         <div class="footer">
           <div class="prev">

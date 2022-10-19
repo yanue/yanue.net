@@ -11,6 +11,7 @@ require (
 	github.com/gin-contrib/sessions v0.0.5
 	github.com/gin-contrib/static v0.0.0-20191128031702-f81c604d8ac2
 	github.com/gin-gonic/gin v1.7.7
+	github.com/gomarkdown/markdown v0.0.0-20221013030248-663e2500819c
 	gorm.io/driver/sqlite v1.3.6
 	gorm.io/gorm v1.23.8
 )

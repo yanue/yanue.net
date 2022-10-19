@@ -3,6 +3,8 @@ package api
 import (
 	"fmt"
 	"github.com/gin-gonic/gin"
+	"github.com/gomarkdown/markdown"
+	"html/template"
 	"math"
 	"net/http"
 	"strings"
@@ -98,6 +100,7 @@ func (s *WebHandler) Post(c *gin.Context) {
 		_ = model.Model.PostView(postId)
 		_, isLogin := isAdminLogon(c)
 		newPost := adaptPost(post, cats)
+		newPost.Content = string(markdown.ToHTML([]byte(post.Content), nil, nil))
 		c.HTML(http.StatusOK, "post", gin.H{
 			"title":     post.Title,
 			"content":   post.Content,
@@ -109,6 +112,7 @@ func (s *WebHandler) Post(c *gin.Context) {
 			"isLogin":   isLogin,
 			"activeNav": "home",
 			"side":      getSideData(),
+			"unescaped": func(str string) template.HTML { return template.HTML(str) },
 		})
 	}
 }

@@ -2,8 +2,10 @@ package main
 
 import (
 	"fmt"
+	"github.com/foolin/goview"
 	"github.com/foolin/goview/supports/ginview"
 	"github.com/gin-gonic/gin"
+	"html/template"
 	"log"
 	"net/http"
 	"os"
@@ -27,8 +29,13 @@ func main() {
 
 	r := new(router)
 	r.Engine = engine
-	// 模板引擎
-	r.HTMLRender = ginview.Default()
+	cfg := goview.DefaultConfig
+	cfg.Funcs = template.FuncMap{
+		"unescape": func(s string) template.HTML {
+			return template.HTML(s)
+		},
+	}
+	r.HTMLRender = ginview.New(cfg)
 	r.StaticFile("/favicon.ico", "./assets/img/favicon.ico")
 
 	// 路由
