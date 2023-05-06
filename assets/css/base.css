@@ -67,7 +67,7 @@ a.btn:hover {color: #ffffff;background-color: #d9534f}
 .content .wrap .footer .next { width: 50%;float: right;overflow: hidden;text-align: right;}
 .content .wrap .more {line-height: 40px;font-size: 14px;background: #f9f7fd;border: 1px solid #f0f0f0;text-align: center;margin-top: 20px;}
 .content .wrap .article-header {margin-top: 30px;margin-bottom: 20px;font-size: 14px;color: #666;}
-.content .wrap .article-header .title { font-weight: 500;font-size: 30px;line-height: 50px;color: #000;}
+.content .wrap .article-header .title { font-weight: 500;font-size: 26px;line-height: 50px;color: #000;margin-bottom: 10px;}
 .content .wrap .article-header .text-muted { line-height: 30px;height: 30px;}
 .content .wrap .nav {font-size: 16px;}
 .content .wrap .nav a {display: inline-block;padding-right: 8px;}
