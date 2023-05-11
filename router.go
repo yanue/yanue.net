@@ -73,6 +73,7 @@ func (r *router) route() {
 
 	// 静态资源
 	r.Use(static.Serve("/assets/", static.LocalFile("./assets/", false)))
+	r.Use(static.Serve("/uploads/", static.LocalFile("./data/uploads/", false)))
 
 	// 未知路由
 	r.NoRoute(func(c *gin.Context) {

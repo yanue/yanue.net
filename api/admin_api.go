@@ -84,6 +84,13 @@ func (s *AdminHandler) Create(c *gin.Context) {
 		s.OutError(c, 1, err.Error())
 		return
 	}
+	// 替换图片
+	newContent, err := SaveImageToLocal(item.Content)
+	if err != nil {
+		s.OutError(c, 5, err.Error())
+		return
+	}
+	item.Content = newContent
 	err = model.Model.CreatePost(item)
 	if err != nil {
 		s.OutError(c, 2, err.Error())
@@ -109,6 +116,13 @@ func (s *AdminHandler) Save(c *gin.Context) {
 		s.OutError(c, 3, err.Error())
 		return
 	}
+	// 替换图片
+	newContent, err := SaveImageToLocal(item.Content)
+	if err != nil {
+		s.OutError(c, 5, err.Error())
+		return
+	}
+	item.Content = newContent
 	err = model.Model.UpdatePost(id, item)
 	if err != nil {
 		s.OutError(c, 4, err.Error())

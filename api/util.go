@@ -1,8 +1,14 @@
 package api
 
 import (
+	"crypto/md5"
+	"encoding/base64"
+	"encoding/hex"
+	"errors"
 	"fmt"
 	"github.com/gin-gonic/gin"
+	"os"
+	"regexp"
 	"sort"
 	"strings"
 	"time"
@@ -142,5 +148,43 @@ func isAdminLogon(c *gin.Context) (user *model.AdminUser, ok bool) {
 		return
 	}
 	ok = true
+	return
+}
+
+func SaveImageToLocal(content string) (newContent string, err error) {
+	newContent = content
+	var re = regexp.MustCompile(`(?m).*\(data:image/(.*);base64,(.*)\).*`)
+	for i, match := range re.FindAllString(content, -1) {
+		imgUrl, err := SaveBase64ImageToLocal(match)
+		fmt.Println("正在转换", i, imgUrl, err)
+		newContent = re.ReplaceAllLiteralString(newContent, fmt.Sprintf("![image.png](%v)", imgUrl))
+	}
+	return
+}
+
+func SaveBase64ImageToLocal(content string) (imgUrl string, err error) {
+	var re = regexp.MustCompile(`(?m).*\(data:image/(.*);base64,(.*)\).*`)
+	matches := re.FindStringSubmatch(content)
+	if len(matches) < 3 {
+		err = errors.New("匹配小于3")
+		return
+	}
+	suffix := matches[1]
+	base := matches[2]
+	src, err := base64.StdEncoding.DecodeString(base)
+	if err != nil {
+		return
+	}
+	// 使用md5文件名
+	sum := md5.Sum(src)
+	name := hex.EncodeToString(sum[:])
+	path := fmt.Sprintf("data/uploads/%v", suffix)
+	_ = os.MkdirAll(path, 0777)
+	file := fmt.Sprintf("%v/%v.%v", path, name, suffix)
+	err = os.WriteFile(file, src, 0777)
+	if err != nil {
+		return
+	}
+	imgUrl = strings.TrimPrefix(file, "data")
 	return
 }

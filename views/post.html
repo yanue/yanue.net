@@ -28,7 +28,7 @@
               <i class="icon icon-tags"></i>
                 {{ range .post.Tags }}
                   <span class="tag">
-                            <a href="/tag/{{ . }}">{{ . }}</a>
+                            <a href="/tags/{{ . }}">{{ . }}</a>
                           </span>
                 {{ end }}
             </p>
@@ -46,6 +46,7 @@
               {{ end }}
           </div>
         </div>
+        <div></div>
         <div class="markdown-body">
             {{ .post.Content | unescape }}
         </div>
