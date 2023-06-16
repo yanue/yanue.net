@@ -125,7 +125,8 @@ func (s *WebHandler) Post(c *gin.Context) {
 		if err != nil {
 
 		}
-		newPost.Content = buf.String()
+		// 新窗口跳转
+		newPost.Content = strings.ReplaceAll(buf.String(), "<a ", "<a target='_blank'")
 		c.HTML(http.StatusOK, "post", gin.H{
 			"title":     post.Title,
 			"content":   post.Content,

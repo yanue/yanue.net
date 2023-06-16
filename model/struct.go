@@ -39,13 +39,8 @@ func (m *Post) TableName() string {
 }
 
 type PostCat struct {
-	Id       int    `json:"id" gorm:"column:id"`
-	Alias    string `json:"alias" gorm:"column:alias"`
-	Name     string `json:"name" gorm:"column:name"`
-	EnName   string `json:"en_name" gorm:"column:en_name"`
-	ParentID int    `json:"parent_id" gorm:"column:parent_id"`
-	IsParent int    `json:"is_parent" gorm:"column:is_parent"`
-	Detail   string `json:"detail" gorm:"column:detail"`
+	Id   int    `json:"id" gorm:"column:id"`
+	Name string `json:"name" gorm:"column:name"`
 }
 
 func (m *PostCat) TableName() string {

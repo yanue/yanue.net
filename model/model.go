@@ -31,7 +31,7 @@ func (s *model) PrevPost(id int) (item *Post, err error) {
 }
 
 func (s *model) PostView(id int) (err error) {
-	err = db.Exec("update post set views = views+1 where id=?", id).Error
+	err = db.Exec("update `post` set `views` = `views`+1 where id=?", id).Error
 	return
 }
 
