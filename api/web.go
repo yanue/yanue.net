@@ -27,7 +27,11 @@ func NewWebHandler() *WebHandler {
 }
 
 func (s *WebHandler) Home(c *gin.Context) {
-	s.showList(c)
+	if strings.Contains(c.Request.Host, "map.yanue.net") {
+		s.showMap(c)
+	} else {
+		s.showList(c)
+	}
 }
 
 func (s *WebHandler) Archives(c *gin.Context) {
@@ -186,6 +190,10 @@ func (s *WebHandler) About(c *gin.Context) {
 }
 
 func (s *WebHandler) Map(c *gin.Context) {
+	s.showMap(c)
+}
+
+func (s *WebHandler) showMap(c *gin.Context) {
 	c.HTML(http.StatusOK, "map/map.html", gin.H{
 		"title":       "经纬度在线查询,地名(批量)查询经纬度,经纬度(批量)查询地名",
 		"keywords":    "经纬度,查询,经纬度查询,经纬度在线查询,经纬度查找地名,经纬度(批量)查询,经纬度转换地名,地名批量查询经纬度,查询地名返回经纬度,根据经纬度批量查询地名,google map经纬度 ,yanue.net",
