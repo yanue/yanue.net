@@ -1,6 +1,12 @@
-<!--PC版-->
 <div id="cusdis_thread"
      data-host="https://cusdis.com"
      data-app-id="23abcfa5-81d8-4ce8-a99f-efc74cd681f5"
+     data-page-id="{{ .PAGE_ID }}"
 ></div>
-<script async defer src="https://cusdis.com/js/cusdis.es.js"></script>
+<script src="https://cusdis.com/js/cusdis.es.js"></script>
+<script>
+  window.onload = function () {
+    window.CUSDIS.initial()
+    window.CUSDIS.setTheme('dark')
+  }
+</script>
