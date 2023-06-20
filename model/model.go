@@ -46,7 +46,7 @@ func (s *model) GetPostList(where string, page int, limit int) (list []*Post, er
 
 func (s *model) UpdatePost(id int, item *Post) (err error) {
 	updateFields := []string{"cid", "title", "tags", "content", "modified", "published", "recommend"}
-	item.Modified = int(time.Now().Unix())
+	item.Modified = time.Now().Unix()
 	err = db.Model(&Post{}).Where("id = ?", id).Select(updateFields).Updates(item).Error
 	return
 }
@@ -58,8 +58,8 @@ func (s *model) DelPost(id int) (err error) {
 
 func (s *model) CreatePost(item *Post) (err error) {
 	item.Id = 0
-	item.Created = int(time.Now().Unix())
-	item.Modified = int(time.Now().Unix())
+	item.Created = time.Now().Unix()
+	item.Modified = time.Now().Unix()
 	err = db.Model(&Post{}).Create(item).Error
 	return
 }

@@ -8,18 +8,24 @@
     <div class="wrap">
       <div class="box">
         <header class="article-header">
-          <h1 class="title">全部文章</h1>
-          <div class="text-muted pagination">
+          <div class="title">
+            <span>文章列表</span>
+            <form method="get" class="search">
+              <label>
+                <input type="text" name="key" value="{{.search_key}}" class="search-input">
+              </label>
+              <input type="submit" value="搜索" class="search-btn">
+            </form>
+          </div>
+          <div class="pagination">
             <span class="right">
-              第
               {{range .pages}}
                   {{ if .Current }}
-                    <span class="btn btn-small btn-danger">{{ .Page }}</span>
+                    <a class="page-item current">{{ .Page }}</a>
                   {{ else }}
-                    <a class="btn btn-small btn-primary" href="{{.Link}}">{{ .Page }}</a>
+                    <a class="page-item" href="{{.Link}}">{{ .Page }}</a>
                   {{end}}
               {{ end }}
-              页
             </span>
             <span class="left ">共 {{ .count }} 条, 每页 {{ .size }} 条, 当前 {{.page}}/{{ .totalPage }} 页</span>
           </div>

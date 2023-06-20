@@ -26,10 +26,10 @@ type Post struct {
 	Keywords  string `json:"keywords" gorm:"column:keywords"`
 	CoverImg  string `json:"cover_img" gorm:"column:cover_img"`
 	Content   string `json:"content" gorm:"column:content"`
-	Created   int    `json:"created" gorm:"column:created"`
-	Modified  int    `json:"modified" gorm:"column:modified"`
-	Published int64  `json:"published" gorm:"column:published"`
-	Recommend int64  `json:"recommend" gorm:"column:recommend"`
+	Created   int64  `json:"created" gorm:"column:created"`
+	Modified  int64  `json:"modified" gorm:"column:modified"`
+	Published int    `json:"published" gorm:"column:published"`
+	Recommend int    `json:"recommend" gorm:"column:recommend"`
 	Comments  int    `json:"comments" gorm:"column:comments"`
 	Views     int    `json:"views" gorm:"column:views"`
 }

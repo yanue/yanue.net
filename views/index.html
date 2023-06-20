@@ -7,7 +7,32 @@
   <div class="content">
     <div class="wrap">
       <div class="box">
-        <div style="height: 20px;"></div>
+        <header class="article-header">
+          <div class="title">
+            <span>文章列表</span>
+            <form method="get" class="search">
+              <label>
+                <input type="text" name="key">
+              </label>
+              <input type="submit" value="搜索">
+            </form>
+          </div>
+          <div class="text-muted pagination">
+            <span class="right">
+              第
+              {{range .pages}}
+                  {{ if .Current }}
+                    <span class="btn btn-small btn-danger">{{ .Page }}</span>
+                  {{ else }}
+                    <a class="btn btn-small btn-primary" href="{{.Link}}">{{ .Page }}</a>
+                  {{end}}
+              {{ end }}
+              页
+            </span>
+            <span class="left ">共 {{ .count }} 条, 每页 {{ .size }} 条, 当前 {{.page}}/{{ .totalPage }} 页</span>
+          </div>
+          <div class="clear" style="margin-bottom: -20px;"></div>
+        </header>
         <div class="list">
           <ul>
               {{ range .list}}
@@ -47,9 +72,21 @@
               {{ end }}
           </ul>
         </div>
-        <div class="more">
-          <a href="/more?page=2">全部文章</a>
-        </div>
+        <header class="more">
+          <div class="text-muted pagination">
+            <span class="">
+              第
+              {{range .pages}}
+                  {{ if .Current }}
+                    <span class="btn btn-small btn-danger">{{ .Page }}</span>
+                  {{ else }}
+                    <a class="btn btn-small btn-primary" href="{{.Link}}">{{ .Page }}</a>
+                  {{end}}
+              {{ end }}
+              页
+            </span>
+          </div>
+        </header>
       </div>
     </div>
   </div>

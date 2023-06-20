@@ -22,7 +22,7 @@ a .num {font-size: 12px;color: #999;display: inline-block;}
 textarea {outline: none}
 .left {float: left;}
 .right {float: right;}
-.btn {display: inline-block;*display: inline;*zoom: 1;padding: 6px 12px 4px;margin-bottom: 0;font-size: 12px;line-height: 20px;text-align: center;vertical-align: middle;cursor: pointer;border: 0;border-radius: 0;}
+.btn {display: inline-block;padding: 6px 12px 4px;margin-bottom: 0;font-size: 12px;line-height: 20px;text-align: center;vertical-align: middle;cursor: pointer;border: 0;border-radius: 0;}
 .btn-primary {color: #ffffff;background-color: #0c8999}
 .btn-danger {color: #ffffff;background-color: #d9534f}
 .btn:hover, .btn:focus {text-decoration: none}
@@ -62,13 +62,15 @@ a.btn:hover {color: #ffffff;background-color: #d9534f}
 .content .wrap .item .article-title { font-size: 30px;font-weight: normal;color: #000;padding: 40px 0 15px 0; }
 .content .wrap .md-viewer {font-size: 14px;}
 .content .wrap .fill-foot {height: 50px;}
-.content .wrap .footer {background: #FBFBFB;height: 50px;line-height: 50px;padding: 0 20px;color: #999;overflow: hidden;font-size: 14px;}
+.content .wrap .footer {margin: 20px 0;background: #F0F9F0;border: 1px dashed #999;height: 50px;line-height: 50px;padding: 0 20px;color: #999;overflow: hidden;font-size: 14px;}
 .content .wrap .footer .prev { width: 50%;float: left;overflow: hidden;}
 .content .wrap .footer .next { width: 50%;float: right;overflow: hidden;text-align: right;}
-.content .wrap .more {line-height: 40px;font-size: 14px;background: #f9f7fd;border: 1px solid #f0f0f0;text-align: center;margin-top: 20px;}
+.content .wrap .more {line-height: 40px;font-size: 14px;text-align: center;margin-top: 20px;}
+.content .wrap .tip {border: 1px dashed #999;line-height: 36px;height: 36px;overflow: hidden;background: #F0F9F0;margin: 20px 0;padding: 0 10px;border-radius: 3px;color: #d9534f;font-size: 14px;}
 .content .wrap .article-header {margin-top: 30px;margin-bottom: 20px;font-size: 14px;color: #666;}
 .content .wrap .article-header .title { font-weight: 500;font-size: 26px;line-height: 50px;color: #000;margin-bottom: 10px;}
 .content .wrap .article-header .text-muted { line-height: 30px;height: 30px;}
+.content .wrap .article-header .search { line-height: 30px;height: 30px;position: absolute;right: 30px;top:40px;}
 .content .wrap .nav {font-size: 16px;}
 .content .wrap .nav a {display: inline-block;padding-right: 8px;}
 .content .panel {margin-top: 10px;line-height: 32px;font-size: 16px;}
@@ -110,3 +112,12 @@ a.btn:hover {color: #ffffff;background-color: #d9534f}
   .aside {width: 320px;!important}
   .copyright {width: 300px;!important}
 }
+.pagination{background: #fff; line-height: 24px; margin: 8px 0; font-size: 12px; padding: 0 0 8px;}
+.pagination .page-item{text-decoration: none; border: 1px solid #E0E0E0;  color: #666;border-radius: 3px;display: inline-block; margin-right: 5px; padding: 0 8px;}
+.pagination .page-item:hover{background: #f0f0f0;}
+.pagination .current{color: red;background: #f6f6f6;}
+.search-input{border: 1px solid #E0E0E0;height: 24px;line-height: 24px;padding: 0 8px;border-radius: 3px;}
+.search-input:focus{border-color: #c9ccd5;background: #f6f6f6;}
+.search-btn{height: 26px;padding: 0 8px;background: #eee8d5;border: 1px solid #eee8d5;outline: none;cursor: pointer;border-radius: 3px;}
+.search-btn:hover{background: #b6a981;border: 1px solid #eee8d5;}
+.markdown-body p{text-indent: 36px;line-height: 180%;}

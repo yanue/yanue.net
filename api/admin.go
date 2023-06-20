@@ -55,6 +55,6 @@ func (s *AdminHandler) Admin(c *gin.Context) {
 		"post":      adaptPost(post, cats),
 		"cats":      cats,
 		"user":      user.Id,
-		"pages":     genPage("/admin", page, totalPage),
+		"pages":     genPage("/admin", page, totalPage, ""),
 	})
 }

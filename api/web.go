@@ -13,6 +13,7 @@ import (
 	"math"
 	"net/http"
 	"strings"
+	"time"
 	"yanue/model"
 	"yanue/util"
 )
@@ -26,13 +27,7 @@ func NewWebHandler() *WebHandler {
 }
 
 func (s *WebHandler) Home(c *gin.Context) {
-	list, _ := model.Model.GetPostList("published=1", 0, 9)
-	cats, _ := model.Model.GetCats()
-	c.HTML(http.StatusOK, "index", gin.H{
-		"list":      adaptPosts(list, cats),
-		"side":      getSideData(),
-		"activeNav": "home",
-	})
+	s.showList(c)
 }
 
 func (s *WebHandler) Archives(c *gin.Context) {
@@ -116,6 +111,7 @@ func (s *WebHandler) Post(c *gin.Context) {
 				parser.WithAutoHeadingID(),
 			),
 			goldmark.WithRendererOptions(
+				html.WithUnsafe(),
 				html.WithHardWraps(),
 				html.WithXHTML(),
 			),
@@ -138,19 +134,29 @@ func (s *WebHandler) Post(c *gin.Context) {
 			"isLogin":   isLogin,
 			"activeNav": "home",
 			"side":      getSideData(),
+			"n":         (time.Now().Unix() - post.Created) / (86400 * 360),
 			"unescaped": func(str string) template.HTML { return template.HTML(str) },
 		})
 	}
 }
 
 func (s *WebHandler) More(c *gin.Context) {
-	pageSize = 10
+	s.showList(c)
+}
+
+func (s *WebHandler) showList(c *gin.Context) {
+	size := 10
 	page := util.ToInt(c.Query("page"))
+	key := strings.ReplaceAll(strings.ReplaceAll(strings.Trim(c.DefaultQuery("key", ""), " "), "\"", ""), "'", "")
 	where := "published=1"
+	if len(key) > 0 {
+		keyArg := fmt.Sprintf("%v%v%v", "%", key, "%")
+		where = fmt.Sprintf("%s and (`title` like '%s' or `content` like '%s') ", where, keyArg, keyArg)
+	}
 	cnt := model.Model.Count(where)
-	list, _ := model.Model.GetPostList("", page, pageSize)
+	list, _ := model.Model.GetPostList(where, page, size)
 	cats, _ := model.Model.GetCats()
-	totalPage := int(math.Ceil(float64(cnt) / float64(pageSize)))
+	totalPage := int(math.Ceil(float64(cnt) / float64(size)))
 	if page < 1 {
 		page = 1
 	}
@@ -159,15 +165,16 @@ func (s *WebHandler) More(c *gin.Context) {
 	}
 	newList := adaptPosts(list, cats)
 	c.HTML(http.StatusOK, "more", gin.H{
-		"list":      newList,
-		"count":     cnt,
-		"page":      page,
-		"size":      pageSize,
-		"totalPage": totalPage,
-		"activeNav": "home",
-		"title":     fmt.Sprintf("第%v页", page),
-		"pages":     genPage("/more", page, totalPage),
-		"side":      getSideData(),
+		"list":       newList,
+		"count":      cnt,
+		"page":       page,
+		"size":       size,
+		"totalPage":  totalPage,
+		"activeNav":  "home",
+		"search_key": key,
+		"title":      fmt.Sprintf("yanue.net - 第%v页", page),
+		"pages":      genPage("/more", page, totalPage, key),
+		"side":       getSideData(),
 	})
 }
 
@@ -179,7 +186,7 @@ func (s *WebHandler) About(c *gin.Context) {
 }
 
 func (s *WebHandler) Map(c *gin.Context) {
-	c.HTML(http.StatusOK, "map.html", gin.H{
+	c.HTML(http.StatusOK, "map/map.html", gin.H{
 		"title":       "经纬度在线查询,地名(批量)查询经纬度,经纬度(批量)查询地名",
 		"keywords":    "经纬度,查询,经纬度查询,经纬度在线查询,经纬度查找地名,经纬度(批量)查询,经纬度转换地名,地名批量查询经纬度,查询地名返回经纬度,根据经纬度批量查询地名,google map经纬度 ,yanue.net",
 		"description": "运用google map api开发的地图系统，实现经纬度(批量)在线查询,地名批量查询经纬度,google 经纬度查询地名,经纬度查找地名,查询地名返回经纬度,根据经纬度批量查询地名,google map运用geocoder.geocode实例",
@@ -187,7 +194,7 @@ func (s *WebHandler) Map(c *gin.Context) {
 }
 
 func (s *WebHandler) ToLatLng(c *gin.Context) {
-	c.HTML(http.StatusOK, "map_toLatLng.html", gin.H{
+	c.HTML(http.StatusOK, "map/map_toLatLng.html", gin.H{
 		"title":       "在线查询经纬度,通过地名查询经纬度(手动精确定位)",
 		"keywords":    "经纬度,查询,经纬度查询,经纬度在线查询,经纬度查找地名,查询地名返回经纬度(手动精确定位),鼠标经过地图区域提示经纬度",
 		"description": "在线查询经纬度,通过地名查询经纬度(手动精确定位)，实现鼠标经过提示经纬度，自动填充地名地点名称，输入完成后可直接点击enter键进行解析，地理位置不准确，可以拖动重新解析，解析后经纬度信息显示完整",
@@ -195,7 +202,7 @@ func (s *WebHandler) ToLatLng(c *gin.Context) {
 }
 
 func (s *WebHandler) Gps(c *gin.Context) {
-	c.HTML(http.StatusOK, "map_gps.html", gin.H{
+	c.HTML(http.StatusOK, "map/map_gps.html", gin.H{
 		"title":       "GPS坐标转换经纬度,GPS转谷歌百度地图经纬度",
 		"keywords":    "GPS,GPS转换,GPS坐标转换经纬度，GPS转谷歌地图经纬度，GPS免费接口,GPS免费转换接口,gpsApi.php,map.yanue.net,半叶寒羽-原创作品,GPS定位,GPS to lat lng，GPS Coordinate Converter",
 		"description": "GPS,GPS转换,GPS坐标转换经纬度，GPS转谷歌地图经纬度，GPS免费接口,GPS免费转换接口,gpsApi.php,map.yanue.net,半叶寒羽-原创作品,GPS,GPS to lat lng，GPS Coordinate Converter,GPS转中文地址,GPS转Google地址!详情见https://map.yanue.net/gps.html",

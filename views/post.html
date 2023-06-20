@@ -46,7 +46,9 @@
               {{ end }}
           </div>
         </div>
-        <div></div>
+        {{ if (gt .n 2) }}
+          <div class="tip">本文发布于 {{ .n }} 年前, 内容可能已经过时或失效!</div>
+        {{ end }}
         <div class="markdown-body">
             {{ .post.Content | unescape }}
         </div>

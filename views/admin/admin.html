@@ -103,6 +103,7 @@
                 <p>
                   <span class="label">分类</span>
                   <select name="cid">
+                    <option value="0">不选</option>
                       {{ range $_id,$_name := .cats }}
                         <option value="{{ $_id }}"
                                 {{ if eq $_id $cid }} selected {{ end}}
@@ -190,11 +191,6 @@
                 data['cid'] = parseInt(data['cid'])
                 data['recommend'] = parseInt(data['recommend'])
                 data['content'] = editor.getMarkdown();
-                console.log(data);
-                let ok = window.confirm("请确认需要保存吗?")
-                if (!ok) {
-                  return
-                }
                 let method = 'POST'
                 let url = "/admin/create"
                 if (id > 0) {

@@ -45,13 +45,13 @@ func adaptPosts(list []*model.Post, cats map[int]string) []*Post {
 	return newList
 }
 
-func genPage(path string, page int, totalPage int) []Page {
+func genPage(path string, page int, totalPage int, key string) []Page {
 	list := make([]Page, 0)
 	for i := 1; i <= totalPage; i++ {
 		nowPage := i
 		list = append(list, Page{
 			Page:    nowPage,
-			Link:    fmt.Sprintf("%v?page=%d", path, nowPage),
+			Link:    fmt.Sprintf("%v?page=%d&key=%v", path, nowPage, key),
 			Current: nowPage == page,
 		})
 	}
