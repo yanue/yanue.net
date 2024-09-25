@@ -22,12 +22,12 @@
 <div id="main">
   <div class="top">
     <div class="box">
-        {{include "layouts/top"}}
+      {{include "layouts/top"}}
     </div>
   </div>
   <div id="header">
     <div class="box">
-        {{include "layouts/header"}}
+      {{include "layouts/header"}}
     </div>
   </div>
   <div id="content">
@@ -39,18 +39,21 @@
           >
           <a href="https://map.yanue.net/">地图作品</a>
         </div>
-        <article class="post-detail">
+        <article class="post-detail" id="inner">
           <header class="post-info">
             <h1 class='post-title'>{{ .title }}</h1>
           </header>
           <main class="post-content">
+            <div class="toplink">
+              <label>地图工具</label>
+              <a href="https://map.yanue.net/toLatLng/">地名查询经纬度</a> |
+              <a href="https://map.yanue.net/">批量地名经纬度查询</a> |
+              <a href="https://map.yanue.net/gps.html">GPS转换谷歌百度经纬度</a>
+              <span class="right">
+                <a href="javascript:;" id="fullscreenBtn" class="red" style="font-size: 16px;">全屏模式</a>
+              </span>
+            </div>
             <div id="map-wrap">
-              <div class="toplink">
-                <label>地图工具</label>
-                <a href="https://map.yanue.net/toLatLng/">地名查询经纬度</a> |
-                <a href="https://map.yanue.net/">批量地名经纬度查询</a> |
-                <a href="https://map.yanue.net/gps.html">GPS转换谷歌百度经纬度</a>
-              </div>
               <div id="inputWrap">
                 <div id="left">
                   <h3 class="sub-title">
@@ -79,8 +82,9 @@
               </div>
               <div class="showWrap">
                 <div class="showMap">
-                  <h3 class="sub-title">地图展示<em>(基于百度地图)</em><span class="right"><a
-                        href=''>重新载入</a></span>
+                  <h3 class="sub-title">
+                    地图展示<em>(基于百度地图)</em>
+                    <span class="right"><a href=''>重新加载地图</a></span>
                   </h3>
                   <div id="map_canvas"></div>
                 </div>
@@ -101,7 +105,7 @@
           <div class="comment">
             <p class="comment-head">留言</p>
             <div class="comment-content">
-                {{include "layouts/comment"}}
+              {{include "layouts/comment"}}
             </div>
           </div>
         </article>
@@ -109,7 +113,7 @@
     </div>
   </div>
   <div id="footer">
-      {{include "layouts/footer"}}
+    {{include "layouts/footer"}}
   </div>
 </div>
 {{ .floatAd }}

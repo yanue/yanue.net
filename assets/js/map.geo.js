@@ -14,6 +14,13 @@ $(function () {
   var exportName = ""
   var n = 1
 
+  $('#fullscreenBtn').on('click', function () {
+    // #inner 添加全屏样式 .fullscreen, 通过toggleClass切换样式, 并更改按钮文字为: 退出全屏|全屏模式
+    $('#inner').toggleClass('fullscreen');
+    var text = $('#inner').hasClass('fullscreen') ? '退出全屏' : '全屏模式';
+    $('#fullscreenBtn').text(text);
+  })
+
   $('#toLatLngBtn').on('click', function (e) {
     exportName = "通过地址解析经纬度(yanue.net)-" + (n++);
     result = [] // 重置数据
