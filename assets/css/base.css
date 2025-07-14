@@ -70,7 +70,7 @@ a.btn:hover {color: #ffffff;background-color: #d9534f}
 .content .wrap .article-header {margin-top: 30px;margin-bottom: 20px;font-size: 14px;color: #666;}
 .content .wrap .article-header .title { font-weight: 500;font-size: 26px;line-height: 50px;color: #000;margin-bottom: 10px;}
 .content .wrap .article-header .text-muted { line-height: 30px;height: 30px;}
-.content .wrap .article-header .search { line-height: 30px;height: 30px;position: absolute;right: 30px;top:40px;}
+.content .wrap .article-header .search { line-height: 30px;height: 30px;position: absolute;right: 30px;top: 40px;}
 .content .wrap .nav {font-size: 16px;}
 .content .wrap .nav a {display: inline-block;padding-right: 8px;}
 .content .panel {margin-top: 10px;line-height: 32px;font-size: 16px;}
@@ -112,12 +112,18 @@ a.btn:hover {color: #ffffff;background-color: #d9534f}
   .aside {width: 320px;!important}
   .copyright {width: 300px;!important}
 }
-.pagination{background: #fff; line-height: 24px; margin: 8px 0; font-size: 12px; padding: 0 0 8px;}
-.pagination .page-item{text-decoration: none; border: 1px solid #E0E0E0;  color: #666;border-radius: 3px;display: inline-block; margin-right: 5px; padding: 0 8px;}
-.pagination .page-item:hover{background: #f0f0f0;}
-.pagination .current{color: red;background: #f6f6f6;}
-.search-input{border: 1px solid #E0E0E0;height: 24px;line-height: 24px;padding: 0 8px;border-radius: 3px;}
-.search-input:focus{border-color: #c9ccd5;background: #f6f6f6;}
-.search-btn{height: 26px;padding: 0 8px;background: #eee8d5;border: 1px solid #eee8d5;outline: none;cursor: pointer;border-radius: 3px;}
-.search-btn:hover{background: #b6a981;border: 1px solid #eee8d5;}
-.markdown-body p{text-indent: 36px;line-height: 180%;}
+.pagination {background: #fff; line-height: 24px; margin: 8px 0; font-size: 12px; padding: 0 0 8px;}
+.pagination .page-item {text-decoration: none; border: 1px solid #E0E0E0; color: #666;border-radius: 3px;display: inline-block; margin-right: 5px; padding: 0 8px;}
+.pagination .page-item:hover {background: #f0f0f0;}
+.pagination .current {color: red;background: #f6f6f6;}
+.search-input {border: 1px solid #E0E0E0;height: 24px;line-height: 24px;padding: 0 8px;border-radius: 3px;}
+.search-input:focus {border-color: #c9ccd5;background: #f6f6f6;}
+.search-btn {height: 26px;padding: 0 8px;background: #eee8d5;border: 1px solid #eee8d5;outline: none;cursor: pointer;border-radius: 3px;}
+.search-btn:hover {background: #b6a981;border: 1px solid #eee8d5;}
+.markdown-wrap {position: relative;}
+.markdown-wrap .toc-wrap {position: fixed;top: 36px;right: 300px;width: 300px;border: 1px solid #eee;padding: 10px 0 10px 10px;z-index: 99999;background: #f6f7f8;}
+.toc-wrap .toc-title {font-size: 16px;color: #000;font-weight: 500;margin-bottom: 10px;}
+.toc-wrap .toc-list {line-height: 30px;font-size: 14px;padding-left: 5px;}
+.toc-wrap .toc-list a {color: #333 !important;text-decoration: none !important;}
+.toc-wrap .toc-list a:hover {color: #0c8999 !important;}
+.toggle-toc {position: absolute;top: 50px;right: 0;width: 50px;height: 50px;line-height: 50px;text-align: center;background: #0c8999;color: #fff;cursor: pointer;z-index: 99999;}

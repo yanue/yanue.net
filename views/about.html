@@ -1,10 +1,7 @@
 {{define "head"}}
-  <link rel="stylesheet" href="/assets/toastui/prism.css">
-  <link rel="stylesheet" href="/assets/toastui/toastui-editor-viewer.min.css">
-
-  <script src="/assets/toastui/toastui-editor-viewer.min.js"></script>
-  <script src="/assets/toastui/prism.js"></script>
-  <script src="/assets/toastui/toastui-editor-plugin-code-syntax-highlight-all.min.js"></script>
+<!-- prism.js -->
+<link rel="stylesheet" href="/assets/theme/prism.css">
+<script src="/assets/theme/prism.js"></script>
 {{end}}
 
 {{define "content"}}
@@ -17,7 +14,8 @@
             喜欢新事物, 对新的技术有追求, 从web前端入行, 从事PHP多年再到Golang后端, 混迹10年有余, 目前还是半桶水.
           </p>
         </header>
-        <div id="viewer" class="md-viewer">
+        <div id="json-viewer">
+            <pre><code id="json-block" class="language-json"></code></pre>
         </div>
         <script class="code-js">
           var about = {
@@ -62,12 +60,25 @@
               "WSL"
             ]
           }
-          const Viewer = toastui.Editor;
-          const viewer = new Viewer({
-            el: document.querySelector('#viewer'),
-            initialValue: "```json5 \n" + JSON.stringify(about, undefined, 2) + "\n```",
+          // 把 JSON 转成字符串并写入 <code> 标签
+          document.getElementById("json-block").textContent = JSON.stringify(about, null, 2);
+          // 高亮代码
+          Prism.highlightAll();
+          // 添加 Prism.js 的行号和代码高亮
+          document.querySelectorAll('pre code').forEach((block) => {
+              block.classList.add('line-numbers');  // 添加行号支持
+              Prism.highlightElement(block);  // 代码高亮
           });
         </script>
+        <style>
+          #json-viewer pre {
+            color: #9F2328;
+            background-color: #f6f8fa;
+          }
+          #json-viewer .token.property {
+            color: #1F2368;
+          }
+        </style>
         <div class="comment">
             {{include "layouts/comment"}}
         </div>

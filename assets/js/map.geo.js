@@ -1,58 +1,68 @@
 $(function () {
-  // 百度地图API功能
+  // 百度地图初始化
   var map = new BMap.Map("map_canvas");
   map.enableDragging();
   map.enableScrollWheelZoom();
-  var point = new BMap.Point(114.05786799999998, 22.543099);
+  var point = new BMap.Point(114.057868, 22.543099);
   map.centerAndZoom(point, 12);
-
   var myGeo = new BMap.Geocoder();
-
   var markerClusterer = new BMapLib.MarkerClusterer(map, {markers: []});
 
-  var result = [] // 解析结果
-  var exportName = ""
-  var n = 1
+  var result = []; // 最终解析结果
+  var exportName = "";
+  var n = 1;
 
+  // 全屏切换
   $('#fullscreenBtn').on('click', function () {
-    // #inner 添加全屏样式 .fullscreen, 通过toggleClass切换样式, 并更改按钮文字为: 退出全屏|全屏模式
     $('#inner').toggleClass('fullscreen');
     var text = $('#inner').hasClass('fullscreen') ? '退出全屏' : '全屏模式';
     $('#fullscreenBtn').text(text);
-  })
+  });
 
+  // 地址 → 经纬度
   $('#toLatLngBtn').on('click', function (e) {
-    exportName = "通过地址解析经纬度(yanue.net)-" + (n++);
-    result = [] // 重置数据
-    result[0] = ["序号", "输入地址", "解析经度", "解析纬度", "返回信息(encodeURI)"]
+    exportName = "通过地址解析经纬度-" + (n++);
+    result = [["序号", "输入地址", "解析经度", "解析纬度", "返回信息"]];
     $('#showResults').html("").fadeIn();
     map.clearOverlays();
     markerClusterer.clearMarkers();
+
     var addrStr = $('#addr').val();
-    var addrs = addrStr.split('\n');
-    for (var i in addrs) {
-      var addr = addrs[i];
-      var j = 1 + parseInt(i)
-      geoSearch(j, addr);
-    }
+    var addrs = addrStr.split('\n').filter(function (line) {
+      return line.trim() !== '';
+    });
+
+    var tasks = addrs.map(function (addr, i) {
+      return {index: i + 1, value: addr};
+    });
+
+    runGeoQueue(tasks, geoSearch, function () {
+      console.log("地址解析全部完成");
+    }, 10);
+
     e.stopImmediatePropagation();
   });
 
+  // 经纬度 → 地址
   $('#toAddressBtn').on('click', function (e) {
-    exportName = "通过经纬度解析地址(yanue.net)-" + (n++);
-    result = [] // 重置数据
-    result[0] = ["序号", "输入经度", "输入纬度", "解析地址", "返回信息(encodeURI)"]
+    exportName = "通过经纬度解析地址-" + (n++);
+    result = [["序号", "输入经度", "输入纬度", "解析地址", "返回信息"]];
     $('#showResults').html("").fadeIn();
     map.clearOverlays();
     markerClusterer.clearMarkers();
-    makers = [];
-    var addrStr = $('#latLng').val();
-    var addrs = addrStr.split('\n');
-    for (var i in addrs) {
-      var addr = addrs[i];
-      var j = 1 + parseInt(i)
-      geoParse(j, addr);
-    }
+
+    var latLngStr = $('#latLng').val();
+    var pairs = latLngStr.split('\n').filter(function (line) {
+      return line.trim() !== '';
+    });
+
+    var tasks = pairs.map(function (pair, i) {
+      return {index: i + 1, value: pair};
+    });
+
+    runGeoQueue(tasks, geoParse, function () {
+      console.log("经纬度解析全部完成");
+    }, 10);
 
     //最简单的用法，生成一个marker数组，然后调用markerClusterer类即可。
     e.stopImmediatePropagation();
@@ -78,7 +88,7 @@ $(function () {
         markerClusterer.addMarker(_marker);
         map.addOverlay(_marker);              // 将标注添加到地图中
         $("#showResults").append(str);
-        result[i] = [i, addr, point.lng, point.lat, encodeURI(JSON.stringify(point))]
+        result[i] = [i, addr, point.lng, point.lat, JSON.stringify(point)]
       } else {
         var str = addr + '：解析失败 <br>';
         $('#showResults').append(str);
@@ -86,7 +96,6 @@ $(function () {
       }
     });
   }
-
 
   function geoParse(i, str) {
     str = str.toString();
@@ -119,7 +128,7 @@ $(function () {
         map.centerAndZoom(po, 12);
         map.addOverlay(_marker);              // 将标注添加到地图中
         $('#showResults').append(str1);
-        result[i] = [i, lng, lat, rs.address, encodeURI(JSON.stringify(rs))]
+        result[i] = [i, lng, lat, rs.address, JSON.stringify(rs)]
       } else {
         var str = lng + ',' + lat + ': 解析失败<br>';
         $('#showResults').append(str);
@@ -143,30 +152,78 @@ $(function () {
 });
 
 /**
+ * 限制并发执行任务的核心函数（最大并发数 limit）
+ * @param tasks Array<{index, value}>
+ * @param handler function(index, value, done)
+ * @param doneCallback 全部完成回调
+ * @param limit 并发数
+ */
+function runGeoQueue(tasks, handler, doneCallback, limit) {
+  var queue = tasks.slice(0); // 任务克隆
+  var running = 0;
+  var max = limit || 10;
+  var total = tasks.length;
+  var completed = 0;
+
+  function next() {
+    while (running < max && queue.length > 0) {
+      var t = queue.shift();
+      running++;
+      handler(t.index, t.value, function () {
+        running--;
+        completed++;
+        if (completed >= total) {
+          if (typeof doneCallback === 'function') doneCallback();
+        } else {
+          next();
+        }
+      });
+    }
+  }
+
+  next();
+}
+
+/**
+ * [escapeCSV 转义CSV内容]
+ * @return {String}       [转义后的内容]
+ * @param value
+ */
+function escapeCSV(value) {
+  if (value == null) return '';
+  var str = value.toString();
+  // 如果包含逗号、双引号、换行符，则需要用双引号包围，并对内部 " 转义
+  if (/["\n\r,]/.test(str)) {
+    str = '"' + str.replace(/"/g, '""') + '"';
+  }
+  return str;
+}
+
+/**
  * [exportsCSV 导出数据到CSV]
  * @param  {Array}  [_body=[]]      [内容]
  * @param  {String} [name='excel'}] [文件名]
  * @return {[type]}                 [无]
  */
 function exportsCSV(_body, name) {
-  var output = _body.map(item => { // 格式化表内容
-    return item.join(",") + '\n'
+  var output = _body.map(row => { // 格式化表内容
+    // 先将每个单元格的内容进行转义
+    return row.map(escapeCSV).join(','); // 使用分号分隔
   })
   console.log("output", output)
-  var BOM = '\uFEFF'
   if (!window.Blob) {
     alert("你的浏览器不支持!")
     return
   }
   // 创建一个文件CSV文件
-  var blob = new Blob([BOM + output.join("")], {type: 'text/csv'})
+  var BOM = '\uFEFF' // 中文乱码问题
+  var blob = new Blob([BOM + output.join("\n")], {type: 'text/csv'})
   // IE
   if (navigator.msSaveOrOpenBlob) {
     // 解决大文件下载失败
     // 保存到本地文件
     navigator.msSaveOrOpenBlob(blob, `${name}.csv`)
   } else {
-    // let uri = encodeURI(`data:text/csv;charset=utf-8,${BOM}${output}`)
     var downloadLink = document.createElement('a')
     // downloadLink.href = uri
     downloadLink.setAttribute('href', URL.createObjectURL(blob)) // 因为url有最大长度限制，encodeURI是会把字符串转化为url，超出限制长度部分数据丢失导致下载失败,为此我采用创建Blob（二进制大对象）的方式来存放缓存数据，具体代码如下：

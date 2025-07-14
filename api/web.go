@@ -1,14 +1,8 @@
 package api
 
 import (
-	"bytes"
 	"fmt"
 	"github.com/gin-gonic/gin"
-	"github.com/yuin/goldmark"
-	"github.com/yuin/goldmark/extension"
-	"github.com/yuin/goldmark/parser"
-	"github.com/yuin/goldmark/renderer/html"
-	"go.abhg.dev/goldmark/toc"
 	"html/template"
 	"math"
 	"net/http"
@@ -104,29 +98,7 @@ func (s *WebHandler) Post(c *gin.Context) {
 		_ = model.Model.PostView(postId)
 		_, isLogin := isAdminLogon(c)
 		newPost := adaptPost(post, cats)
-		md := goldmark.New(
-			goldmark.WithExtensions(
-				extension.GFM,
-				extension.Typographer,
-				extension.DefinitionList,
-				&toc.Extender{Title: "文章目录"},
-			),
-			goldmark.WithParserOptions(
-				parser.WithAutoHeadingID(),
-			),
-			goldmark.WithRendererOptions(
-				html.WithUnsafe(),
-				html.WithHardWraps(),
-				html.WithXHTML(),
-			),
-		)
-		var buf bytes.Buffer
-		err := md.Convert([]byte(post.Content), &buf)
-		if err != nil {
-
-		}
 		// 新窗口跳转
-		newPost.Content = strings.ReplaceAll(buf.String(), "<a ", "<a target='_blank'")
 		c.HTML(http.StatusOK, "post", gin.H{
 			"title":     post.Title,
 			"content":   post.Content,

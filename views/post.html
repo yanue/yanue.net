@@ -1,7 +1,13 @@
 {{define "head"}}
-  <link rel="stylesheet" href="/assets/toastui/prism.css">
-  <link rel="stylesheet" href="/assets/css/markdown.css">
-  <script src="/assets/toastui/prism.js"></script>
+<!-- Marked.js -->
+<script src="/assets/theme/marked.min.js"></script>
+
+<!-- prism.js -->
+<link rel="stylesheet" href="/assets/theme/prism.css">
+<script src="/assets/theme/prism.js"></script>
+
+<!-- markdown.css -->
+<link rel="stylesheet" href="/assets/theme/markdown.css">
 {{end}}
 
 
@@ -49,8 +55,10 @@
         {{ if (gt .n 2) }}
           <div class="tip">本文发布于 {{ .n }} 年前, 内容可能已经过时或失效!</div>
         {{ end }}
-        <div class="markdown-body">
-            {{ .post.Content | unescape }}
+        <div class="markdown-wrap">
+          <div id="markdown-content" class="markdown-body">
+            <pre>{{ .post.Content }}</pre>
+          </div>
         </div>
         <div class="clear"></div>
         <div class="footer">
@@ -86,6 +94,74 @@
   <div class="aside">
       {{include "layouts/aside"}}
   </div>
+
+<script>
+  window.onload = function () {
+    // marked.js 配置
+    marked.setOptions({
+        gfm: true,                    // 启用 GitHub 风格的 Markdown
+        breaks: true,                 // 允许回车换行 (GFM 扩展)
+        pedantic: false,              // 允许更严格的 Markdown 解析
+        smartypants: true,            // 启用智能引号转换
+    });
+
+    // 存储目录数据
+    let toc = [];
+
+    // 自定义 renderer 来提取标题信息
+    const renderer = new marked.Renderer();
+    renderer.heading = (item) => {
+        const id = `heading-${toc.length + 1}`; // 生成唯一 ID
+        toc.push(item); // 存入目录数据
+        return `<h${item.depth} id="${id}">${item.text}</h${item.depth}>`; // 返回标题 HTML
+    };
+
+    // 生成目录 HTML 的函数
+    function generateTocHtml(toc, baseClass = 'toc-level') {
+        if (toc.length === 0) return ''; // 处理空输入
+        const stack = [{ depth: toc[0].depth, ul: [] }]; // 初始化栈
+        toc.forEach((title, index) => {
+            const d = title.depth;
+            // 弹出栈中深度大于当前深度的列表
+            while (stack.length > 0 && stack[stack.length - 1].depth > d) {
+                const innerUl = stack.pop().ul.join('');
+                if (stack.length > 0) {
+                    const parentDepth = stack[stack.length - 1].depth;
+                    stack[stack.length - 1].ul[stack[stack.length - 1].ul.length - 1] +=`<ul class="toc-list ${baseClass}-${parentDepth + 1}">${innerUl}</ul>`;
+                }
+            }
+            // 如果栈为空或当前深度大于栈顶深度，推入新层级
+            if (stack.length === 0 || stack[stack.length - 1].depth < d) {
+                stack.push({ depth: d, ul: [] });
+            }
+            // 添加当前标题作为 <li>
+            stack[stack.length - 1].ul.push(`<li><a href="#heading-${index + 1}">${title.text}</a></li>`);
+        });
+
+        // 关闭剩余的嵌套列表
+        while (stack.length > 1) {
+            const innerUl = stack.pop().ul.join('');
+            const parentDepth = stack[stack.length - 1].depth;
+            stack[stack.length - 1].ul[stack[stack.length - 1].ul.length - 1] += `<ul class="toc-list ${baseClass}-${parentDepth + 1}">${innerUl}</ul>`;
+        }
+        // 返回顶层 <ul>
+        const topDepth = toc[0].depth;
+        return `<ul class="toc-list ${baseClass}-${topDepth}">${stack[0].ul.join('')}</ul>`;
+    }
+    // 解析 Markdown
+    const markdownContent = document.getElementById("markdown-content").innerText;
+    const contentHtml = marked.parse(markdownContent, { renderer });
+    // 生成 TOC
+    const tocHtml = generateTocHtml(toc);
+    document.getElementById("markdown-content").innerHTML = contentHtml;
+    document.getElementById("markdown-toc").innerHTML = tocHtml
+    // 添加 Prism.js 的行号和代码高亮
+    document.querySelectorAll('pre code').forEach((block) => {
+        block.classList.add('line-numbers');  // 添加行号支持
+        Prism.highlightElement(block);  // 代码高亮
+    });
+  }
+</script>
 {{end}}
 
 

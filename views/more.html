@@ -70,7 +70,21 @@
               {{ end }}
           </ul>
         </div>
-        <div class="fill-foot"></div>
+        <div class="fill-foot">
+          <div class="pagination">
+            <span class="right">
+              {{range .pages}}
+                  {{ if .Current }}
+                    <a class="page-item current">{{ .Page }}</a>
+                  {{ else }}
+                    <a class="page-item" href="{{.Link}}">{{ .Page }}</a>
+                  {{end}}
+              {{ end }}
+            </span>
+            <span class="left ">共 {{ .count }} 条, 每页 {{ .size }} 条, 当前 {{.page}}/{{ .totalPage }} 页</span>
+          </div>
+          <div class="clear" style="margin-bottom: -20px;"></div>
+        </div>
       </div>
     </div>
   </div>
