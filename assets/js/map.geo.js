@@ -1,5 +1,4 @@
 $(function () {
-  // 百度地图初始化
   var map = new BMap.Map("map_canvas");
   map.enableDragging();
   map.enableScrollWheelZoom();
@@ -7,148 +6,111 @@ $(function () {
   map.centerAndZoom(point, 12);
   var myGeo = new BMap.Geocoder();
   var markerClusterer = new BMapLib.MarkerClusterer(map, {markers: []});
-
-  var result = []; // 最终解析结果
+  var result = [];
   var exportName = "";
   var n = 1;
-
-  // 全屏切换
   $('#fullscreenBtn').on('click', function () {
     $('#inner').toggleClass('fullscreen');
     var text = $('#inner').hasClass('fullscreen') ? '退出全屏' : '全屏模式';
     $('#fullscreenBtn').text(text);
   });
-
-  // 地址 → 经纬度
   $('#toLatLngBtn').on('click', function (e) {
     exportName = "通过地址解析经纬度-" + (n++);
     result = [["序号", "输入地址", "解析经度", "解析纬度", "返回信息"]];
     $('#showResults').html("").fadeIn();
     map.clearOverlays();
     markerClusterer.clearMarkers();
-
-    var addrStr = $('#addr').val();
-    var addrs = addrStr.split('\n').filter(function (line) {
-      return line.trim() !== '';
-    });
-
-    var tasks = addrs.map(function (addr, i) {
-      return {index: i + 1, value: addr};
-    });
-
+    var addrs = $('#addr').val().split('\n').filter(line => line.trim() !== '');
+    var tasks = addrs.map((addr, i) => ({index: i + 1, value: addr}));
+    $("#status").html("开始解析...");
     runGeoQueue(tasks, geoSearch, function () {
       console.log("地址解析全部完成");
+      $("#status").html("解析完成");
     }, 10);
-
     e.stopImmediatePropagation();
   });
-
-  // 经纬度 → 地址
   $('#toAddressBtn').on('click', function (e) {
     exportName = "通过经纬度解析地址-" + (n++);
     result = [["序号", "输入经度", "输入纬度", "解析地址", "返回信息"]];
     $('#showResults').html("").fadeIn();
     map.clearOverlays();
     markerClusterer.clearMarkers();
-
-    var latLngStr = $('#latLng').val();
-    var pairs = latLngStr.split('\n').filter(function (line) {
-      return line.trim() !== '';
-    });
-
-    var tasks = pairs.map(function (pair, i) {
-      return {index: i + 1, value: pair};
-    });
-
+    var pairs = $('#latLng').val().split('\n').filter(line => line.trim() !== '');
+    var tasks = pairs.map((pair, i) => ({index: i + 1, value: pair}));
+    $("#status").html("开始解析...");
     runGeoQueue(tasks, geoParse, function () {
       console.log("经纬度解析全部完成");
+      $("#status").html("解析完成");
     }, 10);
-
-    //最简单的用法，生成一个marker数组，然后调用markerClusterer类即可。
     e.stopImmediatePropagation();
   });
 
-  function geoSearch(i, addr) {
+  function geoSearch(i, addr, done) {
     myGeo.getPoint(addr, function (point) {
+      let str = '';
       if (point) {
-        var str = addr + ":" + point.lng + "," + point.lat + "<br>";
-        var po = new BMap.Point(point.lng, point.lat);
+        str = addr + ":" + point.lng + "," + point.lat + "<br>";
+        const po = new BMap.Point(point.lng, point.lat);
         map.centerAndZoom(po, 12);
-
-        var _marker = new BMap.Marker(po);
-
-        _marker.addEventListener("click", function (e) {
+        const _marker = new BMap.Marker(po);
+        _marker.addEventListener("click", function () {
           this.openInfoWindow(new BMap.InfoWindow(str));
         });
-
-        _marker.addEventListener("mouseover", function (e) {
+        _marker.addEventListener("mouseover", function () {
           this.setTitle("位于: " + point.lng + "," + point.lat);
         });
-
         markerClusterer.addMarker(_marker);
-        map.addOverlay(_marker);              // 将标注添加到地图中
-        $("#showResults").append(str);
-        result[i] = [i, addr, point.lng, point.lat, JSON.stringify(point)]
+        map.addOverlay(_marker);
+        result[i] = [i, addr, point.lng, point.lat, JSON.stringify(point)];
       } else {
-        var str = addr + '：解析失败 <br>';
-        $('#showResults').append(str);
-        result[i] = [i, addr, "", "", "解析失败"]
+        str = addr + '：解析失败 <br>';
+        result[i] = [i, addr, "", "", "解析失败"];
       }
+      $('#showResults').append(str);
+      done(); // 回调通知任务完成
     });
   }
 
-  function geoParse(i, str) {
-    str = str.toString();
-    //去除中间所有空格，将中文'，'号替换成英文','并按','分割
-    str = str.replace(/[(^\s+)(\s+$)]/g, "").replace('，', ',').split(',');
-    //第一个值为纬度并转化为float类型
-    var lat = parseFloat(str[1]);
-    //第二个值为经度并转化为float类型
-    var lng = parseFloat(str[0]);
-    if (lat == 0 || lng == 0 || isNaN(lat) || isNaN(lng)) {
-      result[i] = [i, str[1], str[0], "非经纬度"]
-      return false;
+  function geoParse(i, str, done) {
+    str = str.toString().replace(/\s+/g, "").replace('，', ',').split(',');
+    const lng = parseFloat(str[0]);
+    const lat = parseFloat(str[1]);
+    if (isNaN(lng) || isNaN(lat) || lng === 0 || lat === 0) {
+      const failText = str.join(',') + ': 解析失败<br>';
+      $('#showResults').append(failText);
+      result[i] = [i, lng || "", lat || "", "非经纬度", ""];
+      done();
+      return;
     }
-    var po = new BMap.Point(lng, lat);
+    const po = new BMap.Point(lng, lat);
     myGeo.getLocation(po, function (rs) {
+      let text = '';
       if (rs) {
-        var str1 = lng + "," + lat + "：" + rs.address + '<br>';
-        var po = new BMap.Point(lng, lat);
-        var _marker = new BMap.Marker(po);
-
-        _marker.addEventListener("click", function (e) {
-          this.openInfoWindow(new BMap.InfoWindow(str));
+        text = lng + "," + lat + "：" + rs.address + '<br>';
+        const _marker = new BMap.Marker(po);
+        _marker.addEventListener("click", function () {
+          this.openInfoWindow(new BMap.InfoWindow(text));
         });
-
-        _marker.addEventListener("mouseover", function (e) {
-          this.setTitle("位于: " + point.lng + "," + point.lat);
+        _marker.addEventListener("mouseover", function () {
+          this.setTitle("位于: " + lng + "," + lat);
         });
-
         markerClusterer.addMarker(_marker);
         map.centerAndZoom(po, 12);
-        map.addOverlay(_marker);              // 将标注添加到地图中
-        $('#showResults').append(str1);
-        result[i] = [i, lng, lat, rs.address, JSON.stringify(rs)]
+        map.addOverlay(_marker);
+        result[i] = [i, lng, lat, rs.address, JSON.stringify(rs)];
       } else {
-        var str = lng + ',' + lat + ': 解析失败<br>';
-        $('#showResults').append(str);
-        result[i] = [i, lng, lat, "解析失败", ""]
+        text = lng + ',' + lat + ': 解析失败<br>';
+        result[i] = [i, lng, lat, "解析失败", ""];
       }
+      $('#showResults').append(text);
+      done(); // 通知任务完成
     });
   }
 
-  $('#clearAddress').on('click', function () {
-    $('#addr').val("");
-  });
-  $('#clearLatLng').on('click', function () {
-    $('#latLng').val("");
-  });
-  $('#clearResult').on('click', function () {
-    $('#showResults').html("等待解析");
-  });
-  $("#exportResult").on('click', function () {
-    exportsCSV(result, exportName)
-  })
+  $('#clearAddress').on('click', () => $('#addr').val(""));
+  $('#clearLatLng').on('click', () => $('#latLng').val(""));
+  $('#clearResult').on('click', () => $('#showResults').html("等待解析"));
+  $("#exportResult").on('click', () => exportsCSV(result, exportName));
 });
 
 /**
