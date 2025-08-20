@@ -10,11 +10,7 @@
   <title>{{.title}}</title>
   <link rel="stylesheet" href="/assets/css/map.css">
   <script src="/assets/js/jquery.last.js" type="text/javascript"></script>
-  <script type="text/javascript" src="https://api.map.baidu.com/api?v=3.0&ak=CG8eakl6UTlEb1OakeWYvofh"></script>
-  <script type="text/javascript"
-          src="https://api.map.baidu.com/library/TextIconOverlay/1.2/src/TextIconOverlay_min.js"></script>
-  <script type="text/javascript"
-          src="https://api.map.baidu.com/library/MarkerClusterer/1.2/src/MarkerClusterer_min.js"></script>
+  <script src="https://api.map.baidu.com/api?v=1.0&type=webgl&ak=kr2z6BjQZMspzlbBFuzbIJ81VpdPDner"></script>
   <script type="text/javascript" src="/assets/js/map.geo.js"></script>
 </head>
 <body>
@@ -45,11 +41,11 @@
           <main class="post-content">
             <div class="toplink">
               <label>地图工具</label>
-              <a href="https://map.yanue.net/toLatLng/">地名查询经纬度</a> |
+              <a href="https://map.yanue.net/toLatLng/">地名查询经纬度(拖动精确定位)</a> |
               <a href="https://map.yanue.net/">批量地名经纬度查询</a> |
               <a href="https://map.yanue.net/gps.html">GPS转换谷歌百度经纬度</a>
               <span class="right">
-                <a href="javascript:;" id="fullscreenBtn" class="red" style="font-size: 16px;">全屏模式</a>
+                <a href=''>重新加载地图</a>
               </span>
             </div>
             <div id="map-wrap">
@@ -83,7 +79,9 @@
                 <div class="showMap">
                   <h3 class="sub-title">
                     地图展示<em>(基于百度地图)</em>
-                    <span class="right"><a href=''>重新加载地图</a></span>
+                    <span class="right">
+                      <a href="javascript:;" id="fullscreenBtn" style="font-size: 16px;color:#f60;">全屏模式</a>
+                    </span>
                   </h3>
                   <div id="map_canvas"></div>
                 </div>
