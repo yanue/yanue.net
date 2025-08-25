@@ -37,7 +37,7 @@ $(function () {
     runGeoQueue(tasks, geoSearch, function () {
       console.log("地址解析全部完成");
       $("#status").html("解析完成");
-    }, 10);
+    }, 2);
     e.stopImmediatePropagation();
   });
   $('#toAddressBtn').on('click', function (e) {
@@ -51,7 +51,7 @@ $(function () {
     runGeoQueue(tasks, geoParse, function () {
       console.log("经纬度解析全部完成");
       $("#status").html("解析完成");
-    }, 10);
+    }, 2);
     e.stopImmediatePropagation();
   });
 
