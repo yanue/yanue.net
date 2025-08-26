@@ -26,33 +26,66 @@ $(function () {
     }, 200); // 设置一点延时，确保 DOM 已经完成 resize
   });
 
+  // 全局运行状态标志，防止重复点击
+  let isRunning = false;
+
   $('#toLatLngBtn').on('click', function (e) {
+    e.stopImmediatePropagation();
+
+    // ------------------- 并发控制逻辑 -------------------
+    if (isRunning) {
+      alert("任务正在执行中，请稍候再试...");
+      return;
+    }
+    isRunning = true; // 标记任务开始
+
     exportName = "通过地址解析经纬度-" + (n++);
     result = [["序号", "输入地址", "解析经度", "解析纬度", "返回信息"]];
     $('#showResults').html("").fadeIn();
     map.clearOverlays();
+
     var addrs = $('#addr').val().split('\n').filter(line => line.trim() !== '');
     var tasks = addrs.map((addr, i) => ({index: i + 1, value: addr}));
+
     $("#status").html("开始解析...");
+
+    // runGeoQueue(tasks, workerFn, callback, 并行数)
     runGeoQueue(tasks, geoSearch, function () {
       console.log("地址解析全部完成");
       $("#status").html("解析完成");
+
+      // ------------------- 任务结束，释放锁 -------------------
+      isRunning = false;
     }, 2);
-    e.stopImmediatePropagation();
   });
+
   $('#toAddressBtn').on('click', function (e) {
+    e.stopImmediatePropagation();
+
+    // ------------------- 并发控制逻辑 -------------------
+    if (isRunning) {
+      alert("任务正在执行中，请稍候再试...");
+      return;
+    }
+    isRunning = true; // 标记任务开始
+
     exportName = "通过经纬度解析地址-" + (n++);
     result = [["序号", "输入经度", "输入纬度", "解析地址", "返回信息"]];
     $('#showResults').html("").fadeIn();
     map.clearOverlays();
+
     var pairs = $('#latLng').val().split('\n').filter(line => line.trim() !== '');
     var tasks = pairs.map((pair, i) => ({index: i + 1, value: pair}));
+
     $("#status").html("开始解析...");
+
     runGeoQueue(tasks, geoParse, function () {
       console.log("经纬度解析全部完成");
       $("#status").html("解析完成");
+
+      // ------------------- 任务结束，释放锁 -------------------
+      isRunning = false;
     }, 2);
-    e.stopImmediatePropagation();
   });
 
 // 创建标注并支持点击后居中
@@ -79,26 +112,60 @@ $(function () {
     map.centerAndZoom(point, 10);
   }
 
-  function geoSearch(i, addr, done) {
-    myGeo.getPoint(addr, function (point) {
-      let str = '';
-      if (point) {
-        str = addr + ":" + point.lng + "," + point.lat + "<br>";
-        addMarker(point.lng, point.lat, i + ":" + str)
-        result[i] = [i, addr, point.lng, point.lat, JSON.stringify(point)];
-      } else {
-        str = addr + '：解析失败 <br>';
-        result[i] = [i, addr, "", "", "解析失败"];
-      }
+  /**
+   * 对地址进行地理编码搜索，并增加超时保护
+   * @param {Number} i   序号
+   * @param {String} addr 要解析的地址
+   * @param {Function} done 任务完成回调
+   * @param {Number} timeoutMs 超时时间（毫秒），默认5秒
+   */
+  function geoSearch(i, addr, done, timeoutMs = 5000) {
+    let timeoutId;
+    let finished = false; // 防止多次回调
+
+    // 定义完成函数，保证只执行一次
+    function finish(str, data) {
+      if (finished) return; // 只允许调用一次
+      finished = true;
+      clearTimeout(timeoutId);
+
       $('#showResults').append(str);
-      done(); // 回调通知任务完成
+      result[i] = data;
+      done(); // 通知外部任务完成
+    }
+
+    // 设置超时处理
+    timeoutId = setTimeout(() => {
+      const str = addr + '：解析超时 <br>';
+      finish(str, [i, addr, "", "", "解析超时"]);
+    }, timeoutMs);
+
+    // 调用异步地理编码服务
+    myGeo.getPoint(addr, function (point) {
+      if (point) {
+        const str = addr + ":" + point.lng + "," + point.lat + "<br>";
+        addMarker(point.lng, point.lat, i + ":" + str);
+        finish(str, [i, addr, point.lng, point.lat, JSON.stringify(point)]);
+      } else {
+        const str = addr + '：解析失败 <br>';
+        finish(str, [i, addr, "", "", "解析失败"]);
+      }
     });
   }
 
-  function geoParse(i, str, done) {
+  /**
+   * 对经纬度进行逆地理解析（坐标 -> 地址），带超时处理
+   * @param {Number} i   序号
+   * @param {String} str 输入的经纬度字符串 "lng,lat"
+   * @param {Function} done 回调通知任务完成
+   * @param {Number} timeoutMs 超时时间，默认5秒
+   */
+  function geoParse(i, str, done, timeoutMs = 5000) {
     str = str.toString().replace(/\s+/g, "").replace('，', ',').split(',');
     const lng = parseFloat(str[0]);
     const lat = parseFloat(str[1]);
+
+    // 校验输入是否为有效经纬度
     if (isNaN(lng) || isNaN(lat) || lng === 0 || lat === 0) {
       const failText = str.join(',') + ': 解析失败<br>';
       $('#showResults').append(failText);
@@ -106,19 +173,37 @@ $(function () {
       done();
       return;
     }
+
+    let finished = false;
+    let timeoutId;
+
+    // 封装统一的结束逻辑
+    function finish(text, data) {
+      if (finished) return;  // 防止多次调用
+      finished = true;
+      clearTimeout(timeoutId); // 清理超时定时器
+      $('#showResults').append(text + '<br>');
+      result[i] = data;
+      done(); // 通知外部任务完成
+    }
+
+    // 设置超时保护
+    timeoutId = setTimeout(() => {
+      const text = lng + ',' + lat + ': 解析超时';
+      finish(text, [i, lng, lat, "解析超时", ""]);
+    }, timeoutMs);
+
+    // 发起逆地理解析
     const po = new BMapGL.Point(lng, lat);
     myGeo.getLocation(po, function (rs) {
-      let text = '';
       if (rs) {
-        text = lng + "," + lat + "：" + rs.address;
-        addMarker(lng, lat, i + ":" + text)
-        result[i] = [i, lng, lat, rs.address, JSON.stringify(rs)];
+        const text = lng + "," + lat + "：" + rs.address;
+        addMarker(lng, lat, i + ":" + text);
+        finish(text, [i, lng, lat, rs.address, JSON.stringify(rs)]);
       } else {
-        text = lng + ',' + lat + ': 解析失败';
-        result[i] = [i, lng, lat, "解析失败", ""];
+        const text = lng + ',' + lat + ': 解析失败';
+        finish(text, [i, lng, lat, "解析失败", ""]);
       }
-      $('#showResults').append(text + '<br>');
-      done(); // 通知任务完成
     });
   }
 
@@ -146,6 +231,7 @@ function runGeoQueue(tasks, handler, doneCallback, limit) {
     while (running < max && queue.length > 0) {
       var t = queue.shift();
       running++;
+      console.log("开始任务", t.index, t.value);
       handler(t.index, t.value, function () {
         running--;
         completed++;
