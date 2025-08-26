@@ -1,12 +1,16 @@
-<div id="cusdis_thread"
-     data-host="https://cusdis.com"
-     data-app-id="23abcfa5-81d8-4ce8-a99f-efc74cd681f5"
-     data-page-id="{{ .PAGE_ID }}"
-></div>
-<script src="https://cusdis.com/js/cusdis.es.js"></script>
+<!-- CSS -->
+<link href="https://artalk.yanue.net/dist/Artalk.css" rel="stylesheet" />
+
+<!-- JS -->
+<script src="https://artalk.yanue.net/dist/Artalk.js"></script>
+
+<!-- Artalk -->
+<div id="Comments"></div>
 <script>
-  window.onload = function () {
-    window.CUSDIS.initial()
-    window.CUSDIS.setTheme('dark')
-  }
+Artalk.init({
+  el:        '#Comments',
+  pageKey:   '{{ .PAGE_ID }}',
+  server:    'https://artalk.yanue.net/',
+  site:      'yanue.net',
+})
 </script>
