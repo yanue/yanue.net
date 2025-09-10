@@ -6,6 +6,14 @@ $(function () {
   map.addControl(new BMap.NavigationControl());
   window.map = map;
 
+  var mapTypeCtrl = new BMap.MapTypeControl({
+    mapTypes: [
+      BMAP_NORMAL_MAP,     // 普通图
+      BMAP_HYBRID_MAP,  // 混合图
+    ]
+  });
+  map.addControl(mapTypeCtrl);
+
   // 设置默认的位置
   setMarker('114.033933', '22.537781');
 

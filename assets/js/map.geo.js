@@ -4,6 +4,16 @@ $(function () {
   map.enableScrollWheelZoom();
   var point = new BMapGL.Point(114.057868, 22.543099);
   map.centerAndZoom(point, 10);
+
+  var mapTypeCtrl = new BMapGL.MapTypeControl({
+    // 控件上可以显示的地图类型
+    mapTypes: [
+      BMAP_NORMAL_MAP,     // 普通图
+      BMAP_EARTH_MAP       // 地球模式（3D地球）
+    ]
+  });
+  map.addControl(mapTypeCtrl);
+
   var myGeo = new BMapGL.Geocoder();
   var result = [];
   var exportName = "";
