@@ -73,7 +73,7 @@
               <p>　　👉 <a href="https://lbsyun.baidu.com/jsdemo.htm#xRevAddressParseGroup" target="_blank" style="color:blue">百度地图官方 Demo - 经纬度反地址解析</a></p>
               <h4>三. 如果你需要<span style="color: #856404">大量使用</span>,推荐自己申请key进行编程, 如果你不懂代码, 可以下载源码到本地使用</p>
               <p>　　1. 申请自己的key 👉 <a href="https://lbsyun.baidu.com/apiconsole/key" target="_blank" style="color:blue">去百度地图开放平台申请 Key</a></p>
-              <p>　　2. 下载本页源码 👉 <a id="downloadSourceBtn" href='javascript:;' title="https://map.yanue.net/assets/map源码.html" style="color:blue">map源码.html</a></p>
+              <p>　　2. 下载本页源码 👉 <a href='https://map.yanue.net/assets/map源码.html' title="https://map.yanue.net/assets/map源码.html" style="color:blue">map源码.html</a></p>
               <p>　　3. 用文本编辑器打开 "map源码.html", 然后替换 "ak=你的百度地图key" 为你申请的key</p>
               <p>　　4. 然后用浏览器打开 "map源码.html" (双击这个文件), 即可使用</p>
             </div>
@@ -160,14 +160,6 @@
 
 
 <script>
-  $('#downloadSourceBtn').click(function () {
-    const element = document.createElement('a');
-    const file = new Blob([document.documentElement.outerHTML], {type: 'text/html'});
-    element.href = URL.createObjectURL(file);
-    element.download = 'map源码.html';
-    document.body.appendChild(element);
-    element.click();
-  });
   window.onerror = function (message, source, lineno, colno, error) {
     console.log('捕获到异常：', {message, source, lineno, colno, error});
   }

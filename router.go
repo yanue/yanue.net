@@ -53,6 +53,10 @@ func (r *router) route() {
 	r.GET("/toLatLng", web.ToLatLng)
 	r.GET("/gps", web.Gps)
 	r.GET("/gps.html", web.Gps)
+	// 文件下载接口 - 强制下载 HTML 而不是打开
+	r.GET("/assets/map源码.html", func(c *gin.Context) {
+		c.FileAttachment("./assets/map源码.html", "map源码.html")
+	})
 
 	admin := api.NewAdminHandler()
 
