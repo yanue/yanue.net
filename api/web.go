@@ -168,16 +168,7 @@ func (s *WebHandler) Map(c *gin.Context) {
 }
 
 func getBaiduMapKey() string {
-	keys := []string{
-		"nSxiPohfziUaCuONe4ViUP2N",
-		"PlhFWpA02aoURjAOpnWcRGqw7AI8EEyO",
-		"CG8eakl6UTlEb1OakeWYvofh",
-		"kr2z6BjQZMspzlbBFuzbIJ81VpdPDner",
-	}
-	// 随机选择一个百度地图API密钥
-	randIndex := time.Now().UnixNano() % int64(len(keys))
-	baiduMapKey := keys[randIndex]
-	return baiduMapKey
+	return "请输入你的key"
 }
 
 func (s *WebHandler) showMap(c *gin.Context) {
